@@ -7,6 +7,7 @@
 Instead of forcing users to search through hundreds of schemes manually, MatchWise AI analyzes information such as **location, age, education, business type, sector, income, turnover, organization type, and funding requirements** to surface schemes that are more relevant to them.
 
 🔗 **Live Demo:** https://matchwiseai.vercel.app/
+
 🔗 **GitHub Repository:** https://github.com/lokeshpavanteja/SIH_project
 
 ---
