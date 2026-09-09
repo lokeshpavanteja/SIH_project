@@ -1,0 +1,8 @@
+{
+  "name": "MatchWise AI - Scheme Discovery & Matching Platform",
+  "description": "Intelligent scheme matching and guidance platform for Indian and global founders, categorizing Government and Private schemes with official portal direct links.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
