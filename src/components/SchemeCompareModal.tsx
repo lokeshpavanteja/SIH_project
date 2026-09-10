@@ -26,6 +26,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
   const [selectedSchemeBId, setSelectedSchemeBId] = useState<string>('');
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [isLoadingAnalysis, setIsLoadingAnalysis] = useState<boolean>(false);
+  const [hasCompared, setHasCompared] = useState<boolean>(false);
 
   useEffect(() => {
     if (initialSchemeA) {
@@ -39,19 +40,20 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
     } else if (allSchemes.length > 1) {
       setSelectedSchemeBId(allSchemes[1].id);
     }
+    setHasCompared(false);
   }, [initialSchemeA, initialSchemeB, allSchemes, isOpen]);
 
   const schemeA = allSchemes.find((s) => s.id === selectedSchemeAId) || allSchemes[0];
   const schemeB = allSchemes.find((s) => s.id === selectedSchemeBId) || allSchemes[1] || allSchemes[0];
 
-  // Fetch AI Scheme Comparison
-  useEffect(() => {
-    if (!isOpen || !schemeA || !schemeB || schemeA.id === schemeB.id) {
-      setAiAnalysis(null);
+  const handleCompare = () => {
+    if (!schemeA || !schemeB || schemeA.id === schemeB.id) {
+      setAiAnalysis("Please select two different schemes to compare.");
+      setHasCompared(true);
       return;
     }
 
-    let isMounted = true;
+    setHasCompared(true);
     setIsLoadingAnalysis(true);
 
     fetch('/api/gemini/scheme-compare', {
@@ -66,22 +68,14 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        if (isMounted) {
-          setAiAnalysis(data.analysis || null);
-          setIsLoadingAnalysis(false);
-        }
+        setAiAnalysis(data.analysis || null);
+        setIsLoadingAnalysis(false);
       })
       .catch((err) => {
         console.error('Error fetching scheme comparison:', err);
-        if (isMounted) {
-          setIsLoadingAnalysis(false);
-        }
+        setIsLoadingAnalysis(false);
       });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedSchemeAId, selectedSchemeBId, isOpen, currentLanguage]);
+  };
 
   if (!isOpen) return null;
 
@@ -171,7 +165,22 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
             </div>
           </div>
 
+          {/* Compare Action Button */}
+          {!hasCompared && (
+            <div className="p-4 sm:p-6 bg-surface-container-lowest flex justify-center border-b border-surface-variant">
+              <button
+                onClick={handleCompare}
+                disabled={!selectedSchemeAId || !selectedSchemeBId || selectedSchemeAId === selectedSchemeBId}
+                className="px-6 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-sm hover:bg-primary-hover hover:scale-105 transition-all flex items-center gap-2 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
+              >
+                <span className="material-symbols-outlined text-[20px]">play_arrow</span>
+                Compare Now
+              </button>
+            </div>
+          )}
+
           {/* Body Comparison Matrix */}
+          {hasCompared && (
           <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 text-on-surface">
             {schemeA && schemeB && (
               <div className="overflow-x-auto">
@@ -338,6 +347,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
               )}
             </div>
           </div>
+          )}
 
           {/* Footer */}
           <div className="p-4 border-t border-surface-variant bg-surface-container-lowest flex items-center justify-between text-xs text-on-surface-variant">
