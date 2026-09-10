@@ -63,7 +63,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span>{userProfile.companyName}</span>
             <span>•</span>
             <span>{userProfile.stateRegion}, {userProfile.country}</span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/5 text-white border border-white/10">
               {userProfile.country} Matching Active
             </span>
           </p>
@@ -71,14 +71,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
         <div className="flex items-center gap-3">
           <div className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-surface-variant text-xs font-semibold text-on-surface flex items-center gap-2 shadow-xs">
-            <span className="material-symbols-outlined text-primary text-[18px]">verified</span>
-            <span>Target Funding: <strong className="text-primary">{userProfile.targetFunding || '₹50,00,000'}</strong></span>
+            <span className="material-symbols-outlined text-white text-[18px]">verified</span>
+            <span>Target Funding: <strong className="text-white">{userProfile.targetFunding || '₹50,00,000'}</strong></span>
           </div>
 
           <button
             id="btn-dash-compare-cta"
             onClick={() => onOpenCompare()}
-            className="px-3.5 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-hover shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-white text-on-primary text-xs font-semibold hover:bg-white-hover shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <span className="material-symbols-outlined text-[16px]">compare_arrows</span>
             <span>{t('compareSchemesTitle')}</span>
@@ -87,16 +87,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Safety Notice Strip */}
-      <div className="mb-6 p-3.5 rounded-xl bg-primary/5 border border-primary/20 flex items-center justify-between gap-3 text-xs text-on-surface">
+      <div className="mb-6 p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between gap-3 text-xs text-on-surface">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary text-[18px]">shield</span>
+          <span className="material-symbols-outlined text-white text-[18px]">shield</span>
           <span>
             <strong>Official Application Notice:</strong> MatchWise provides smart matching and document checklists. All submissions occur on official government and private portals.
           </span>
         </div>
         <button
           onClick={onNavigateToDiscovery}
-          className="text-primary font-semibold hover:underline shrink-0 hidden sm:inline-block"
+          className="text-white font-semibold hover:underline shrink-0 hidden sm:inline-block"
         >
           Explore All Schemes →
         </button>
@@ -105,7 +105,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* Bento Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter-md">
         {/* Top Matches (Spans 8 cols on desktop) */}
-        <section className="col-span-1 md:col-span-8 bg-surface-container-lowest rounded-2xl shadow-ambient border border-surface-variant p-4 md:p-6 flex flex-col">
+        <section className="col-span-1 md:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant p-4 md:p-6 flex flex-col">
           <div className="flex justify-between items-center mb-stack-md">
             <div>
               <h2 className="font-headline-md text-headline-md text-on-surface">
@@ -118,7 +118,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <button
               id="btn-dash-view-all-discovery"
               onClick={onNavigateToDiscovery}
-              className="font-label-md text-label-md text-primary hover:underline flex items-center gap-1 group transition-colors shrink-0"
+              className="font-label-md text-label-md text-white hover:underline flex items-center gap-1 group transition-colors shrink-0"
             >
               <span>{t('discoveryTitle')}</span>
               <span className="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">
@@ -132,7 +132,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <div
                 key={scheme.id}
                 id={`scheme-card-${scheme.id}`}
-                className="bg-surface border border-surface-variant rounded-xl p-4 flex flex-col justify-between hover:shadow-ambient transition-all relative overflow-hidden group hover:border-primary/40"
+                className="bg-surface border border-surface-variant rounded-xl p-4 flex flex-col justify-between hover:shadow-sm transition-all relative overflow-hidden group hover:border-white/40"
               >
                 <div>
                   {/* Top Badges */}
@@ -152,7 +152,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       id={`btn-dash-bookmark-${scheme.id}`}
                       onClick={(e) => onToggleBookmark(scheme.id, e)}
                       className={`transition-colors p-1 rounded-md hover:bg-surface-variant ${
-                        scheme.saved ? 'text-primary' : 'text-on-surface-variant'
+                        scheme.saved ? 'text-white' : 'text-on-surface-variant'
                       }`}
                     >
                       <span className="material-symbols-outlined text-[18px]">
@@ -164,7 +164,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   {/* Title & Match */}
                   <h3
                     onClick={() => onOpenSchemeDetail(scheme)}
-                    className="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1 cursor-pointer"
+                    className="font-title-md text-title-md text-on-surface font-semibold group-hover:text-white transition-colors line-clamp-1 cursor-pointer"
                   >
                     {scheme.title}
                   </h3>
@@ -173,10 +173,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </p>
 
                   <div className="flex items-baseline justify-between mb-3">
-                    <span className="font-headline-md text-headline-md text-primary font-bold">
+                    <span className="font-headline-md text-headline-md text-white font-bold">
                       {scheme.amountFormatted}
                     </span>
-                    <span className="font-label-md text-label-md px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium flex items-center gap-1">
+                    <span className="font-label-md text-label-md px-2 py-0.5 rounded-full bg-white/5 text-white font-medium flex items-center gap-1">
                       <span className="material-symbols-outlined text-xs">stars</span>
                       {scheme.matchScore}% Match
                     </span>
@@ -192,7 +192,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     href={scheme.officialWebsiteUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2 px-3 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:bg-primary-hover shadow-xs flex items-center justify-center gap-1.5 transition-all"
+                    className="w-full py-2 px-3 rounded-lg bg-white text-on-primary text-xs font-semibold hover:bg-white-hover shadow-xs flex items-center justify-center gap-1.5 transition-all"
                   >
                     <span>{t('applyOnOfficialWebsite')}</span>
                     <span className="material-symbols-outlined text-[14px]">open_in_new</span>
@@ -205,7 +205,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     </span>
                     <button
                       onClick={() => onOpenSchemeDetail(scheme)}
-                      className="text-primary hover:underline font-semibold"
+                      className="text-white hover:underline font-semibold"
                     >
                       View Details
                     </button>
@@ -217,7 +217,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </section>
 
         {/* Readiness Gauge (Spans 4 cols on desktop) */}
-        <section className="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-2xl shadow-ambient border border-surface-variant p-4 md:p-6 flex flex-col justify-between">
+        <section className="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant p-4 md:p-6 flex flex-col justify-between">
           <div>
             <h2 className="font-headline-md text-headline-md text-on-surface mb-1">
               {t('readinessTitle')}
@@ -278,7 +278,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <button
             id="btn-dash-improve-score"
             onClick={onOpenImproveScore}
-            className="w-full py-3 px-4 rounded-xl bg-surface hover:bg-surface-variant border border-surface-variant text-primary font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer mt-4"
+            className="w-full py-3 px-4 rounded-xl bg-surface hover:bg-surface-variant border border-surface-variant text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer mt-4"
           >
             <span>{t('improveScore')}</span>
             <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -286,7 +286,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </section>
 
         {/* Upcoming Milestones / Deadlines */}
-        <section className="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-2xl shadow-ambient border border-surface-variant p-4 md:p-6">
+        <section className="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-xl shadow-sm border border-surface-variant p-4 md:p-6">
           <div className="flex justify-between items-center mb-stack-md">
             <div>
               <h2 className="font-headline-md text-headline-md text-on-surface">
@@ -326,7 +326,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <span className="text-on-surface-variant">{item.daysRemaining} days left</span>
                   <button
                     onClick={() => onOpenDeadlineAction(item)}
-                    className="text-primary hover:underline font-semibold"
+                    className="text-white hover:underline font-semibold"
                   >
                     View Checklist
                   </button>

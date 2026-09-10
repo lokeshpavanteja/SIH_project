@@ -97,12 +97,12 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-surface-container-lowest border border-outline-variant rounded-2xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
+          className="bg-surface-container-lowest border border-outline-variant rounded-xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
         >
           {/* Header */}
           <div className="p-6 border-b border-surface-variant bg-surface flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-white/5 text-white flex items-center justify-center">
                 <span className="material-symbols-outlined text-[22px]">upload_file</span>
               </div>
               <div>
@@ -146,11 +146,11 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-primary"
               >
-                <option value="Financials">Financials & Balance Sheets</option>
-                <option value="Certifications">Diversity & MBE/WBE Certifications</option>
-                <option value="Pitch Materials">Pitch Decks & Whitepapers</option>
-                <option value="Compliance">AI Governance & Privacy Policies</option>
-                <option value="Legal">Articles of Incorporation & Legal</option>
+                <option className="bg-zinc-900 text-white" value="Financials">Financials & Balance Sheets</option>
+                <option className="bg-zinc-900 text-white" value="Certifications">Diversity & MBE/WBE Certifications</option>
+                <option className="bg-zinc-900 text-white" value="Pitch Materials">Pitch Decks & Whitepapers</option>
+                <option className="bg-zinc-900 text-white" value="Compliance">AI Governance & Privacy Policies</option>
+                <option className="bg-zinc-900 text-white" value="Legal">Articles of Incorporation & Legal</option>
               </select>
             </div>
 
@@ -162,8 +162,8 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
               onDrop={handleDrop}
               className={`p-6 border-2 border-dashed rounded-xl text-center transition-all cursor-pointer ${
                 dragActive
-                  ? 'border-primary bg-primary/5'
-                  : 'border-outline-variant hover:border-primary/50 bg-surface'
+                  ? 'border-white bg-white/5'
+                  : 'border-outline-variant hover:border-white/50 bg-surface'
               }`}
             >
               <input
@@ -174,7 +174,7 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
                 accept=".pdf,.xlsx,.csv,.docx,.png"
               />
               <label htmlFor="doc-file-input" className="cursor-pointer block">
-                <span className="material-symbols-outlined text-4xl text-primary mb-2">
+                <span className="material-symbols-outlined text-4xl text-white mb-2">
                   cloud_upload
                 </span>
                 <h5 className="font-label-md text-xs font-semibold text-on-surface">
@@ -189,7 +189,7 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
             {/* AI Analysis Feedback */}
             {isAnalyzing && (
               <div className="p-4 rounded-xl bg-surface border border-surface-variant flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary text-xl animate-spin">
+                <span className="material-symbols-outlined text-white text-xl animate-spin">
                   progress_activity
                 </span>
                 <span className="text-xs text-on-surface font-medium">
@@ -199,8 +199,8 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
             )}
 
             {analysisResult && (
-              <div className="p-4 rounded-xl bg-primary-fixed/20 border border-primary-fixed text-xs animate-in fade-in">
-                <div className="flex items-center justify-between font-bold text-primary mb-1">
+              <div className="p-4 rounded-xl bg-white-fixed/20 border border-white-fixed text-xs animate-in fade-in">
+                <div className="flex items-center justify-between font-bold text-white mb-1">
                   <span className="flex items-center gap-1">
                     <span className="material-symbols-outlined text-[16px]">verified</span>
                     AI Compliance Score: {analysisResult.score}/100
@@ -225,7 +225,7 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
 
             <button
               onClick={handleConfirmUpload}
-              className="px-6 py-2 bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-xs rounded-lg transition-all shadow-xs"
+              className="px-6 py-2 bg-white hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-xs rounded-lg transition-all shadow-xs"
             >
               Confirm & Save
             </button>

@@ -139,7 +139,7 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-surface-variant bg-surface/80 backdrop-blur-sm flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-white text-on-primary flex items-center justify-center font-bold shadow-xs">
                 <span className="material-symbols-outlined text-[20px]">psychology</span>
               </div>
               <div>
@@ -168,7 +168,7 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
               <button
                 key={idx}
                 onClick={() => handleSendMessage(prompt)}
-                className="px-2.5 py-1 rounded-lg bg-surface-container-lowest border border-surface-variant hover:border-primary text-[11px] text-on-surface whitespace-nowrap transition-colors"
+                className="px-2.5 py-1 rounded-lg bg-surface-container-lowest border border-surface-variant hover:border-white text-[11px] text-on-surface whitespace-nowrap transition-colors"
               >
                 {prompt}
               </button>
@@ -183,15 +183,15 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
                 className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.sender === 'assistant' && (
-                  <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-white/5 text-white border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="material-symbols-outlined text-[15px]">smart_toy</span>
                   </div>
                 )}
 
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-xs ${
+                  className={`max-w-[85%] rounded-xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-xs ${
                     msg.sender === 'user'
-                      ? 'bg-primary text-on-primary rounded-br-xs'
+                      ? 'bg-white text-on-primary rounded-br-xs'
                       : 'bg-surface border border-surface-variant text-on-surface rounded-bl-xs whitespace-pre-line'
                   }`}
                 >
@@ -209,13 +209,13 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
 
             {isLoading && (
               <div className="flex gap-2.5 items-center text-xs text-on-surface-variant">
-                <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0">
+                <div className="w-7 h-7 rounded-lg bg-white/5 text-white border border-white/10 flex items-center justify-center shrink-0">
                   <span className="material-symbols-outlined text-[15px] animate-spin">sync</span>
                 </div>
-                <div className="bg-surface border border-surface-variant rounded-2xl px-4 py-2 text-xs flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-bounce" />
-                  <span className="w-2 h-2 rounded-full bg-primary animate-bounce delay-100" />
-                  <span className="w-2 h-2 rounded-full bg-primary animate-bounce delay-200" />
+                <div className="bg-surface border border-surface-variant rounded-xl px-4 py-2 text-xs flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-white animate-bounce" />
+                  <span className="w-2 h-2 rounded-full bg-white animate-bounce delay-100" />
+                  <span className="w-2 h-2 rounded-full bg-white animate-bounce delay-200" />
                   <span className="ml-1 text-on-surface-variant">Evaluating schemes & criteria...</span>
                 </div>
               </div>
@@ -244,7 +244,7 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
                 id="btn-send-ai-chat"
                 type="submit"
                 disabled={!inputQuery.trim() || isLoading}
-                className="p-2.5 bg-primary text-on-primary rounded-xl hover:bg-primary-hover disabled:opacity-50 transition-all cursor-pointer"
+                className="p-2.5 bg-white text-on-primary rounded-xl hover:bg-white-hover disabled:opacity-50 transition-all cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[18px]">send</span>
               </button>

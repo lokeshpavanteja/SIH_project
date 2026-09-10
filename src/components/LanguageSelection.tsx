@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { LanguageCode, supportedLanguages, getTranslation } from '../i18n/translations';
+import { Sparkles, Search, Check, Info, ArrowRight } from 'lucide-react';
 
 interface LanguageSelectionProps {
   selectedLanguage: LanguageCode;
@@ -28,33 +29,37 @@ export const LanguageSelection: React.FC<LanguageSelectionProps> = ({
   const t = (key: string) => getTranslation(key, selectedLanguage);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-8 sm:py-12">
+    <div className="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-8 sm:py-12 relative overflow-hidden">
+      {/* Background glow effects */}
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
+
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="w-full max-w-2xl"
+        initial={{ opacity: 0, y: 16, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.4, type: 'spring', stiffness: 200, damping: 20 }}
+        className="w-full max-w-2xl relative z-10"
       >
         {/* Brand header */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold text-sm">
-            <span className="material-symbols-outlined text-[20px]">auto_awesome</span>
+        <div className="flex items-center justify-center gap-3 mb-10">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-[0_0_20px_rgba(139,92,246,0.3)] border border-white/20">
+            <Sparkles size={24} />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-on-surface tracking-tight">
-              MatchWise <span className="text-primary">AI</span>
+            <h1 className="text-2xl font-extrabold text-white tracking-tight">
+              MatchWise <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-black tracking-tight">AI</span>
             </h1>
-            <p className="text-[10px] text-on-surface-variant font-medium tracking-wide uppercase">
-              Scheme Discovery & Guidance
+            <p className="text-xs text-on-surface-muted font-bold tracking-widest uppercase mt-0.5">
+              Enterprise Scheme Discovery
             </p>
           </div>
         </div>
 
         {/* Card */}
-        <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 sm:p-8 shadow-ambient">
+        <div className="glass-panel border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl relative">
           {/* Title */}
-          <div className="text-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-on-surface mb-1.5">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               {t('selectLanguageTitle')}
             </h2>
             <p className="text-sm text-on-surface-variant max-w-md mx-auto">
@@ -63,22 +68,20 @@ export const LanguageSelection: React.FC<LanguageSelectionProps> = ({
           </div>
 
           {/* Search */}
-          <div className="relative mb-5">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
-              search
-            </span>
+          <div className="relative mb-6 group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-muted group-focus-within:text-white transition-colors" size={18} />
             <input
               id="input-search-languages"
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t('searchLanguages')}
-              className="w-full pl-10 pr-4 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className="w-full pl-12 pr-4 py-3.5 bg-surface-container-low/50 border border-white/10 rounded-xl text-sm text-white placeholder:text-on-surface-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white transition-all shadow-inner"
             />
           </div>
 
           {/* Language Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 mb-6 max-h-[400px] overflow-y-auto pr-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
             {filteredLanguages.map((lang) => {
               const isSelected = selectedLanguage === lang.code;
               return (
@@ -87,48 +90,50 @@ export const LanguageSelection: React.FC<LanguageSelectionProps> = ({
                   id={`lang-btn-${lang.code}`}
                   onClick={() => onSelectLanguage(lang.code)}
                   type="button"
-                  className={`relative flex flex-col items-start p-3.5 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
+                  className={`relative flex flex-col items-start p-4 rounded-xl border text-left transition-all duration-300 cursor-pointer ${
                     isSelected
-                      ? 'border-primary bg-primary/5 ring-1 ring-primary/30'
-                      : 'border-outline-variant bg-surface hover:bg-surface-variant/50 hover:border-outline'
+                      ? 'border-white bg-white/5 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                      : 'border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/20'
                   }`}
                 >
-                  <div className="flex items-center justify-between w-full mb-1.5">
-                    <span className="text-base font-bold text-on-surface leading-tight">
+                  <div className="flex items-center justify-between w-full mb-2">
+                    <span className={`text-base font-bold leading-tight ${isSelected ? 'text-white' : 'text-white'}`}>
                       {lang.nativeName}
                     </span>
                     {isSelected && (
-                      <span className="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0">
-                        <span className="material-symbols-outlined text-[13px]">check</span>
+                      <span className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center shrink-0 shadow-sm">
+                        <Check size={14} strokeWidth={3} />
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-on-surface-variant">{lang.name}</span>
+                  <span className="text-xs text-on-surface-muted font-medium">{lang.name}</span>
                 </button>
               );
             })}
           </div>
 
           {filteredLanguages.length === 0 && (
-            <div className="text-center py-8 text-sm text-on-surface-variant">
+            <div className="text-center py-10 text-sm text-on-surface-muted bg-white/5 rounded-xl border border-white/5 border-dashed">
               No languages found matching "{searchQuery}"
             </div>
           )}
 
           {/* Continue */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-outline-variant">
-            <p className="text-xs text-on-surface-variant flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[15px] text-primary">info</span>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10">
+            <p className="text-xs text-on-surface-muted flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center text-white shrink-0">
+                <Info size={14} />
+              </span>
               <span>{t('languageChangeNote')}</span>
             </p>
 
             <button
               id="btn-language-continue"
               onClick={onContinue}
-              className="w-full sm:w-auto px-8 py-2.5 bg-primary hover:bg-primary/90 text-on-primary font-semibold text-sm rounded-xl transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3 bg-primary hover:bg-primary-hover text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm hover:scale-105 active:scale-95"
             >
               <span>{t('continueButton')}</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              <ArrowRight size={18} />
             </button>
           </div>
         </div>

@@ -93,7 +93,7 @@ export const DraftApplicationModal: React.FC<DraftApplicationModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-surface-container-lowest border border-outline-variant rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
+          className="bg-surface-container-lowest border border-outline-variant rounded-xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
         >
           {/* Header */}
           <div className="p-6 border-b border-surface-variant bg-surface flex items-start justify-between">
@@ -135,7 +135,7 @@ export const DraftApplicationModal: React.FC<DraftApplicationModalProps> = ({
                 onClick={() => setActiveSection(tab.key as any)}
                 className={`py-3 px-3.5 font-label-md text-xs border-b-2 whitespace-nowrap transition-all font-semibold ${
                   activeSection === tab.key
-                    ? 'border-primary text-primary'
+                    ? 'border-white text-white'
                     : 'border-transparent text-on-surface-variant hover:text-on-surface'
                 }`}
               >
@@ -157,7 +157,7 @@ export const DraftApplicationModal: React.FC<DraftApplicationModalProps> = ({
               <button
                 onClick={handleEnhanceWithAI}
                 disabled={isEnhancingWithAI}
-                className="text-xs font-semibold text-primary hover:text-on-primary-fixed-variant flex items-center gap-1.5 px-3 py-1 bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors disabled:opacity-50"
+                className="text-xs font-semibold text-white hover:text-on-primary-fixed-variant flex items-center gap-1.5 px-3 py-1 bg-white/5 rounded-lg hover:bg-white/10 transition-colors disabled:opacity-50"
               >
                 <span className="material-symbols-outlined text-[16px] text-secondary-container">
                   auto_awesome
@@ -203,7 +203,7 @@ export const DraftApplicationModal: React.FC<DraftApplicationModalProps> = ({
             )}
 
             <div className="p-3 bg-surface rounded-lg border border-surface-variant flex items-center gap-2 text-xs text-on-surface-variant">
-              <span className="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+              <span className="material-symbols-outlined text-white text-[18px]">verified_user</span>
               <span>All attached documents (MBE Certificate, AI Privacy Framework) will be automatically bundled upon submission.</span>
             </div>
           </div>
@@ -226,7 +226,7 @@ export const DraftApplicationModal: React.FC<DraftApplicationModalProps> = ({
               </button>
               <button
                 onClick={handleSubmit}
-                className="px-6 py-2 bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-xs rounded-lg transition-all shadow-xs flex items-center gap-1.5"
+                className="px-6 py-2 bg-white hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-xs rounded-lg transition-all shadow-xs flex items-center gap-1.5"
               >
                 <span className="material-symbols-outlined text-[16px]">send</span>
                 Submit Official Application

@@ -1,9 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Scheme, UserProfile, LanguageCode, StartedScheme } from '../types';
 import { getTranslation } from '../i18n/translations';
 import { SCHEME_CATEGORIES_GOV, SCHEME_CATEGORIES_PRIVATE } from '../data/mockData';
 import { computeAllMatches } from '../utils/matchingEngine';
+import { 
+  Search, Landmark, Building2, Bookmark, BookmarkCheck, Play, Check, 
+  ChevronDown, Filter, LayoutGrid, Sparkles, CreditCard, ExternalLink
+} from 'lucide-react';
 
 interface DiscoveryViewProps {
   schemes: Scheme[];
@@ -16,6 +20,19 @@ interface DiscoveryViewProps {
 }
 
 const ITEMS_PER_PAGE = 12;
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  show: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
 
 export const DiscoveryView: React.FC<DiscoveryViewProps> = ({
   schemes,
@@ -69,179 +86,221 @@ export const DiscoveryView: React.FC<DiscoveryViewProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.2 }}
-      className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10"
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3 }}
+      className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10"
     >
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-on-surface mb-1">{t('exploreTitle')}</h1>
-        <p className="text-sm text-on-surface-variant">{t('exploreSubtitle')}</p>
+      <div className="mb-8">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary mb-3">
+          {t('exploreTitle')}
+        </h1>
+        <p className="text-base text-on-surface-variant max-w-2xl">{t('exploreSubtitle')}</p>
       </div>
 
-      {/* Tabs + Search */}
-      <div className="flex flex-col gap-3 mb-5">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-          {/* Type tabs */}
-          <div className="flex bg-surface-variant/60 p-0.5 rounded-lg">
-            {(['all', 'government', 'private'] as const).map(type => (
+      {/* Advanced Filters */}
+      <div className="bg-surface-container-low border border-white/10 rounded-2xl p-5 mb-8 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        
+        <div className="flex flex-col gap-5 relative z-10">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
+            
+            {/* Type tabs */}
+            <div className="flex p-1 bg-surface-container/50 rounded-xl border border-white/5">
+              {(['all', 'government', 'private'] as const).map(type => (
+                <button
+                  key={type}
+                  onClick={() => { setTypeFilter(type); setSelectedCategory('All Categories'); setVisibleCount(ITEMS_PER_PAGE); }}
+                  className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-300 flex items-center gap-2 ${
+                    typeFilter === type
+                      ? 'bg-surface shadow-md text-white border border-white/10'
+                      : 'text-on-surface-muted hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  {type === 'government' && <Landmark size={14} />}
+                  {type === 'private' && <Building2 size={14} />}
+                  {type === 'all' && <LayoutGrid size={14} />}
+                  {type === 'all' ? t('filterAll') : type === 'government' ? t('filterGovernment') : t('filterPrivate')}
+                </button>
+              ))}
+            </div>
+
+            {/* Search */}
+            <div className="relative flex-1 w-full lg:max-w-md group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-muted group-focus-within:text-secondary transition-colors" size={18} />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => { setSearchQuery(e.target.value); setVisibleCount(ITEMS_PER_PAGE); }}
+                placeholder={t('searchSchemes')}
+                className="w-full pl-11 pr-4 py-2.5 bg-surface border border-white/10 rounded-xl text-sm text-white placeholder:text-on-surface-muted focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+              />
+            </div>
+
+            {/* Sort */}
+            <div className="relative w-full lg:w-48 group">
+              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-muted" size={16} />
+              <select
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value as any)}
+                className="w-full appearance-none pl-11 pr-10 py-2.5 bg-surface border border-white/10 rounded-xl text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all cursor-pointer"
+              >
+                <option className="bg-zinc-900 text-white" value="best">{t('sortBestMatch')}</option>
+                <option className="bg-zinc-900 text-white" value="highest">{t('sortHighestMatch')}</option>
+                <option className="bg-zinc-900 text-white" value="recent">{t('sortRecentlyAdded')}</option>
+                <option className="bg-zinc-900 text-white" value="deadline">{t('sortDeadline')}</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-muted pointer-events-none" size={16} />
+            </div>
+          </div>
+
+          {/* Category chips */}
+          <div className="flex flex-wrap gap-2">
+            {categories.slice(0, 12).map(cat => (
               <button
-                key={type}
-                onClick={() => { setTypeFilter(type); setSelectedCategory('All Categories'); setVisibleCount(ITEMS_PER_PAGE); }}
-                className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-all ${
-                  typeFilter === type
-                    ? 'bg-surface-container-lowest text-on-surface shadow-xs'
-                    : 'text-on-surface-variant hover:text-on-surface'
+                key={cat}
+                onClick={() => { setSelectedCategory(cat); setVisibleCount(ITEMS_PER_PAGE); }}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 border ${
+                  selectedCategory === cat
+                    ? 'bg-secondary/20 text-secondary border-secondary/30 shadow-[0_0_15px_rgba(14,165,233,0.15)]'
+                    : 'bg-white/5 border-white/10 text-on-surface-muted hover:text-white hover:bg-white/10'
                 }`}
               >
-                {type === 'all' ? t('filterAll') : type === 'government' ? t('filterGovernment') : t('filterPrivate')}
+                {cat}
               </button>
             ))}
           </div>
-
-          {/* Search */}
-          <div className="relative flex-1 w-full sm:max-w-sm">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">search</span>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => { setSearchQuery(e.target.value); setVisibleCount(ITEMS_PER_PAGE); }}
-              placeholder={t('searchSchemes')}
-              className="w-full pl-9 pr-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-            />
-          </div>
-
-          {/* Sort */}
-          <select
-            value={sortBy}
-            onChange={e => setSortBy(e.target.value as any)}
-            className="px-3 py-2 bg-surface border border-outline-variant rounded-lg text-xs font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
-          >
-            <option value="best">{t('sortBestMatch')}</option>
-            <option value="highest">{t('sortHighestMatch')}</option>
-            <option value="recent">{t('sortRecentlyAdded')}</option>
-            <option value="deadline">{t('sortDeadline')}</option>
-          </select>
-        </div>
-
-        {/* Category chips */}
-        <div className="flex flex-wrap gap-1.5">
-          {categories.slice(0, 10).map(cat => (
-            <button
-              key={cat}
-              onClick={() => { setSelectedCategory(cat); setVisibleCount(ITEMS_PER_PAGE); }}
-              className={`px-2.5 py-1 text-[11px] font-medium rounded-lg transition-all ${
-                selectedCategory === cat
-                  ? 'bg-primary/10 text-primary border border-primary/20'
-                  : 'bg-surface border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
         </div>
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-on-surface-variant mb-4">
+      <p className="text-sm font-medium text-on-surface-muted mb-6 flex items-center gap-2">
+        <Sparkles size={16} className="text-secondary" />
         {t('showingResults').replace('{count}', String(filteredSchemes.length))}
       </p>
 
       {/* Scheme Grid */}
-      {visibleSchemes.length > 0 ? (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {visibleSchemes.map(scheme => (
-              <div
-                key={scheme.id}
-                className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 hover:border-outline transition-all flex flex-col"
-              >
-                {/* Badges */}
-                <div className="flex items-center gap-1.5 mb-2">
-                  <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase ${
-                    scheme.type === 'government' ? 'bg-amber-500/10 text-amber-700 border border-amber-500/20' : 'bg-blue-500/10 text-blue-700 border border-blue-500/20'
-                  }`}>
-                    {scheme.type === 'government' ? t('govBadge') : t('privateBadge')}
-                  </span>
-                  <span className="text-[10px] text-on-surface-variant bg-surface-variant px-1.5 py-0.5 rounded">
-                    {scheme.category}
-                  </span>
-                  <span className={`ml-auto text-[11px] font-bold px-1.5 py-0.5 rounded ${
-                    scheme.matchScore >= 80 ? 'bg-green-500/10 text-green-700' :
-                    scheme.matchScore >= 60 ? 'bg-amber-500/10 text-amber-700' :
-                    'bg-surface-variant text-on-surface-variant'
-                  }`}>
-                    {scheme.matchScore}%
-                  </span>
-                </div>
-
-                {/* Title + Desc */}
-                <h3
-                  className="text-sm font-bold text-on-surface mb-1 line-clamp-2 cursor-pointer hover:text-primary transition-colors"
-                  onClick={() => onOpenSchemeDetail(scheme)}
+      <AnimatePresence mode="wait">
+        {visibleSchemes.length > 0 ? (
+          <motion.div 
+            key="grid"
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+          >
+            {visibleSchemes.map(scheme => {
+              const isHighMatch = scheme.matchScore >= 80;
+              return (
+                <motion.div
+                  key={scheme.id}
+                  variants={itemVariants}
+                  className="group glass-card rounded-xl p-5 flex flex-col h-full relative overflow-hidden"
                 >
-                  {scheme.title}
-                </h3>
-                <p className="text-xs text-on-surface-variant mb-3 line-clamp-2 flex-1">{scheme.description}</p>
-
-                {/* Amount */}
-                {scheme.amountFormatted && (
-                  <div className="flex items-center gap-1.5 mb-3 text-xs text-on-surface">
-                    <span className="material-symbols-outlined text-[14px] text-primary">payments</span>
-                    {scheme.amountFormatted}
+                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  
+                  {/* Badges */}
+                  <div className="flex items-start justify-between gap-2 mb-4 relative z-10">
+                    <div className="flex flex-col gap-2 items-start">
+                      <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded border text-[10px] font-bold uppercase tracking-wider ${
+                        scheme.type === 'government' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                      }`}>
+                        {scheme.type === 'government' ? <Landmark size={12} /> : <Building2 size={12} />}
+                        {scheme.type === 'government' ? t('govBadge') : t('privateBadge')}
+                      </span>
+                      <span className="text-[10px] font-semibold text-on-surface-variant bg-white/5 px-2 py-1 rounded border border-white/10">
+                        {scheme.category}
+                      </span>
+                    </div>
+                    <span className={`text-[11px] font-black px-2.5 py-1 rounded-full border shadow-sm ${
+                      isHighMatch ? 'bg-secondary/20 text-secondary border-secondary/30 shadow-[0_0_10px_rgba(14,165,233,0.3)]' :
+                      scheme.matchScore >= 60 ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                      'bg-surface-variant text-on-surface-variant border-white/10'
+                    }`}>
+                      {scheme.matchScore}%
+                    </span>
                   </div>
-                )}
 
-                {/* Actions */}
-                <div className="flex items-center gap-2 pt-2.5 border-t border-outline-variant/60 mt-auto">
-                  <button
+                  {/* Title + Desc */}
+                  <h3
+                    className="text-base font-bold text-white mb-2 line-clamp-2 cursor-pointer group-hover:text-secondary transition-colors relative z-10"
                     onClick={() => onOpenSchemeDetail(scheme)}
-                    className="flex-1 py-1.5 text-[11px] font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-variant rounded-lg transition-all"
                   >
-                    {t('viewDetails')}
-                  </button>
-                  <button
-                    onClick={() => onToggleSave(scheme.id)}
-                    className={`py-1.5 px-2 text-[11px] font-medium rounded-lg transition-all flex items-center gap-1 ${
-                      scheme.saved ? 'text-primary bg-primary/5' : 'text-on-surface-variant hover:bg-surface-variant'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[13px]">{scheme.saved ? 'bookmark' : 'bookmark_border'}</span>
-                  </button>
-                  <button
-                    onClick={() => onStartApplication(scheme)}
-                    disabled={isStarted(scheme.id)}
-                    className={`py-1.5 px-2.5 text-[11px] font-semibold rounded-lg transition-all ${
-                      isStarted(scheme.id)
-                        ? 'bg-surface-variant text-on-surface-variant'
-                        : 'bg-primary text-on-primary hover:bg-primary/90'
-                    }`}
-                  >
-                    {isStarted(scheme.id) ? t('statusStarted') : t('startApplication')}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+                    {scheme.title}
+                  </h3>
+                  <p className="text-sm text-on-surface-variant mb-4 line-clamp-3 flex-1 relative z-10">{scheme.description}</p>
 
-          {visibleCount < filteredSchemes.length && (
-            <div className="text-center mt-6">
-              <button
-                onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
-                className="px-6 py-2.5 text-sm font-medium text-primary border border-primary/20 bg-primary/5 rounded-xl hover:bg-primary/10 transition-all"
-              >
-                {t('loadMore')}
-              </button>
+                  {/* Amount */}
+                  {scheme.amountFormatted && (
+                    <div className="flex items-center gap-2 mb-4 text-sm font-semibold text-white bg-white/5 p-2.5 rounded-xl border border-white/5 relative z-10">
+                      <CreditCard className="text-secondary" size={16} />
+                      {scheme.amountFormatted}
+                    </div>
+                  )}
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 pt-4 border-t border-white/10 mt-auto relative z-10">
+                    <button
+                      onClick={() => onOpenSchemeDetail(scheme)}
+                      className="flex-1 py-2.5 text-xs font-bold text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/5 hover:border-white/20 flex justify-center items-center gap-1.5"
+                    >
+                      <ExternalLink size={14} />
+                      {t('viewDetails')}
+                    </button>
+                    
+                    <button
+                      onClick={() => onToggleSave(scheme.id)}
+                      className={`w-10 h-10 shrink-0 flex items-center justify-center rounded-xl transition-all border ${
+                        scheme.saved 
+                          ? 'text-white bg-white/5 border-white/20 shadow-[0_0_10px_rgba(139,92,246,0.2)]' 
+                          : 'text-on-surface-muted hover:text-white bg-white/5 hover:bg-white/10 border-white/5'
+                      }`}
+                    >
+                      {scheme.saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                    </button>
+                    
+                    <button
+                      onClick={() => onStartApplication(scheme)}
+                      disabled={isStarted(scheme.id)}
+                      className={`py-2.5 px-3 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 border ${
+                        isStarted(scheme.id)
+                          ? 'bg-surface-container text-on-surface-muted border-white/5 cursor-default'
+                          : 'bg-secondary text-white hover:bg-secondary/90 border-secondary shadow-[0_4px_14px_0_rgba(14,165,233,0.39)] hover:shadow-[0_6px_20px_rgba(14,165,233,0.23)] hover:-translate-y-0.5'
+                      }`}
+                    >
+                      {isStarted(scheme.id) ? <Check size={14} /> : <Play size={14} className="ml-0.5" />}
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        ) : (
+          <motion.div 
+            key="empty"
+            initial={{ opacity: 0, scale: 0.95 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            className="text-center py-24 px-4 border border-white/5 border-dashed rounded-2xl bg-surface-container-low/30"
+          >
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 mb-4">
+              <Search className="text-on-surface-muted" size={32} />
             </div>
-          )}
-        </>
-      ) : (
-        <div className="text-center py-16">
-          <span className="material-symbols-outlined text-[40px] text-on-surface-variant/40 mb-3 block">search_off</span>
-          <h3 className="text-base font-semibold text-on-surface mb-1">{t('noMatchesFound')}</h3>
-          <p className="text-sm text-on-surface-variant">{t('noMatchesSubtitle')}</p>
+            <h3 className="text-lg font-bold text-white mb-2">{t('noMatchesFound')}</h3>
+            <p className="text-sm text-on-surface-muted max-w-md mx-auto">{t('noMatchesSubtitle')}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {visibleCount < filteredSchemes.length && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
+            className="px-8 py-3 text-sm font-bold text-white border border-white/20 bg-white/5 rounded-full hover:bg-white/10 transition-all hover:scale-105 active:scale-95"
+          >
+            {t('loadMore')}
+          </button>
         </div>
       )}
     </motion.div>

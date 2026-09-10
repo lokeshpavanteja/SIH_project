@@ -2,6 +2,11 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scheme, LanguageCode } from '../types';
 import { getTranslation } from '../i18n/translations';
+import { 
+  X, Landmark, Building2, Bookmark, BookmarkCheck, Play, 
+  ExternalLink, Info, Star, FileText, CheckCircle2, Check,
+  Calendar, UserCheck, Shield, Clock, IndianRupee
+} from 'lucide-react';
 
 interface GrantDetailModalProps {
   scheme: Scheme | null;
@@ -27,40 +32,41 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-12">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/60 backdrop-blur-xl"
         />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 16 }}
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 16 }}
-          transition={{ duration: 0.2 }}
-          className="relative w-full max-w-3xl bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-lg z-10 overflow-hidden max-h-[90vh] flex flex-col"
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          className="relative w-full max-w-4xl bg-surface border border-white/10 rounded-2xl shadow-2xl z-10 overflow-hidden max-h-full flex flex-col"
         >
           {/* Header */}
-          <div className="p-5 sm:p-6 border-b border-outline-variant bg-surface/50">
-            <div className="flex items-start justify-between gap-3 mb-3">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wide ${
-                  isGov ? 'bg-amber-500/10 text-amber-700 border border-amber-500/20' : 'bg-blue-500/10 text-blue-700 border border-blue-500/20'
+          <div className="p-6 sm:p-8 bg-surface-container/50 border-b border-white/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+            
+            <div className="flex items-start justify-between gap-4 mb-4 relative z-10">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider ${
+                  isGov ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                 }`}>
-                  <span className="material-symbols-outlined text-[12px]">{isGov ? 'account_balance' : 'business'}</span>
+                  {isGov ? <Landmark size={14} /> : <Building2 size={14} />}
                   {isGov ? t('govBadge') : t('privateBadge')}
                 </span>
-                <span className="text-[10px] text-on-surface-variant bg-surface-variant px-2 py-0.5 rounded-md">
+                <span className="text-xs font-semibold text-on-surface-variant bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
                   {scheme.category}
                 </span>
-                {/* Match */}
-                <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
-                  scheme.matchScore >= 80 ? 'bg-green-500/10 text-green-700' :
-                  scheme.matchScore >= 60 ? 'bg-amber-500/10 text-amber-700' :
-                  'bg-surface-variant text-on-surface-variant'
+                <span className={`text-xs font-black px-3 py-1.5 rounded-lg border shadow-sm flex items-center gap-1.5 ${
+                  scheme.matchScore >= 80 ? 'bg-white/10 text-white border-white/20 shadow-[0_0_15px_rgba(139,92,246,0.2)]' :
+                  scheme.matchScore >= 60 ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                  'bg-surface-variant text-on-surface-variant border-white/10'
                 }`}>
                   {scheme.matchScore}% {t('estimatedMatch')}
                 </span>
@@ -68,216 +74,226 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
 
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant"
-                aria-label={t('close')}
+                className="p-2 rounded-full hover:bg-white/10 transition-colors text-on-surface-muted hover:text-white bg-white/5 border border-white/5"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <X size={20} />
               </button>
             </div>
 
-            <h2 className="text-lg sm:text-xl font-bold text-on-surface mb-2">{scheme.title}</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 leading-tight relative z-10">
+              {scheme.title}
+            </h2>
 
-            <div className="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
-              <span>{scheme.providerName}</span>
+            <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-on-surface-variant mb-6 relative z-10">
+              <span className="flex items-center gap-1.5"><Shield size={16} className="text-white"/> {scheme.providerName}</span>
               {scheme.amountFormatted && (
                 <>
-                  <span>•</span>
-                  <span className="font-semibold text-on-surface">{scheme.amountFormatted}</span>
+                  <span className="text-white/20">•</span>
+                  <span className="text-white flex items-center gap-1"><IndianRupee size={16} className="text-secondary"/> {scheme.amountFormatted}</span>
                 </>
               )}
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => onToggleSave(scheme.id)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-all flex items-center gap-1.5 ${
-                  scheme.saved
-                    ? 'border-primary/20 bg-primary/5 text-primary'
-                    : 'border-outline-variant text-on-surface-variant hover:bg-surface-variant'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[15px]">{scheme.saved ? 'bookmark' : 'bookmark_border'}</span>
-                {scheme.saved ? t('savedScheme') : t('saveScheme')}
-              </button>
+            {/* Main Actions */}
+            <div className="flex flex-wrap items-center gap-3 relative z-10">
               <button
                 onClick={() => onStartApplication(scheme)}
-                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary text-on-primary hover:bg-primary/90 transition-all flex items-center gap-1.5"
+                className="px-6 py-3 text-sm font-bold rounded-xl bg-white text-black hover:bg-white-hover transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:scale-105 active:scale-95"
               >
-                <span className="material-symbols-outlined text-[15px]">play_arrow</span>
+                <Play size={18} className="fill-current" />
                 {t('startApplication')}
               </button>
+              
+              <button
+                onClick={() => onToggleSave(scheme.id)}
+                className={`px-5 py-3 text-sm font-bold rounded-xl border transition-all flex items-center gap-2 ${
+                  scheme.saved
+                    ? 'border-secondary/30 bg-secondary/10 text-secondary'
+                    : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
+                }`}
+              >
+                {scheme.saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                {scheme.saved ? t('savedScheme') : t('saveScheme')}
+              </button>
+
               {scheme.officialWebsiteUrl && (
                 <a
                   href={scheme.officialWebsiteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 text-xs font-medium rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-1.5"
+                  className="px-5 py-3 text-sm font-bold rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-all flex items-center gap-2 ml-auto"
                 >
-                  <span className="material-symbols-outlined text-[15px]">open_in_new</span>
+                  <ExternalLink size={18} />
                   {t('applyOnOfficialWebsite')}
                 </a>
               )}
             </div>
           </div>
 
-          {/* Body */}
-          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+          {/* Body content */}
+          <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-8 custom-scrollbar">
+            
             {/* Overview */}
-            <section>
-              <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[16px] text-primary">info</span>
+            <section className="prose prose-invert max-w-none">
+              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                <Info className="text-white" size={20} />
                 {t('schemeOverview')}
               </h3>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
+              <p className="text-base text-on-surface-variant leading-relaxed">
                 {scheme.fullOverview || scheme.description}
               </p>
             </section>
 
             {/* Why this matches */}
             {scheme.matchReasons && scheme.matchReasons.length > 0 && (
-              <section className="p-3 bg-green-500/5 border border-green-500/15 rounded-xl">
-                <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px] text-green-600">verified</span>
+              <section className="p-5 bg-gradient-to-r from-primary/10 to-transparent border border-white/10 rounded-xl">
+                <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                  <Star className="text-white" size={18} />
                   {t('whyThisMatches')}
                 </h3>
-                <div className="space-y-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {scheme.matchReasons.map((reason, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-green-600 text-[14px]">check_circle</span>
-                      <span className="text-sm text-on-surface">{t(reason) || reason}</span>
+                    <div key={i} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="text-white shrink-0 mt-0.5" size={16} />
+                      <span className="text-sm text-on-surface-variant font-medium">{t(reason) || reason}</span>
                     </div>
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Benefits */}
-            {scheme.benefits && scheme.benefits.length > 0 && (
-              <section>
-                <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px] text-primary">star</span>
-                  {t('schemeBenefits')}
-                </h3>
-                <ul className="space-y-1.5">
-                  {scheme.benefits.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
-                      <span className="material-symbols-outlined text-primary text-[14px] mt-0.5">check</span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* Eligibility */}
-            <section>
-              <h3 className="text-sm font-bold text-on-surface mb-3 flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[16px] text-primary">checklist</span>
-                {t('schemeEligibility')}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {scheme.ageRequirements && (
-                  <div className="p-3 bg-surface border border-outline-variant rounded-xl">
-                    <div className="text-[10px] font-semibold text-on-surface-variant uppercase mb-1">{t('ageRequirement')}</div>
-                    <div className="text-sm font-medium text-on-surface">{scheme.ageRequirements}</div>
-                  </div>
-                )}
-                {scheme.locationRequirements && (
-                  <div className="p-3 bg-surface border border-outline-variant rounded-xl">
-                    <div className="text-[10px] font-semibold text-on-surface-variant uppercase mb-1">{t('locationRequirement')}</div>
-                    <div className="text-sm font-medium text-on-surface">{scheme.locationRequirements}</div>
-                  </div>
-                )}
-                {scheme.incomeRequirements && (
-                  <div className="p-3 bg-surface border border-outline-variant rounded-xl">
-                    <div className="text-[10px] font-semibold text-on-surface-variant uppercase mb-1">{t('incomeRequirement')}</div>
-                    <div className="text-sm font-medium text-on-surface">{scheme.incomeRequirements}</div>
-                  </div>
-                )}
-              </div>
-              {scheme.eligibility && scheme.eligibility.length > 0 && (
-                <ul className="mt-3 space-y-1">
-                  {scheme.eligibility.map((e, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
-                      <span className="text-on-surface-variant">•</span>
-                      {e}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-
-            {/* Required Documents */}
-            {scheme.requiredDocs && scheme.requiredDocs.length > 0 && (
-              <section>
-                <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px] text-primary">description</span>
-                  {t('schemeDocuments')}
-                </h3>
-                <div className="space-y-1.5">
-                  {scheme.requiredDocs.map((doc, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-on-surface-variant">
-                      <span className="material-symbols-outlined text-on-surface-variant text-[14px]">task_alt</span>
-                      {doc}
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Application Process */}
-            {(scheme.applicationSteps || scheme.applicationProcess) && (
-              <section>
-                <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px] text-primary">route</span>
-                  {t('schemeProcess')}
-                </h3>
-                {scheme.applicationSteps ? (
-                  <ol className="space-y-2">
-                    {scheme.applicationSteps.map((step, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-on-surface-variant">
-                        <span className="w-5 h-5 rounded-full bg-primary/10 text-primary text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
-                          {i + 1}
-                        </span>
-                        {step}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Benefits */}
+              {scheme.benefits && scheme.benefits.length > 0 && (
+                <section>
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <Star className="text-secondary" size={20} />
+                    {t('schemeBenefits')}
+                  </h3>
+                  <ul className="space-y-3">
+                    {scheme.benefits.map((b, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-on-surface-variant bg-white/5 p-3 rounded-xl border border-white/5">
+                        <Check className="text-secondary shrink-0 mt-0.5" size={16} />
+                        {b}
                       </li>
                     ))}
-                  </ol>
-                ) : (
-                  <p className="text-sm text-on-surface-variant">{scheme.applicationProcess}</p>
+                  </ul>
+                </section>
+              )}
+
+              {/* Eligibility */}
+              <section>
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <UserCheck className="text-secondary" size={20} />
+                  {t('schemeEligibility')}
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {scheme.ageRequirements && (
+                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                      <span className="text-xs font-semibold text-on-surface-muted uppercase">{t('ageRequirement')}</span>
+                      <span className="text-sm font-bold text-white">{scheme.ageRequirements}</span>
+                    </div>
+                  )}
+                  {scheme.locationRequirements && (
+                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                      <span className="text-xs font-semibold text-on-surface-muted uppercase">{t('locationRequirement')}</span>
+                      <span className="text-sm font-bold text-white">{scheme.locationRequirements}</span>
+                    </div>
+                  )}
+                  {scheme.incomeRequirements && (
+                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                      <span className="text-xs font-semibold text-on-surface-muted uppercase">{t('incomeRequirement')}</span>
+                      <span className="text-sm font-bold text-white">{scheme.incomeRequirements}</span>
+                    </div>
+                  )}
+                </div>
+                {scheme.eligibility && scheme.eligibility.length > 0 && (
+                  <ul className="mt-4 space-y-2">
+                    {scheme.eligibility.map((e, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white/30 mt-1.5 shrink-0" />
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </section>
-            )}
+            </div>
 
-            {/* Important Information */}
-            <section className="p-3 bg-surface border border-outline-variant rounded-xl">
-              <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[16px] text-on-surface-variant">info</span>
-                {t('schemeImportant')}
-              </h3>
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div>
-                  <div className="text-on-surface-variant font-medium mb-0.5">{t('applicationDeadline')}</div>
-                  <div className="text-on-surface font-semibold">{scheme.deadline || 'Open'}</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Required Documents */}
+              {scheme.requiredDocs && scheme.requiredDocs.length > 0 && (
+                <section>
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <FileText className="text-white" size={20} />
+                    {t('schemeDocuments')}
+                  </h3>
+                  <div className="space-y-2">
+                    {scheme.requiredDocs.map((doc, i) => (
+                      <div key={i} className="flex items-center gap-3 text-sm text-on-surface-variant bg-surface-container-low p-3 rounded-xl border border-white/5">
+                        <FileText className="text-on-surface-muted" size={16} />
+                        <span className="font-medium">{doc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Application Process */}
+              {(scheme.applicationSteps || scheme.applicationProcess) && (
+                <section>
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <Clock className="text-white" size={20} />
+                    {t('schemeProcess')}
+                  </h3>
+                  {scheme.applicationSteps ? (
+                    <ol className="relative border-l border-white/10 ml-3 space-y-6">
+                      {scheme.applicationSteps.map((step, i) => (
+                        <li key={i} className="pl-6 relative">
+                          <span className="absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-white/10 border border-white/50 text-white text-xs font-black flex items-center justify-center">
+                            {i + 1}
+                          </span>
+                          <p className="text-sm font-medium text-on-surface-variant pt-1">{step}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p className="text-sm text-on-surface-variant p-4 bg-white/5 rounded-xl border border-white/5">{scheme.applicationProcess}</p>
+                  )}
+                </section>
+              )}
+            </div>
+
+            {/* Important Information Meta Grid */}
+            <section className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-surface-container-low border border-white/5 rounded-xl">
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
+                  <Calendar size={12} /> {t('applicationDeadline')}
                 </div>
-                <div>
-                  <div className="text-on-surface-variant font-medium mb-0.5">{t('responsibleAuthority')}</div>
-                  <div className="text-on-surface font-semibold">{scheme.providerName}</div>
+                <div className="text-sm font-bold text-white">{scheme.deadline || 'Open'}</div>
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
+                  <Shield size={12} /> {t('responsibleAuthority')}
                 </div>
-                <div>
-                  <div className="text-on-surface-variant font-medium mb-0.5">{t('schemeStatus')}</div>
-                  <div className="text-on-surface font-semibold capitalize">{scheme.status || 'Active'}</div>
+                <div className="text-sm font-bold text-white truncate" title={scheme.providerName}>{scheme.providerName}</div>
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
+                  <CheckCircle2 size={12} /> {t('schemeStatus')}
                 </div>
-                <div>
-                  <div className="text-on-surface-variant font-medium mb-0.5">{t('lastUpdated')}</div>
-                  <div className="text-on-surface font-semibold">{scheme.lastUpdatedDate || '—'}</div>
+                <div className="text-sm font-bold text-green-400 capitalize">{scheme.status || 'Active'}</div>
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
+                  <Clock size={12} /> {t('lastUpdated')}
                 </div>
+                <div className="text-sm font-bold text-white">{scheme.lastUpdatedDate || '—'}</div>
               </div>
             </section>
 
             {/* Disclaimer */}
-            <p className="text-[11px] text-on-surface-variant leading-relaxed p-3 bg-surface-variant/30 rounded-lg">
+            <p className="text-xs text-on-surface-muted text-center max-w-2xl mx-auto italic">
               {t('safetyDisclaimer')}
             </p>
           </div>

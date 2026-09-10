@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationTab, LanguageCode } from '../types';
 import { getTranslation } from '../i18n/translations';
+import { Sparkles, Search, FolderOpen, User } from 'lucide-react';
 
 interface BottomNavBarProps {
   activeTab: NavigationTab;
@@ -9,15 +10,15 @@ interface BottomNavBarProps {
 }
 
 export const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChange, currentLanguage }) => {
-  const tabs: { tab: NavigationTab; labelKey: string; icon: string }[] = [
-    { tab: 'recommended', labelKey: 'navRecommended', icon: 'auto_awesome' },
-    { tab: 'discovery', labelKey: 'navDiscovery', icon: 'search' },
-    { tab: 'my_schemes', labelKey: 'navMySchemes', icon: 'folder_open' },
-    { tab: 'profile', labelKey: 'navProfile', icon: 'person' },
+  const tabs: { tab: NavigationTab; labelKey: string; icon: React.ReactNode; activeIcon: React.ReactNode }[] = [
+    { tab: 'recommended', labelKey: 'navRecommended', icon: <Sparkles size={20} strokeWidth={2} />, activeIcon: <Sparkles size={22} strokeWidth={2.5} /> },
+    { tab: 'discovery', labelKey: 'navDiscovery', icon: <Search size={20} strokeWidth={2} />, activeIcon: <Search size={22} strokeWidth={2.5} /> },
+    { tab: 'my_schemes', labelKey: 'navMySchemes', icon: <FolderOpen size={20} strokeWidth={2} />, activeIcon: <FolderOpen size={22} strokeWidth={2.5} /> },
+    { tab: 'profile', labelKey: 'navProfile', icon: <User size={20} strokeWidth={2} />, activeIcon: <User size={22} strokeWidth={2.5} /> },
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-14 px-2 bg-surface border-t border-outline-variant/60 backdrop-blur-md bg-surface/95">
+    <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50 flex justify-around items-center h-16 px-2 glass-panel rounded-xl">
       {tabs.map((t) => {
         const isActive = activeTab === t.tab;
         return (
@@ -25,19 +26,21 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChan
             key={t.tab}
             id={`bottom-nav-${t.tab}`}
             onClick={() => onTabChange(t.tab)}
-            className={`flex flex-col items-center justify-center rounded-lg px-3 py-1 transition-all ${
+            className={`flex flex-col items-center justify-center rounded-xl w-16 h-12 transition-all duration-300 relative ${
               isActive
-                ? 'text-primary'
-                : 'text-on-surface-variant'
+                ? 'text-white'
+                : 'text-on-surface-muted hover:text-white'
             }`}
           >
-            <span
-              className="material-symbols-outlined mb-0.5 text-[20px]"
-              style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
-            >
-              {t.icon}
+            {isActive && (
+              <div className="absolute inset-0 bg-white/5 rounded-xl blur-sm" />
+            )}
+            <span className={`mb-1 transition-all duration-300 z-10 ${isActive ? 'text-white' : ''}`}>
+              {isActive ? t.activeIcon : t.icon}
             </span>
-            <span className="text-[10px] font-medium">{getTranslation(t.labelKey, currentLanguage)}</span>
+            <span className={`text-[10px] z-10 ${isActive ? 'font-bold' : 'font-medium'}`}>
+              {getTranslation(t.labelKey, currentLanguage)}
+            </span>
           </button>
         );
       })}

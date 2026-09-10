@@ -1,146 +1,159 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #00342b;
+  /* Ultra-Premium Dark Color Theme (Shadcn/Linear Inspired) */
+  --color-primary: #8b5cf6; /* Violet 500 */
   --color-on-primary: #ffffff;
-  --color-primary-container: #004d40;
-  --color-on-primary-container: #7ebdac;
-  --color-primary-fixed: #afefdd;
-  --color-primary-fixed-dim: #94d3c1;
-  --color-on-primary-fixed: #00201a;
-  --color-on-primary-fixed-variant: #065043;
-  --color-inverse-primary: #94d3c1;
-
-  --color-secondary: #7e5700;
+  --color-primary-hover: #7c3aed; /* Violet 600 */
+  
+  --color-secondary: #0ea5e9; /* Sky 500 */
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #feb300;
-  --color-on-secondary-container: #6a4800;
-  --color-secondary-fixed: #ffdeac;
-  --color-secondary-fixed-dim: #ffba38;
-  --color-on-secondary-fixed: #281900;
-  --color-on-secondary-fixed-variant: #604100;
 
-  --color-tertiary: #00342d;
-  --color-tertiary-container: #004d44;
-  --color-on-tertiary: #ffffff;
-  --color-on-tertiary-container: #64c1b0;
-  --color-tertiary-fixed: #97f3e2;
-  --color-tertiary-fixed-dim: #7ad7c6;
-  --color-on-tertiary-fixed: #00201b;
-  --color-on-tertiary-fixed-variant: #005047;
+  --color-accent: #3f3f46; /* zinc-700 */
+  --color-on-accent: #ffffff;
 
-  --color-surface: #f8fafa;
-  --color-surface-dim: #d8dada;
-  --color-surface-bright: #f8fafa;
-  --color-surface-variant: #e1e3e3;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f2f4f4;
-  --color-surface-container: #eceeee;
-  --color-surface-container-high: #e6e8e8;
-  --color-surface-container-highest: #e1e3e3;
-  --color-on-surface: #191c1d;
-  --color-on-surface-variant: #3f4945;
-  --color-inverse-surface: #2e3131;
-  --color-inverse-on-surface: #eff1f1;
+  /* Background & Surfaces */
+  --color-background: #09090b; /* zinc-950 */
+  --color-on-background: #fafafa;
+  
+  --color-surface: #18181b; /* zinc-900 */
+  --color-surface-hover: #27272a; /* zinc-800 */
+  --color-surface-container: #27272a;
+  --color-surface-container-low: #18181b;
+  --color-surface-container-highest: #3f3f46;
+  
+  --color-on-surface: #fafafa; /* zinc-50 */
+  --color-on-surface-variant: #a1a1aa; /* zinc-400 - Muted text */
+  --color-on-surface-muted: #71717a; /* zinc-500 */
 
-  --color-outline: #707975;
-  --color-outline-variant: #bfc9c4;
+  /* Borders & Outlines */
+  --color-outline: #27272a; /* zinc-800 */
+  --color-outline-variant: #18181b; /* zinc-900 */
+  --color-outline-focus: #3f3f46; /* zinc-700 */
 
-  --color-background: #f8fafa;
-  --color-on-background: #191c1d;
-
-  --color-error: #ba1a1a;
-  --color-error-container: #ffdad6;
+  /* Semantic */
+  --color-error: #ef4444;
+  --color-error-container: #450a0a;
   --color-on-error: #ffffff;
-  --color-on-error-container: #93000a;
+  
+  --color-success: #10b981;
+  --color-success-container: #064e3b;
+  --color-on-success: #ffffff;
 
-  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
-  --shadow-ambient: 0 4px 16px rgba(0, 0, 0, 0.04);
+  --font-inter: 'Inter', 'Geist', system-ui, -apple-system, sans-serif;
 }
 
 @layer utilities {
+  /* Typography - Tracking tight for that SaaS feel */
   .font-headline-lg {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -0.02em;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.04em;
     font-weight: 700;
   }
   .font-headline-lg-mobile {
-    font-size: 26px;
-    line-height: 32px;
-    letter-spacing: -0.01em;
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.03em;
     font-weight: 700;
   }
   .font-headline-md {
     font-size: 24px;
     line-height: 32px;
+    letter-spacing: -0.03em;
     font-weight: 600;
   }
   .font-headline-sm {
     font-size: 20px;
     line-height: 28px;
+    letter-spacing: -0.02em;
     font-weight: 600;
   }
   .font-body-lg {
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: -0.01em;
     font-weight: 400;
   }
   .font-body-md {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 22px;
     font-weight: 400;
   }
   .font-label-md {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
-    letter-spacing: 0.01em;
-    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+    text-transform: uppercase;
   }
   .font-label-sm {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 16px;
-    font-weight: 500;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
+  /* Premium Box Grids & Glassmorphism */
+  .glass-panel {
+    @apply bg-surface/50 backdrop-blur-2xl border border-white/5 shadow-2xl ring-1 ring-white/5;
+  }
+  
+  .glass-card {
+    @apply bg-surface-container-low backdrop-blur-xl border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.02] transition-all duration-300;
+  }
+  
+  .glass-nav {
+    @apply bg-background/80 backdrop-blur-3xl border-b border-white/[0.08] transition-colors;
+  }
+
+  /* Sleek Glows (Subtle, strictly monochromatic or faint blue) */
+  .glow-effect {
+    box-shadow: 0 0 40px -10px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Noise overlay class */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* Structural */
   .px-margin-mobile {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
-  .mb-stack-lg {
-    margin-bottom: 2rem;
-  }
-  .mb-stack-md {
-    margin-bottom: 1rem;
-  }
-  .mt-stack-md {
-    margin-top: 1rem;
-  }
-  .gap-gutter-md {
-    gap: 1rem;
-  }
-  .h-touch-target-min {
-    height: 48px;
-  }
-}
-
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', 'Geist', system-ui, -apple-system, sans-serif;
   min-height: max(884px, 100dvh);
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  /* A very sophisticated, barely visible spotlight at the top center */
+  background-image: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.06), transparent 50%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base scrollbar styling for a cleaner look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline-focus);
 }

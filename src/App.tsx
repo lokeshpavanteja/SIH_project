@@ -228,7 +228,8 @@ export default function App() {
 
   // ─── Screen 3: Main App ────────────────────────────────────
   return (
-    <div className="min-h-screen bg-background text-on-background flex flex-col antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <div className="min-h-screen bg-background text-on-background flex flex-col antialiased selection:bg-white/20 selection:text-white relative">
+      {/* Decorative noise/spotlight is handled in index.css body */}
       <TopAppBar
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -238,7 +239,7 @@ export default function App() {
         onLogout={handleLogout}
       />
 
-      <main className="flex-1 pb-20 md:pb-8">
+      <main className="flex-1 pb-24 md:pb-12 pt-6">
         <AnimatePresence mode="wait">
           {activeTab === 'recommended' && (
             <RecommendedView

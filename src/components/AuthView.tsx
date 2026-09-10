@@ -5,7 +5,7 @@ import { sampleUsers } from '../data/mockData';
 import { getTranslation, supportedLanguages } from '../i18n/translations';
 import { COUNTRY_CODES, extractDigits, formatIndianPhoneNumber, isValidIndianPhoneNumber } from '../utils/phoneUtils';
 import { PasswordInput } from './PasswordInput';
-import { CheckCircle2, KeyRound, ShieldCheck, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, KeyRound, ShieldCheck, ArrowRight, ArrowLeft, BadgeInfo, Zap, LogIn, TriangleAlert, Info, KeySquare, Smartphone, Mail, XCircle, Globe, Hexagon } from 'lucide-react';
 
 interface AuthViewProps {
   currentLanguage: LanguageCode;
@@ -451,17 +451,15 @@ export const AuthView: React.FC<AuthViewProps> = ({
   return (
     <div className="min-h-screen bg-background text-on-background flex flex-col justify-between">
       {/* Top Bar with Language Selector & Step Indicator */}
-      <header className="border-b border-surface-variant bg-surface-container-lowest/80 backdrop-blur-md sticky top-0 z-30">
+      <header className="border-b border-white/10 bg-transparent-container-lowest/80 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-xs">
-              M
-            </div>
+            <div className="w-8 h-8 rounded-md bg-white text-black flex items-center justify-center font-bold text-sm shadow-sm"><Hexagon className="w-5 h-5" strokeWidth={2.5} /></div>
             <div>
               <span className="font-headline-md font-bold tracking-tight text-on-surface">
-                MatchWise <span className="text-primary">AI</span>
+                MatchWise <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-black">AI</span>
               </span>
-              <span className="ml-2 text-[11px] px-2 py-0.5 rounded-full bg-surface-variant text-on-surface-variant font-medium">
+              <span className="ml-2 text-[11px] px-2 py-0.5 rounded-full bg-white/5 text-on-surface-variant font-medium">
                 Scheme Finder & Guidance
               </span>
             </div>
@@ -471,10 +469,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
             <button
               id="btn-back-to-language"
               onClick={onBackToLanguageSelect}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-variant bg-surface hover:bg-surface-variant text-xs font-medium text-on-surface transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-transparent hover:bg-white/5 text-xs font-medium text-on-surface transition-colors"
               title={t('changeLanguage')}
             >
-              <span className="material-symbols-outlined text-[16px]">translate</span>
+              <Globe className="w-4 h-4 text-on-surface-variant" />
               <span className="hidden sm:inline">{currentLangObj.nativeName}</span>
             </button>
           </div>
@@ -493,10 +491,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2 }}
-                className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-6 sm:p-8 shadow-ambient"
+                className="glass-panel rounded-lg p-8 sm:p-10 border-white/10 bg-transparent/50 backdrop-blur-3xl ring-1 ring-white/5 shadow-xl"
               >
                 {/* Tabs */}
-                <div className="flex bg-surface-variant p-1 rounded-xl mb-6">
+                <div className="flex bg-white/5 p-1 rounded-lg mb-6">
                   <button
                     id="tab-sign-in"
                     type="button"
@@ -504,7 +502,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       setMode('signin');
                       setSignInError(null);
                     }}
-                    className="flex-1 py-2 text-xs font-semibold rounded-lg bg-surface-container-lowest text-on-surface shadow-xs transition-all"
+                    className="flex-1 py-2 text-xs font-semibold rounded-lg bg-transparent-container-lowest text-on-surface shadow-xs transition-all"
                   >
                     {t('signInTab')}
                   </button>
@@ -531,8 +529,8 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 </div>
 
                 {signInError && (
-                  <div className="mb-4 p-3 rounded-xl bg-error/10 border border-error/20 text-error text-xs flex items-center gap-2 font-medium">
-                    <span className="material-symbols-outlined text-sm">error</span>
+                  <div className="mb-4 p-3 rounded-lg bg-error/10 border border-error/20 text-error text-xs flex items-center gap-2 font-medium">
+                    <TriangleAlert className="w-4 h-4" />
                     {signInError}
                   </div>
                 )}
@@ -543,16 +541,14 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       Username or Email *
                     </label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
-                        badge
-                      </span>
+                      <BadgeInfo className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                       <input
                         id="input-signin-identifier"
                         type="text"
                         value={signInIdentifier}
                         onChange={(e) => setSignInIdentifier(e.target.value)}
                         placeholder="aditya.verma@indusaitech.in or +91 98765 43210"
-                        className="w-full pl-10 pr-4 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-medium"
+                        className="w-full pl-10 pr-4 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white transition-all font-medium"
                         required
                       />
                     </div>
@@ -583,7 +579,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           setForgotError(null);
                           setForgotStatusMsg(null);
                         }}
-                        className="text-xs text-primary hover:text-primary-hover font-semibold hover:underline flex items-center gap-1 transition-colors"
+                        className="text-xs text-white hover:text-white-hover font-semibold hover:underline flex items-center gap-1 transition-colors"
                       >
                         <KeyRound className="w-3.5 h-3.5" />
                         <span>{t('forgotPassword')}</span>
@@ -594,7 +590,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   <button
                     id="btn-submit-signin"
                     type="submit"
-                    className="w-full py-3 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                    className="w-full py-3 bg-primary text-white hover:bg-primary-hover rounded-lg text-sm font-semibold hover:bg-white-hover shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
                     <span>{t('signInButton')}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -602,9 +598,9 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 </form>
 
                 {/* Quick Demo Accounts */}
-                <div className="mt-8 pt-6 border-t border-surface-variant">
+                <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="material-symbols-outlined text-primary text-[16px]">bolt</span>
+                    <Zap className="w-4 h-4 text-white" />
                     <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                       {t('demoAccountsTitle')}
                     </span>
@@ -614,7 +610,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       id="btn-demo-aditya"
                       type="button"
                       onClick={() => onSignIn(sampleUsers[0])}
-                      className="text-left p-3 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors flex items-center justify-between cursor-pointer"
+                      className="text-left p-3 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 transition-colors flex items-center justify-between cursor-pointer"
                     >
                       <div className="flex items-center gap-2.5">
                         <span className="text-lg">🇮🇳</span>
@@ -623,14 +619,14 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           <div className="text-[11px] text-on-surface-variant">+91 98765 43210 • Password: 123456</div>
                         </div>
                       </div>
-                      <span className="material-symbols-outlined text-primary text-sm">login</span>
+                      <LogIn className="w-4 h-4 text-white" />
                     </button>
 
                     <button
                       id="btn-demo-priya"
                       type="button"
                       onClick={() => onSignIn(sampleUsers[1])}
-                      className="text-left p-3 rounded-xl border border-surface-variant bg-surface hover:bg-surface-variant transition-colors flex items-center justify-between cursor-pointer"
+                      className="text-left p-3 rounded-lg border border-white/10 bg-transparent hover:bg-white/5 transition-colors flex items-center justify-between cursor-pointer"
                     >
                       <div className="flex items-center gap-2.5">
                         <span className="text-lg">🇮🇳</span>
@@ -639,7 +635,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           <div className="text-[11px] text-on-surface-variant">+91 94221 87654 • Password: 123456</div>
                         </div>
                       </div>
-                      <span className="material-symbols-outlined text-on-surface-variant text-sm">login</span>
+                      <LogIn className="w-4 h-4 text-on-surface-variant" />
                     </button>
                   </div>
                 </div>
@@ -654,10 +650,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2 }}
-                className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-6 sm:p-8 shadow-ambient"
+                className="glass-panel rounded-lg p-8 sm:p-10 border-white/10 bg-transparent/50 backdrop-blur-3xl ring-1 ring-white/5 shadow-xl"
               >
                 {/* Tabs */}
-                <div className="flex bg-surface-variant p-1 rounded-xl mb-6">
+                <div className="flex bg-white/5 p-1 rounded-lg mb-6">
                   <button
                     id="tab-sign-in-from-signup"
                     type="button"
@@ -673,7 +669,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                     id="tab-sign-up-active"
                     type="button"
                     onClick={() => setMode('signup')}
-                    className="flex-1 py-2 text-xs font-semibold rounded-lg bg-surface-container-lowest text-on-surface shadow-xs transition-all"
+                    className="flex-1 py-2 text-xs font-semibold rounded-lg bg-transparent-container-lowest text-on-surface shadow-xs transition-all"
                   >
                     {t('signUpTab')}
                   </button>
@@ -689,8 +685,8 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 </div>
 
                 {signUpError && (
-                  <div className="mb-4 p-3 rounded-xl bg-error/10 border border-error/20 text-error text-xs flex items-center gap-2 font-medium">
-                    <span className="material-symbols-outlined text-sm">error</span>
+                  <div className="mb-4 p-3 rounded-lg bg-error/10 border border-error/20 text-error text-xs flex items-center gap-2 font-medium">
+                    <TriangleAlert className="w-4 h-4" />
                     {signUpError}
                   </div>
                 )}
@@ -708,7 +704,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="e.g. Aditya Verma"
-                        className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                         required
                       />
                     </div>
@@ -723,7 +719,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                         placeholder="e.g. Indus AI Innovations Pvt Ltd"
-                        className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                         required
                       />
                     </div>
@@ -739,10 +735,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         id="select-country-code"
                         value={countryCode}
                         onChange={(e) => setCountryCode(e.target.value)}
-                        className="w-32 px-3 py-2.5 bg-surface border border-surface-variant rounded-xl text-xs font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-32 px-3 py-2.5 bg-transparent border border-white/10 rounded-lg text-xs font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                       >
                         {COUNTRY_CODES.map((c) => (
-                          <option key={c.code} value={c.code}>
+                          <option className="bg-zinc-900 text-white" key={c.code} value={c.code}>
                             {c.flag} {c.code} ({c.country.split(' ')[0]})
                           </option>
                         ))}
@@ -756,10 +752,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           onChange={(e) => handlePhoneChange(e.target.value, setPhoneDigits, setPhoneError)}
                           placeholder="98765 43210"
                           maxLength={11}
-                          className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm font-medium tracking-wide focus:outline-none transition-all ${
+                          className={`w-full px-3.5 py-2.5 bg-transparent border rounded-lg text-sm font-medium tracking-wide focus:outline-none transition-all ${
                             phoneError
                               ? 'border-error text-error focus:ring-2 focus:ring-error/20'
-                              : 'border-surface-variant text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary'
+                              : 'border-white/10 text-on-surface focus:ring-2 focus:ring-white/20 focus:border-white'
                           }`}
                           required
                         />
@@ -770,7 +766,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                     </div>
                     {phoneError ? (
                       <p className="mt-1 text-[11px] text-error flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[13px]">warning</span>
+                        <TriangleAlert className="w-3.5 h-3.5" />
                         {phoneError}
                       </p>
                     ) : (
@@ -791,7 +787,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="aditya@enterprise.in"
-                      className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                      className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                       required
                     />
                   </div>
@@ -832,7 +828,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         </span>
                       ) : (
                         <span className="text-error font-medium flex items-center gap-1">
-                          <span className="material-symbols-outlined text-[13px]">close</span>
+                          <XCircle className="w-3.5 h-3.5" />
                           {signUpPassword !== signUpConfirmPassword ? 'Passwords do not match.' : 'Password must contain exactly 6 characters.'}
                         </span>
                       )}
@@ -855,10 +851,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             setStateRegion('Karnataka (Bengaluru)');
                           }
                         }}
-                        className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                       >
                         {COUNTRIES.map((c) => (
-                          <option key={c} value={c}>
+                          <option className="bg-zinc-900 text-white" key={c} value={c}>
                             {c}
                           </option>
                         ))}
@@ -874,10 +870,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           id="select-signup-state-india"
                           value={stateRegion}
                           onChange={(e) => setStateRegion(e.target.value)}
-                          className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                          className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                         >
                           {INDIAN_STATES.map((s) => (
-                            <option key={s} value={s}>
+                            <option className="bg-zinc-900 text-white" key={s} value={s}>
                               {s}
                             </option>
                           ))}
@@ -889,7 +885,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           value={stateRegion}
                           onChange={(e) => setStateRegion(e.target.value)}
                           placeholder="e.g. California, London, Bavaria"
-                          className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                          className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                         />
                       )}
                     </div>
@@ -905,10 +901,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         id="select-signup-category"
                         value={userCategory}
                         onChange={(e) => setUserCategory(e.target.value)}
-                        className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                       >
                         {USER_CATEGORIES.map((cat) => (
-                          <option key={cat.key} value={cat.key}>
+                          <option className="bg-zinc-900 text-white" key={cat.key} value={cat.key}>
                             {t(cat.labelKey)}
                           </option>
                         ))}
@@ -925,7 +921,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         value={targetFunding}
                         onChange={(e) => setTargetFunding(e.target.value)}
                         placeholder="₹50,00,000"
-                        className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                       />
                     </div>
                   </div>
@@ -937,10 +933,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   <button
                     id="btn-submit-signup"
                     type="submit"
-                    className="w-full py-3 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                    className="w-full py-3 bg-primary text-white hover:bg-primary-hover rounded-lg text-sm font-semibold hover:bg-white-hover shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
                     <span>{t('signUpButton')}</span>
-                    <span className="material-symbols-outlined text-[18px]">how_to_reg</span>
+                    <LogIn className="w-4 h-4" />
                   </button>
                 </form>
               </motion.div>
@@ -954,7 +950,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2 }}
-                className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-6 sm:p-8 shadow-ambient"
+                className="glass-panel rounded-lg p-8 sm:p-10 border-white/10 bg-transparent/50 backdrop-blur-3xl ring-1 ring-white/5 shadow-xl"
               >
                 {/* Back Button */}
                 {forgotStep !== 'success' && (
@@ -972,7 +968,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         setForgotStatusMsg(null);
                       }
                     }}
-                    className="inline-flex items-center gap-1.5 text-xs text-primary font-semibold mb-4 hover:underline cursor-pointer"
+                    className="inline-flex items-center gap-1.5 text-xs text-white font-semibold mb-4 hover:underline cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>{forgotStep === 'method' ? t('backToSignIn') : 'Back'}</span>
@@ -981,14 +977,14 @@ export const AuthView: React.FC<AuthViewProps> = ({
 
                 {/* Status and Error Banners */}
                 {forgotStatusMsg && forgotStep !== 'success' && (
-                  <div className="mb-4 p-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs flex items-center gap-2 font-semibold">
+                  <div className="mb-4 p-3 rounded-lg bg-success/10 border border-success/20 text-success text-xs flex items-center gap-2 font-semibold">
                     <CheckCircle2 className="w-4 h-4 text-success shrink-0" />
                     <span>{forgotStatusMsg}</span>
                   </div>
                 )}
 
                 {forgotError && (
-                  <div className="mb-4 p-3 rounded-xl bg-error/10 border border-error/20 text-error text-xs flex items-center gap-2 font-medium">
+                  <div className="mb-4 p-3 rounded-lg bg-error/10 border border-error/20 text-error text-xs flex items-center gap-2 font-medium">
                     <span className="material-symbols-outlined text-sm shrink-0">error</span>
                     <span>{forgotError}</span>
                   </div>
@@ -998,7 +994,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 {forgotStep === 'method' && (
                   <div>
                     <div className="mb-6">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/10 text-white flex items-center justify-center mb-3">
                         <KeyRound className="w-5 h-5" />
                       </div>
                       <h1 className="font-headline-md text-xl sm:text-2xl font-bold text-on-surface mb-1">
@@ -1015,7 +1011,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         <label className="block text-xs font-semibold text-on-surface mb-2">
                           {t('howReceiveOtp')}
                         </label>
-                        <div className="grid grid-cols-2 gap-2.5 p-1 bg-surface-variant rounded-xl">
+                        <div className="grid grid-cols-2 gap-2.5 p-1 bg-white/5 rounded-lg">
                           <button
                             id="btn-recovery-phone"
                             type="button"
@@ -1025,7 +1021,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             }}
                             className={`py-2.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
                               forgotMethod === 'phone'
-                                ? 'bg-surface-container-lowest text-on-surface shadow-xs border border-surface-variant'
+                                ? 'bg-transparent-container-lowest text-on-surface shadow-xs border border-white/10'
                                 : 'text-on-surface-variant hover:text-on-surface'
                             }`}
                           >
@@ -1042,7 +1038,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             }}
                             className={`py-2.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
                               forgotMethod === 'email'
-                                ? 'bg-surface-container-lowest text-on-surface shadow-xs border border-surface-variant'
+                                ? 'bg-transparent-container-lowest text-on-surface shadow-xs border border-white/10'
                                 : 'text-on-surface-variant hover:text-on-surface'
                             }`}
                           >
@@ -1062,10 +1058,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             <select
                               value={forgotCountryCode}
                               onChange={(e) => setForgotCountryCode(e.target.value)}
-                              className="w-28 px-3 py-2.5 bg-surface border border-surface-variant rounded-xl text-xs font-semibold text-on-surface"
+                              className="w-28 px-3 py-2.5 bg-transparent border border-white/10 rounded-lg text-xs font-semibold text-on-surface"
                             >
-                              <option value="+91">🇮🇳 +91</option>
-                              <option value="+1">🇺🇸 +1</option>
+                              <option className="bg-zinc-900 text-white" value="+91">🇮🇳 +91</option>
+                              <option className="bg-zinc-900 text-white" value="+1">🇺🇸 +1</option>
                             </select>
                             <input
                               id="input-forgot-phone"
@@ -1074,7 +1070,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                               onChange={(e) => handlePhoneChange(e.target.value, setForgotPhoneDigits, setForgotError)}
                               placeholder="98765 43210"
                               maxLength={11}
-                              className="flex-1 px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                              className="flex-1 px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface font-medium focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                               required
                             />
                           </div>
@@ -1093,7 +1089,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             value={forgotEmail}
                             onChange={(e) => setForgotEmail(e.target.value)}
                             placeholder="aditya.verma@indusaitech.in"
-                            className="w-full px-3.5 py-2.5 bg-surface border border-surface-variant rounded-xl text-sm text-on-surface font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            className="w-full px-3.5 py-2.5 bg-transparent border border-white/10 rounded-lg text-sm text-on-surface font-medium focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                             required
                           />
                           <p className="mt-1 text-[11px] text-on-surface-variant">
@@ -1105,7 +1101,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       <button
                         id="btn-send-otp"
                         type="submit"
-                        className="w-full py-3 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer mt-3"
+                        className="w-full py-3 bg-primary text-white hover:bg-primary-hover rounded-lg text-sm font-semibold hover:bg-white-hover shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer mt-3"
                       >
                         <span>{t('sendOtp')}</span>
                         <ArrowRight className="w-4 h-4" />
@@ -1118,7 +1114,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 {forgotStep === 'otp' && (
                   <div>
                     <div className="mb-6">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/10 text-white flex items-center justify-center mb-3">
                         <ShieldCheck className="w-5 h-5" />
                       </div>
                       <h1 className="font-headline-md text-xl sm:text-2xl font-bold text-on-surface mb-1">
@@ -1149,12 +1145,12 @@ export const AuthView: React.FC<AuthViewProps> = ({
                           }}
                           placeholder="123456"
                           maxLength={6}
-                          className="w-full max-w-xs mx-auto block px-4 py-3 text-center tracking-[0.5em] font-mono text-2xl font-bold bg-surface border border-surface-variant rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                          className="w-full max-w-xs mx-auto block px-4 py-3 text-center tracking-[0.5em] font-mono text-2xl font-bold bg-transparent border border-white/10 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white"
                           required
                           autoFocus
                         />
                         <div className="mt-2.5 flex items-center justify-center gap-2">
-                          <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[11px] font-semibold border border-primary/20">
+                          <span className="px-2.5 py-1 rounded-full bg-white/10 text-white text-[11px] font-semibold border border-white/20">
                             💡 Demo OTP: 123456
                           </span>
                         </div>
@@ -1168,7 +1164,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             setForgotStatusMsg('OTP sent successfully.');
                             setEnteredOtp('');
                           }}
-                          className="text-primary font-semibold hover:underline"
+                          className="text-white font-semibold hover:underline"
                         >
                           Resend OTP
                         </button>
@@ -1178,7 +1174,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                         id="btn-verify-otp"
                         type="submit"
                         disabled={enteredOtp.length !== 6}
-                        className="w-full py-3 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover disabled:opacity-50 shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                        className="w-full py-3 bg-primary text-white hover:bg-primary-hover rounded-lg text-sm font-semibold hover:bg-white-hover disabled:opacity-50 shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
                       >
                         <span>{t('verifyOtpButton')}</span>
                         <CheckCircle2 className="w-4 h-4" />
@@ -1191,7 +1187,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 {forgotStep === 'new_password' && (
                   <div>
                     <div className="mb-6">
-                      <div className="w-10 h-10 rounded-xl bg-success/10 text-success flex items-center justify-center mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-success/10 text-success flex items-center justify-center mb-3">
                         <KeyRound className="w-5 h-5" />
                       </div>
                       <h1 className="font-headline-md text-xl sm:text-2xl font-bold text-on-surface mb-1">
@@ -1240,7 +1236,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                             </span>
                           ) : (
                             <span className="text-error flex items-center gap-1">
-                              <span className="material-symbols-outlined text-[13px]">close</span>
+                              <XCircle className="w-3.5 h-3.5" />
                               {newPassword !== confirmNewPassword ? 'Passwords do not match.' : 'Password must contain exactly 6 characters.'}
                             </span>
                           )}
@@ -1250,7 +1246,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       <button
                         id="btn-save-new-password"
                         type="submit"
-                        className="w-full py-3 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                        className="w-full py-3 bg-primary text-white hover:bg-primary-hover rounded-lg text-sm font-semibold hover:bg-white-hover shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
                       >
                         <span>Reset Password</span>
                         <ArrowRight className="w-4 h-4" />
@@ -1262,7 +1258,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 {/* ---------------- STEP 6: PASSWORD RESET SUCCESSFUL ---------------- */}
                 {forgotStep === 'success' && (
                   <div className="text-center py-4 space-y-5">
-                    <div className="w-16 h-16 rounded-2xl bg-success/10 text-success flex items-center justify-center mx-auto shadow-xs border border-success/20">
+                    <div className="w-16 h-16 rounded-xl bg-success/10 text-success flex items-center justify-center mx-auto shadow-xs border border-success/20">
                       <CheckCircle2 className="w-9 h-9" />
                     </div>
 
@@ -1275,8 +1271,8 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       </p>
                     </div>
 
-                    <div className="p-3.5 bg-surface border border-surface-variant rounded-xl text-xs text-on-surface max-w-sm mx-auto text-left flex items-center gap-3">
-                      <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <div className="p-3.5 bg-transparent border border-white/10 rounded-lg text-xs text-on-surface max-w-sm mx-auto text-left flex items-center gap-3">
+                      <ShieldCheck className="w-5 h-5 text-white shrink-0" />
                       <div>
                         <div className="font-semibold">Ready to Sign In</div>
                         <div className="text-[11px] text-on-surface-variant">
@@ -1289,7 +1285,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                       id="btn-return-to-signin-success"
                       type="button"
                       onClick={handleReturnToSignInFromSuccess}
-                      className="w-full max-w-sm mx-auto py-3 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-hover shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full max-w-sm mx-auto py-3 bg-primary text-white hover:bg-primary-hover rounded-lg text-sm font-semibold hover:bg-white-hover shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <span>{t('returnToSignIn')}</span>
                       <ArrowRight className="w-4 h-4" />
@@ -1303,7 +1299,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-surface-variant py-4 text-center text-xs text-on-surface-variant">
+      <footer className="border-t border-white/10 py-4 text-center text-xs text-on-surface-variant">
         MatchWise AI • Official Scheme Matching & Discovery Platform • All applications completed on official provider portals
       </footer>
     </div>

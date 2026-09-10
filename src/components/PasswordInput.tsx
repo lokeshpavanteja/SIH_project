@@ -83,7 +83,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           className={`w-full pl-10 pr-11 py-2.5 bg-surface border rounded-xl text-sm text-on-surface font-medium placeholder:font-normal placeholder:text-on-surface-variant/50 focus:outline-none transition-all ${
             error
               ? 'border-error text-error focus:ring-2 focus:ring-error/20'
-              : 'border-surface-variant text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary'
+              : 'border-surface-variant text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-white'
           }`}
         />
 
@@ -97,7 +97,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           aria-label={showPassword ? 'Hide password' : 'Show password'}
         >
           {showPassword ? (
-            <EyeOff className="w-4 h-4 text-primary" />
+            <EyeOff className="w-4 h-4 text-white" />
           ) : (
             <Eye className="w-4 h-4" />
           )}

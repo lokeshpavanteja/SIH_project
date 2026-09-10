@@ -32,13 +32,13 @@ export const ImproveScoreModal: React.FC<ImproveScoreModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-surface-container-lowest border border-outline-variant rounded-2xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden"
+          className="bg-surface-container-lowest border border-outline-variant rounded-xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden"
         >
           {/* Header */}
           <div className="p-6 border-b border-surface-variant bg-surface flex items-start justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full border-4 border-primary/20 flex items-center justify-center bg-surface-container-lowest shadow-xs">
-                <span className="font-headline-md text-xl text-primary font-bold">
+              <div className="w-14 h-14 rounded-full border-4 border-white/10 flex items-center justify-center bg-surface-container-lowest shadow-xs">
+                <span className="font-headline-md text-xl text-white font-bold">
                   {score}
                 </span>
               </div>
@@ -76,7 +76,7 @@ export const ImproveScoreModal: React.FC<ImproveScoreModalProps> = ({
                     <div className="flex items-start gap-3">
                       <button
                         onClick={() => onToggleTask(task.id)}
-                        className="w-5 h-5 rounded border-2 border-outline hover:border-primary flex items-center justify-center text-transparent hover:text-primary transition-colors mt-0.5"
+                        className="w-5 h-5 rounded border-2 border-outline hover:border-white flex items-center justify-center text-transparent hover:text-white transition-colors mt-0.5"
                         title="Mark as Complete"
                       >
                         <span className="material-symbols-outlined text-[16px]">check</span>
@@ -105,7 +105,7 @@ export const ImproveScoreModal: React.FC<ImproveScoreModalProps> = ({
                           onToggleTask(task.id);
                         }
                       }}
-                      className="px-3 py-1.5 bg-primary text-on-primary font-label-sm text-xs rounded-lg hover:bg-on-primary-fixed-variant transition-colors shrink-0 shadow-xs"
+                      className="px-3 py-1.5 bg-white text-on-primary font-label-sm text-xs rounded-lg hover:bg-on-primary-fixed-variant transition-colors shrink-0 shadow-xs"
                     >
                       {task.actionLabel}
                     </button>
@@ -113,7 +113,7 @@ export const ImproveScoreModal: React.FC<ImproveScoreModalProps> = ({
                 ))}
 
                 {incompleteTasks.length === 0 && (
-                  <div className="p-6 text-center bg-primary-fixed/20 border border-primary-fixed rounded-xl text-primary">
+                  <div className="p-6 text-center bg-white-fixed/20 border border-white-fixed rounded-xl text-black">
                     <span className="material-symbols-outlined text-4xl mb-1">
                       emoji_events
                     </span>
@@ -139,7 +139,7 @@ export const ImproveScoreModal: React.FC<ImproveScoreModalProps> = ({
                       className="p-3 rounded-lg bg-surface border border-surface-variant flex items-center justify-between opacity-80"
                     >
                       <div className="flex items-center gap-2.5">
-                        <span className="material-symbols-outlined text-primary text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                        <span className="material-symbols-outlined text-white text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                           check_circle
                         </span>
                         <div>
@@ -169,7 +169,7 @@ export const ImproveScoreModal: React.FC<ImproveScoreModalProps> = ({
           <div className="p-4 border-t border-surface-variant bg-surface flex justify-end">
             <button
               onClick={onClose}
-              className="px-5 py-2 bg-primary text-on-primary font-label-md text-xs rounded-lg hover:bg-on-primary-fixed-variant transition-colors"
+              className="px-5 py-2 bg-white text-on-primary font-label-md text-xs rounded-lg hover:bg-on-primary-fixed-variant transition-colors"
             >
               Done
             </button>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationTab, UserProfile, LanguageCode } from '../types';
 import { getTranslation, supportedLanguages } from '../i18n/translations';
+import { Sparkles, Search, FolderOpen, User, Languages, Check, LogOut } from 'lucide-react';
 
 interface TopAppBarProps {
   activeTab: NavigationTab;
@@ -19,7 +20,6 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
   currentLanguage,
   onLanguageChange,
   onLogout,
-  onBackClick,
 }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -27,47 +27,46 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
   const t = (key: string) => getTranslation(key, currentLanguage);
   const currentLangObj = supportedLanguages.find(l => l.code === currentLanguage) || supportedLanguages[0];
 
-  const navItems: { tab: NavigationTab; labelKey: string; icon: string }[] = [
-    { tab: 'recommended', labelKey: 'navRecommended', icon: 'auto_awesome' },
-    { tab: 'discovery', labelKey: 'navDiscovery', icon: 'search' },
-    { tab: 'my_schemes', labelKey: 'navMySchemes', icon: 'folder_open' },
-    { tab: 'profile', labelKey: 'navProfile', icon: 'person' },
+  const navItems: { tab: NavigationTab; labelKey: string; icon: React.ReactNode }[] = [
+    { tab: 'recommended', labelKey: 'navRecommended', icon: <Sparkles size={16} /> },
+    { tab: 'discovery', labelKey: 'navDiscovery', icon: <Search size={16} /> },
+    { tab: 'my_schemes', labelKey: 'navMySchemes', icon: <FolderOpen size={16} /> },
+    { tab: 'profile', labelKey: 'navProfile', icon: <User size={16} /> },
   ];
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-background border-b border-outline-variant select-none">
-      <div className="flex justify-between items-center px-4 sm:px-6 h-12 w-full max-w-6xl mx-auto">
+    <header className="w-full sticky top-0 z-50 glass-nav select-none">
+      <div className="flex justify-between items-center px-4 sm:px-6 h-14 w-full max-w-7xl mx-auto">
         {/* Brand */}
         <div className="flex items-center gap-2">
           <button
             id="btn-brand-home"
             onClick={() => onTabChange('recommended')}
-            className="font-bold text-sm text-on-surface tracking-tight text-left hover:opacity-90 transition-opacity flex items-center gap-1.5"
+            className="font-bold text-base text-white tracking-tight text-left hover:opacity-90 transition-opacity flex items-center gap-2"
           >
-            <span className="material-symbols-outlined text-primary text-[18px]">auto_awesome</span>
-            <span>MatchWise <span className="text-primary">AI</span></span>
+            <div className="bg-white p-1.5 rounded-lg border border-white text-black shadow-sm">
+              <Sparkles size={18} className="animate-pulse" style={{ animationDuration: '3s' }} />
+            </div>
+            <span>MatchWise <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-black">AI</span></span>
           </button>
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-1 items-center">
+        <nav className="hidden md:flex gap-1.5 items-center p-1 bg-surface-container-low/50 rounded-xl border border-white/5 backdrop-blur-md">
           {navItems.map(item => {
             const isActive = activeTab === item.tab;
             return (
-              <button
+               <button
                 key={item.tab}
                 id={`nav-${item.tab}`}
                 onClick={() => onTabChange(item.tab)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 ${
+                className={`px-4 py-1.5 text-xs font-semibold rounded-xl transition-all duration-300 flex items-center gap-2 ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50'
+                    ? 'bg-white text-black shadow-sm'
+                    : 'text-on-surface-variant hover:text-white hover:bg-white/5'
                 }`}
               >
-                <span
-                  className="material-symbols-outlined text-[16px]"
-                  style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
-                >
+                <span className={isActive ? 'text-black' : ''}>
                   {item.icon}
                 </span>
                 {t(item.labelKey)}
@@ -77,35 +76,35 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-3">
           {/* Language selector */}
           <div className="relative">
             <button
               onClick={() => { setShowLangMenu(!showLangMenu); setShowProfileMenu(false); }}
-              className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-on-surface hover:text-white hover:bg-white/10 transition-all border border-transparent hover:border-white/10"
               title={t('changeLanguage')}
             >
-              <span className="text-[11px] font-bold text-primary">{currentLangObj.script}</span>
-              <span className="material-symbols-outlined text-[14px]">translate</span>
+              <Languages size={16} className="text-secondary" />
+              <span className="text-[11px] font-bold">{currentLangObj.script}</span>
             </button>
             {showLangMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowLangMenu(false)} />
-                <div className="absolute right-0 mt-1 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg z-50 max-h-64 overflow-y-auto py-1">
+                <div className="absolute right-0 mt-2 w-48 glass-panel rounded-xl z-50 max-h-64 overflow-y-auto py-2">
                   {supportedLanguages.map(lang => (
                     <button
                       key={lang.code}
                       onClick={() => { onLanguageChange(lang.code); setShowLangMenu(false); }}
-                      className={`w-full text-left px-3 py-2 text-sm flex items-center justify-between hover:bg-surface-variant/50 transition-colors ${
-                        currentLanguage === lang.code ? 'bg-primary/5 text-primary font-medium' : 'text-on-surface'
+                      className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between hover:bg-white/10 transition-colors ${
+                        currentLanguage === lang.code ? 'text-white font-bold bg-white/5' : 'text-on-surface'
                       }`}
                     >
                       <div>
                         <span className="font-medium">{lang.nativeName}</span>
-                        <span className="text-xs text-on-surface-variant ml-1.5">{lang.name}</span>
+                        <span className="text-xs text-on-surface-muted ml-2">{lang.name}</span>
                       </div>
                       {currentLanguage === lang.code && (
-                        <span className="material-symbols-outlined text-primary text-[14px]">check</span>
+                        <Check size={16} className="text-white" />
                       )}
                     </button>
                   ))}
@@ -118,30 +117,32 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
           <div className="relative">
             <button
               onClick={() => { setShowProfileMenu(!showProfileMenu); setShowLangMenu(false); }}
-              className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-all"
+              className="flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-white/10 transition-all border border-transparent hover:border-white/10"
             >
-              <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold">
+              <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold shadow-sm">
                 {userProfile.name ? userProfile.name.charAt(0).toUpperCase() : 'U'}
               </div>
-              <span className="hidden sm:inline text-xs truncate max-w-[100px]">{userProfile.name || 'User'}</span>
             </button>
             {showProfileMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowProfileMenu(false)} />
-                <div className="absolute right-0 mt-1 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg z-50 py-1">
+                <div className="absolute right-0 mt-2 w-52 glass-panel rounded-xl z-50 py-2">
+                  <div className="px-4 py-3 border-b border-white/10 mb-2">
+                    <p className="text-sm font-bold text-white truncate">{userProfile.name || 'User'}</p>
+                    <p className="text-xs text-on-surface-muted truncate">{userProfile.type === 'business' ? 'Business Profile' : 'Individual Profile'}</p>
+                  </div>
                   <button
                     onClick={() => { onTabChange('profile'); setShowProfileMenu(false); }}
-                    className="w-full text-left px-3 py-2 text-sm text-on-surface hover:bg-surface-variant/50 transition-colors flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-white/10 transition-colors flex items-center gap-3 font-medium"
                   >
-                    <span className="material-symbols-outlined text-[16px]">person</span>
+                    <User size={16} />
                     {t('navProfile')}
                   </button>
-                  <div className="border-t border-outline-variant my-1" />
                   <button
                     onClick={() => { onLogout(); setShowProfileMenu(false); }}
-                    className="w-full text-left px-3 py-2 text-sm text-error hover:bg-error/5 transition-colors flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors flex items-center gap-3 font-medium mt-1"
                   >
-                    <span className="material-symbols-outlined text-[16px]">logout</span>
+                    <LogOut size={16} />
                     {t('logout')}
                   </button>
                 </div>

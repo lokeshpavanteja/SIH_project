@@ -103,12 +103,12 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 16 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-5xl bg-surface-container-lowest border border-surface-variant rounded-2xl shadow-elevated z-10 overflow-hidden max-h-[90vh] flex flex-col"
+          className="relative w-full max-w-5xl bg-surface-container-lowest border border-surface-variant rounded-xl shadow-elevated z-10 overflow-hidden max-h-[90vh] flex flex-col"
         >
           {/* Header */}
           <div className="p-6 border-b border-surface-variant flex items-center justify-between bg-surface/50">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+              <div className="w-10 h-10 rounded-xl bg-white/5 text-white flex items-center justify-center border border-white/10">
                 <span className="material-symbols-outlined text-[22px]">compare_arrows</span>
               </div>
               <div>
@@ -144,7 +144,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
                 className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl text-xs font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
               >
                 {allSchemes.map((s) => (
-                  <option key={s.id} value={s.id}>
+                  <option className="bg-zinc-900 text-white" key={s.id} value={s.id}>
                     {s.type === 'government' ? '🏛️ [Gov]' : '🏢 [Private]'} {s.title} ({s.matchScore}% Match)
                   </option>
                 ))}
@@ -163,7 +163,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
                 className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl text-xs font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
               >
                 {allSchemes.map((s) => (
-                  <option key={s.id} value={s.id}>
+                  <option className="bg-zinc-900 text-white" key={s.id} value={s.id}>
                     {s.type === 'government' ? '🏛️ [Gov]' : '🏢 [Private]'} {s.title} ({s.matchScore}% Match)
                   </option>
                 ))}
@@ -179,7 +179,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
                   <thead>
                     <tr className="border-b border-surface-variant">
                       <th className="py-3 px-4 font-bold text-on-surface-variant uppercase w-1/4">Criteria</th>
-                      <th className="py-3 px-4 font-bold text-primary w-3/8 text-sm">
+                      <th className="py-3 px-4 font-bold text-white w-3/8 text-sm">
                         <div className="flex items-center gap-1.5">
                           <span>{schemeA.type === 'government' ? '🏛️' : '🏢'}</span>
                           <span>{schemeA.title}</span>
@@ -217,7 +217,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
                     <tr>
                       <td className="py-3 px-4 font-semibold text-on-surface-variant">Match Score</td>
                       <td className="py-3 px-4">
-                        <span className="font-bold text-sm text-primary">{schemeA.matchScore}% Match</span>
+                        <span className="font-bold text-sm text-white">{schemeA.matchScore}% Match</span>
                       </td>
                       <td className="py-3 px-4">
                         <span className="font-bold text-sm text-indigo-600 dark:text-indigo-400">{schemeB.matchScore}% Match</span>
@@ -267,7 +267,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
                       <td className="py-3 px-4 space-y-1">
                         {schemeA.eligibility.slice(0, 3).map((e, idx) => (
                           <div key={idx} className="flex items-start gap-1 text-[11px] text-on-surface-variant">
-                            <span className="text-primary">•</span>
+                            <span className="text-white">•</span>
                             <span>{e}</span>
                           </div>
                         ))}
@@ -290,7 +290,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
                           href={schemeA.officialWebsiteUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary font-semibold text-[11px] hover:bg-primary-hover transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white text-on-primary font-semibold text-[11px] hover:bg-white-hover transition-colors"
                         >
                           <span>{schemeA.providerType}</span>
                           <span className="material-symbols-outlined text-[14px]">open_in_new</span>
@@ -314,9 +314,9 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
             )}
 
             {/* AI Comparison Analysis Box */}
-            <div className="p-5 rounded-2xl bg-surface border border-surface-variant shadow-xs">
+            <div className="p-5 rounded-xl bg-surface border border-surface-variant shadow-xs">
               <div className="flex items-center gap-2 mb-3">
-                <span className="material-symbols-outlined text-primary text-[20px]">auto_awesome</span>
+                <span className="material-symbols-outlined text-white text-[20px]">auto_awesome</span>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-on-surface">
                   MatchWise AI Comparative Analysis
                 </h3>
@@ -324,7 +324,7 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
 
               {isLoadingAnalysis ? (
                 <div className="flex items-center gap-2 text-xs text-on-surface-variant py-4">
-                  <span className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   <span>Evaluating compatibility for {userProfile.companyName}...</span>
                 </div>
               ) : aiAnalysis ? (

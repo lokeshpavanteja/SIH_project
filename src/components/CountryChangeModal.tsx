@@ -41,11 +41,11 @@ export const CountryChangeModal: React.FC<CountryChangeModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 12 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-lg bg-surface-container-lowest border border-surface-variant rounded-2xl p-6 sm:p-7 shadow-elevated z-10 text-on-surface space-y-5"
+          className="relative w-full max-w-lg bg-surface-container-lowest border border-surface-variant rounded-xl p-6 sm:p-7 shadow-elevated z-10 text-on-surface space-y-5"
         >
           {/* Header Badge & Title */}
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 border border-amber-500/20 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 border border-amber-500/20 flex items-center justify-center shrink-0">
               <Globe className="w-6 h-6" />
             </div>
             <div>
@@ -70,14 +70,14 @@ export const CountryChangeModal: React.FC<CountryChangeModalProps> = ({
               </div>
             </div>
 
-            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center">
               <ArrowRight className="w-4 h-4" />
             </div>
 
             <div className="flex items-center gap-2.5 text-right">
               <div>
-                <div className="text-[10px] text-primary uppercase font-semibold">New Country</div>
-                <div className="text-xs font-bold text-primary">{targetCountry}</div>
+                <div className="text-[10px] text-white uppercase font-semibold">New Country</div>
+                <div className="text-xs font-bold text-white">{targetCountry}</div>
               </div>
               <span className="text-2xl">{targetFlag}</span>
             </div>
@@ -123,7 +123,7 @@ export const CountryChangeModal: React.FC<CountryChangeModalProps> = ({
               id="btn-confirm-country-change"
               type="button"
               onClick={onConfirm}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-hover shadow-ambient transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-on-primary text-xs font-semibold hover:bg-white-hover shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Confirm & Switch to {targetCountry}</span>

@@ -150,7 +150,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
               </div>
 
               {acceptedSchemes.length === 0 ? (
-                <div className="p-10 rounded-2xl bg-surface-container-lowest border border-surface-variant text-center space-y-3">
+                <div className="p-10 rounded-xl bg-surface-container-lowest border border-surface-variant text-center space-y-3">
                   <span className="material-symbols-outlined text-on-surface-variant text-4xl">inbox</span>
                   <p className="text-xs text-on-surface-variant">{t('emptyAccepted')}</p>
                 </div>
@@ -159,7 +159,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                   {acceptedSchemes.map((scheme) => (
                     <div
                       key={scheme.id}
-                      className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-5 shadow-ambient flex flex-col justify-between"
+                      className="bg-surface-container-lowest border border-surface-variant rounded-xl p-5 shadow-sm flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
@@ -172,12 +172,12 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                           >
                             {scheme.type === 'government' ? '🏛️ Government' : '🏢 Private'}
                           </span>
-                          <span className="text-xs font-bold text-primary">{scheme.matchScore}% Match</span>
+                          <span className="text-xs font-bold text-white">{scheme.matchScore}% Match</span>
                         </div>
 
                         <h3
                           onClick={() => onOpenSchemeDetail(scheme)}
-                          className="font-bold text-base text-on-surface hover:text-primary cursor-pointer transition-colors line-clamp-2 mb-1"
+                          className="font-bold text-base text-on-surface hover:text-white cursor-pointer transition-colors line-clamp-2 mb-1"
                         >
                           {scheme.title}
                         </h3>
@@ -202,7 +202,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                           href={scheme.officialWebsiteUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full py-2.5 px-3 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary-hover shadow-xs flex items-center justify-center gap-1.5 transition-all"
+                          className="w-full py-2.5 px-3 rounded-xl bg-white text-on-primary text-xs font-semibold hover:bg-white-hover shadow-xs flex items-center justify-center gap-1.5 transition-all"
                         >
                           <span>{t('applyOnOfficialWebsite')}</span>
                           <span className="material-symbols-outlined text-[15px]">open_in_new</span>
@@ -243,7 +243,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
               </div>
 
               {rejectedSchemes.length === 0 ? (
-                <div className="p-10 rounded-2xl bg-surface-container-lowest border border-surface-variant text-center space-y-3">
+                <div className="p-10 rounded-xl bg-surface-container-lowest border border-surface-variant text-center space-y-3">
                   <span className="material-symbols-outlined text-on-surface-variant text-4xl">check_circle</span>
                   <p className="text-xs text-on-surface-variant">{t('emptyRejected')}</p>
                 </div>
@@ -252,7 +252,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                   {rejectedSchemes.map((scheme) => (
                     <div
                       key={scheme.id}
-                      className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-5 shadow-ambient flex flex-col justify-between opacity-80 hover:opacity-100 transition-opacity"
+                      className="bg-surface-container-lowest border border-surface-variant rounded-xl p-5 shadow-sm flex flex-col justify-between opacity-80 hover:opacity-100 transition-opacity"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
@@ -279,7 +279,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                         </button>
                         <button
                           onClick={() => onRestoreScheme(scheme.id)}
-                          className="flex-1 py-2 text-xs font-semibold text-primary hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
+                          className="flex-1 py-2 text-xs font-semibold text-white hover:bg-white/5 rounded-lg border border-white/10 transition-colors"
                         >
                           Restore Scheme
                         </button>
@@ -296,7 +296,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
       {/* ================= 2. DOCUMENT READINESS VAULT TAB ================= */}
       {activeTab === 'vault' && (
         <div className="space-y-6">
-          <div className="p-5 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-5 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h2 className="font-headline-md text-lg font-bold text-on-surface mb-1">
                 Compliance & Eligibility Document Vault
@@ -307,7 +307,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
             </div>
             <button
               onClick={() => onOpenDocumentUpload()}
-              className="px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-semibold hover:bg-primary-hover flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer w-fit"
+              className="px-4 py-2.5 bg-white text-on-primary rounded-xl text-xs font-semibold hover:bg-white-hover flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer w-fit"
             >
               <span className="material-symbols-outlined text-[18px]">upload_file</span>
               <span>Upload Compliance Document</span>
@@ -318,7 +318,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
             {documents.map((doc) => (
               <div
                 key={doc.id}
-                className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-5 shadow-ambient flex flex-col justify-between"
+                className="bg-surface-container-lowest border border-surface-variant rounded-xl p-5 shadow-sm flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -353,7 +353,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                   <span>{doc.fileSize || 'Required'}</span>
                   <button
                     onClick={() => onOpenDocumentUpload(doc)}
-                    className="text-primary hover:underline font-semibold"
+                    className="text-white hover:underline font-semibold"
                   >
                     {doc.status === 'verified' ? 'Update' : 'Upload'}
                   </button>
@@ -367,8 +367,8 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
       {/* ================= 3. INVESTOR INFORMATION TAB ================= */}
       {activeTab === 'investors' && (
         <div className="space-y-6">
-          <div className="p-5 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
-            <div className="flex items-center gap-2 text-primary font-bold text-sm mb-1">
+          <div className="p-5 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
+            <div className="flex items-center gap-2 text-white font-bold text-sm mb-1">
               <span className="material-symbols-outlined text-[20px]">info</span>
               <span>{t('investorDirectoryTitle')}</span>
             </div>
@@ -381,11 +381,11 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
             {sampleInvestors.map((inv) => (
               <div
                 key={inv.id}
-                className="bg-surface-container-lowest border border-surface-variant rounded-2xl p-5 shadow-ambient flex flex-col justify-between"
+                className="bg-surface-container-lowest border border-surface-variant rounded-xl p-5 shadow-sm flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-primary/10 text-primary">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/5 text-white">
                       Venture Capital / Seed
                     </span>
                     <span className="text-xs text-on-surface-variant">{inv.receptionDesk}</span>
@@ -410,7 +410,7 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                       <span className="text-on-surface-variant font-semibold block mb-0.5">
                         {t('investorTicketTitle')}:
                       </span>
-                      <span className="text-on-surface font-bold text-primary">{inv.ticketSize}</span>
+                      <span className="text-on-surface font-bold text-white">{inv.ticketSize}</span>
                     </div>
 
                     {/* Formatted Contact Number (+91 XXXXX XXXXX) */}
@@ -419,11 +419,11 @@ export const TrackerView: React.FC<TrackerViewProps> = ({
                         {t('investorContactTitle')}
                       </div>
                       <div className="text-xs font-mono font-semibold text-on-surface flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-[15px] text-primary">call</span>
+                        <span className="material-symbols-outlined text-[15px] text-white">call</span>
                         <span>{inv.contactNumber}</span>
                       </div>
                       <div className="text-[11px] text-on-surface-variant mt-0.5 flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-[15px] text-primary">mail</span>
+                        <span className="material-symbols-outlined text-[15px] text-white">mail</span>
                         <span>{inv.email}</span>
                       </div>
                     </div>

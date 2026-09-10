@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { CheckCircle2, Info, AlertTriangle, X } from 'lucide-react';
 
 export interface ToastMessage {
   id: string;
@@ -17,45 +18,49 @@ export const Toast: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-20 md:bottom-6 right-4 z-[60] space-y-2 max-w-xs">
+    <div className="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-[120] space-y-3 max-w-sm w-full pointer-events-none">
       <AnimatePresence>
         {toasts.map(toast => {
           const iconMap = {
-            success: 'check_circle',
-            info: 'info',
-            warning: 'warning',
+            success: <CheckCircle2 className="text-success mt-0.5 shrink-0" size={20} />,
+            info: <Info className="text-secondary mt-0.5 shrink-0" size={20} />,
+            warning: <AlertTriangle className="text-amber-500 mt-0.5 shrink-0" size={20} />,
           };
-          const colorMap = {
-            success: 'bg-green-600',
-            info: 'bg-surface-container-highest',
-            warning: 'bg-amber-600',
+          
+          const glowMap = {
+            success: 'shadow-[0_0_20px_rgba(34,197,94,0.15)]',
+            info: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]',
+            warning: 'shadow-[0_0_20px_rgba(245,158,11,0.15)]',
           };
-          const textColorMap = {
-            success: 'text-white',
-            info: 'text-on-surface',
-            warning: 'text-white',
+
+          const borderMap = {
+            success: 'border-success/30',
+            info: 'border-secondary/30',
+            warning: 'border-amber-500/30',
           };
 
           return (
             <motion.div
               key={toast.id}
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className={`${colorMap[toast.type]} ${textColorMap[toast.type]} rounded-xl shadow-lg px-4 py-3 flex items-start gap-2.5 cursor-pointer`}
+              initial={{ opacity: 0, x: 50, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 20, scale: 0.9 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className={`glass-panel border ${borderMap[toast.type]} ${glowMap[toast.type]} rounded-xl p-4 flex items-start gap-3 pointer-events-auto group relative overflow-hidden`}
               onClick={() => onDismiss(toast.id)}
             >
-              <span className="material-symbols-outlined text-[18px] mt-0.5">{iconMap[toast.type]}</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold">{toast.title}</p>
-                {toast.message && <p className="text-xs opacity-80 mt-0.5 truncate">{toast.message}</p>}
+              {iconMap[toast.type]}
+              
+              <div className="flex-1 min-w-0 pr-6">
+                <p className="text-sm font-bold text-white mb-0.5">{toast.title}</p>
+                {toast.message && <p className="text-xs text-on-surface-muted leading-relaxed line-clamp-2">{toast.message}</p>}
               </div>
+              
               <button
                 onClick={(e) => { e.stopPropagation(); onDismiss(toast.id); }}
-                className="opacity-60 hover:opacity-100"
+                className="absolute top-4 right-4 text-on-surface-muted hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-full p-1"
               >
-                <span className="material-symbols-outlined text-[16px]">close</span>
+                <X size={14} />
               </button>
             </motion.div>
           );

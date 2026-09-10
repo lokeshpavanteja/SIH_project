@@ -477,7 +477,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-surface-variant">
         <div>
           <div className="flex items-center gap-2.5 mb-1">
-            <span className="p-1.5 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center">
+            <span className="p-1.5 rounded-xl bg-white/5 text-white border border-white/10 flex items-center justify-center">
               <span className="material-symbols-outlined text-[20px]">admin_panel_settings</span>
             </span>
             <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">
@@ -495,8 +495,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             id="btn-admin-sync-sources"
             onClick={handleRunSync}
             disabled={isSyncing}
-            className={`px-4 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-semibold flex items-center gap-2 shadow-xs transition-all ${
-              isSyncing ? 'opacity-70 cursor-not-allowed' : 'hover:bg-primary-hover active:scale-95'
+            className={`px-4 py-2.5 rounded-xl bg-white text-on-primary text-xs font-semibold flex items-center gap-2 shadow-xs transition-all ${
+              isSyncing ? 'opacity-70 cursor-not-allowed' : 'hover:bg-white-hover active:scale-95'
             }`}
           >
             <span className={`material-symbols-outlined text-[18px] ${isSyncing ? 'animate-spin' : ''}`}>
@@ -509,13 +509,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* KPI Stats Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+        <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
           <div className="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider">Total Schemes</div>
           <div className="text-xl sm:text-2xl font-bold text-on-surface mt-1">{stats.total}</div>
           <div className="text-[11px] text-on-surface-variant mt-0.5">Central database</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+        <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
           <div className="text-[10px] uppercase font-bold text-amber-600 dark:text-amber-400 tracking-wider flex items-center gap-1">
             <span>🏛️</span>
             <span>Government</span>
@@ -524,7 +524,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="text-[11px] text-on-surface-variant mt-0.5">Central & State Portals</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+        <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
           <div className="text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400 tracking-wider flex items-center gap-1">
             <span>🏢</span>
             <span>Private</span>
@@ -533,7 +533,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="text-[11px] text-on-surface-variant mt-0.5">Corporate & Accelerators</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+        <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
           <div className="text-[10px] uppercase font-bold text-success tracking-wider flex items-center gap-1">
             <span className="material-symbols-outlined text-[14px]">verified</span>
             <span>Verified</span>
@@ -542,21 +542,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="text-[11px] text-on-surface-variant mt-0.5">{stats.verified} verified links</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+        <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
           <div className="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider">Active Sources</div>
           <div className="text-xl sm:text-2xl font-bold text-on-surface mt-1">{stats.activeSources}</div>
           <div className="text-[11px] text-on-surface-variant mt-0.5">Of {sources.length} registered</div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+        <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
           <div className="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider">Duplicate Shield</div>
-          <div className="text-xl sm:text-2xl font-bold text-primary mt-1">100%</div>
+          <div className="text-xl sm:text-2xl font-bold text-white mt-1">100%</div>
           <div className="text-[11px] text-on-surface-variant mt-0.5">0 duplicate entries</div>
         </div>
       </div>
 
       {/* Admin Tab Navigation */}
-      <div className="flex bg-surface-variant p-1 rounded-2xl max-w-fit">
+      <div className="flex bg-surface-variant p-1 rounded-xl max-w-fit">
         <button
           id="btn-tab-admin-schemes"
           onClick={() => setAdminTab('schemes')}
@@ -588,7 +588,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           onClick={() => setAdminTab('ingest')}
           className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
             adminTab === 'ingest'
-              ? 'bg-surface-container-lowest text-primary shadow-xs'
+              ? 'bg-surface-container-lowest text-white shadow-xs'
               : 'text-on-surface-variant hover:text-on-surface'
           }`}
         >
@@ -616,7 +616,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {adminTab === 'schemes' && (
         <div className="space-y-4">
           {/* Controls Bar */}
-          <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
             {/* Search */}
             <div className="relative w-full md:w-80">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
@@ -638,7 +638,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <button
                   onClick={() => setFilterType('all')}
                   className={`px-2 py-1 rounded-lg text-xs font-semibold ${
-                    filterType === 'all' ? 'bg-primary text-on-primary' : 'text-on-surface-variant'
+                    filterType === 'all' ? 'bg-white text-on-primary' : 'text-on-surface-variant'
                   }`}
                 >
                   All
@@ -668,17 +668,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   onChange={(e) => setFilterVerification(e.target.value as any)}
                   className="bg-transparent text-xs font-semibold text-on-surface focus:outline-none pr-1"
                 >
-                  <option value="all">All Verification States</option>
-                  <option value="verified">✅ Verified</option>
-                  <option value="needs_verification">⚠️ Needs Verification</option>
-                  <option value="expired">🔴 Expired / Concluded</option>
+                  <option className="bg-zinc-900 text-white" value="all">All Verification States</option>
+                  <option className="bg-zinc-900 text-white" value="verified">✅ Verified</option>
+                  <option className="bg-zinc-900 text-white" value="needs_verification">⚠️ Needs Verification</option>
+                  <option className="bg-zinc-900 text-white" value="expired">🔴 Expired / Concluded</option>
                 </select>
               </div>
             </div>
           </div>
 
           {/* Scheme Records Table */}
-          <div className="bg-surface-container-lowest border border-surface-variant rounded-2xl shadow-ambient overflow-hidden">
+          <div className="bg-surface-container-lowest border border-surface-variant rounded-xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-surface border-b border-surface-variant text-[10px] uppercase font-bold text-on-surface-variant tracking-wider">
@@ -700,7 +700,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <td className="py-3.5 px-4 max-w-xs">
                           <div
                             onClick={() => onOpenSchemeDetail(scheme)}
-                            className="font-bold text-on-surface hover:text-primary cursor-pointer transition-colors line-clamp-1"
+                            className="font-bold text-on-surface hover:text-white cursor-pointer transition-colors line-clamp-1"
                           >
                             {scheme.title}
                           </div>
@@ -743,7 +743,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             href={scheme.officialWebsiteUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[11px] text-primary hover:underline flex items-center gap-0.5 truncate"
+                            className="text-[11px] text-white hover:underline flex items-center gap-0.5 truncate"
                           >
                             <span>Official Website</span>
                             <span className="material-symbols-outlined text-[12px]">open_in_new</span>
@@ -832,10 +832,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* ========================================================================= */}
       {adminTab === 'sources' && (
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
             <div>
               <h2 className="font-bold text-base text-on-surface flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[20px]">verified</span>
+                <span className="material-symbols-outlined text-white text-[20px]">verified</span>
                 <span>Enrolled Official Source Channels</span>
               </h2>
               <p className="text-xs text-on-surface-variant mt-0.5">
@@ -845,7 +845,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <button
               id="btn-open-add-source"
               onClick={() => setShowAddSourceModal(true)}
-              className="px-4 py-2 bg-primary text-on-primary text-xs font-semibold rounded-xl hover:bg-primary-hover transition-colors flex items-center gap-1.5"
+              className="px-4 py-2 bg-white text-on-primary text-xs font-semibold rounded-xl hover:bg-white-hover transition-colors flex items-center gap-1.5"
             >
               <span className="material-symbols-outlined text-[18px]">add</span>
               <span>Add Official Source</span>
@@ -858,7 +858,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               return (
                 <div
                   key={src.id}
-                  className="p-5 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient flex flex-col justify-between"
+                  className="p-5 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-2">
@@ -912,7 +912,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       href={src.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline font-semibold flex items-center gap-1"
+                      className="text-white hover:underline font-semibold flex items-center gap-1"
                     >
                       <span>Visit Portal</span>
                       <span className="material-symbols-outlined text-[14px]">open_in_new</span>
@@ -933,10 +933,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* ========================================================================= */}
       {adminTab === 'ingest' && (
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient space-y-4">
+          <div className="p-6 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm space-y-4">
             <div>
               <h2 className="font-bold text-base text-on-surface flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[20px]">psychology</span>
+                <span className="material-symbols-outlined text-white text-[20px]">psychology</span>
                 <span>AI Automated Scheme Data Ingestion</span>
               </h2>
               <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">
@@ -956,7 +956,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <button
                 type="submit"
                 disabled={isIngesting}
-                className="px-6 py-3 bg-primary text-on-primary text-xs sm:text-sm font-semibold rounded-xl hover:bg-primary-hover transition-colors flex items-center justify-center gap-2 shadow-xs shrink-0"
+                className="px-6 py-3 bg-white text-on-primary text-xs sm:text-sm font-semibold rounded-xl hover:bg-white-hover transition-colors flex items-center justify-center gap-2 shadow-xs shrink-0"
               >
                 {isIngesting ? (
                   <>
@@ -975,7 +975,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           {/* Ingested Preview Card */}
           {ingestedDraft && (
-            <div className="p-6 rounded-2xl bg-surface-container-lowest border-2 border-primary/40 shadow-elevated space-y-4 animate-in fade-in">
+            <div className="p-6 rounded-xl bg-surface-container-lowest border-2 border-white/40 shadow-elevated space-y-4 animate-in fade-in">
               <div className="flex items-center justify-between pb-3 border-b border-surface-variant">
                 <div className="flex items-center gap-2">
                   <span className="p-1 rounded-lg bg-success/15 text-success text-xs font-bold flex items-center gap-1">
@@ -996,7 +996,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </button>
                   <button
                     onClick={handlePublishIngestedDraft}
-                    className="px-4 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:bg-primary-hover shadow-xs flex items-center gap-1.5"
+                    className="px-4 py-1.5 rounded-lg bg-white text-on-primary text-xs font-semibold hover:bg-white-hover shadow-xs flex items-center gap-1.5"
                   >
                     <span className="material-symbols-outlined text-[16px]">publish</span>
                     <span>Publish to Database</span>
@@ -1022,7 +1022,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                 <div>
                   <label className="text-[10px] uppercase font-bold text-on-surface-variant">Official Link</label>
-                  <div className="font-semibold text-primary truncate mt-0.5">{ingestedDraft.officialWebsiteUrl}</div>
+                  <div className="font-semibold text-white truncate mt-0.5">{ingestedDraft.officialWebsiteUrl}</div>
                 </div>
               </div>
 
@@ -1051,9 +1051,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* ========================================================================= */}
       {adminTab === 'audit' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-ambient">
+          <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm">
             <h2 className="font-bold text-base text-on-surface flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary text-[20px]">history</span>
+              <span className="material-symbols-outlined text-white text-[20px]">history</span>
               <span>Scheme Update & Verification Audit Trail</span>
             </h2>
             <p className="text-xs text-on-surface-variant mt-0.5">
@@ -1061,7 +1061,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </p>
           </div>
 
-          <div className="bg-surface-container-lowest border border-surface-variant rounded-2xl shadow-ambient overflow-hidden">
+          <div className="bg-surface-container-lowest border border-surface-variant rounded-xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-surface border-b border-surface-variant text-[10px] uppercase font-bold text-on-surface-variant tracking-wider">
@@ -1088,7 +1088,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             log.changeType === 'created'
                               ? 'bg-success/15 text-success'
                               : log.changeType === 'verified'
-                              ? 'bg-primary/15 text-primary'
+                              ? 'bg-white/15 text-white'
                               : log.changeType === 'expired'
                               ? 'bg-error/15 text-error'
                               : 'bg-amber-500/15 text-amber-600'
@@ -1114,7 +1114,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* Add Source Modal */}
       {showAddSourceModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-scrim/60 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-surface-container-lowest border border-surface-variant rounded-2xl shadow-elevated p-6 space-y-4">
+          <div className="w-full max-w-md bg-surface-container-lowest border border-surface-variant rounded-xl shadow-elevated p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-surface-variant">
               <h3 className="font-bold text-base text-on-surface">Add Trusted Official Source</h3>
               <button
@@ -1158,8 +1158,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     onChange={(e) => setNewSourceSchemeType(e.target.value as any)}
                     className="w-full mt-1 px-3 py-2 bg-surface border border-surface-variant rounded-xl text-on-surface focus:outline-none"
                   >
-                    <option value="government">🏛️ Government</option>
-                    <option value="private">🏢 Private</option>
+                    <option className="bg-zinc-900 text-white" value="government">🏛️ Government</option>
+                    <option className="bg-zinc-900 text-white" value="private">🏢 Private</option>
                   </select>
                 </div>
 
@@ -1182,12 +1182,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   onChange={(e) => setNewSourceType(e.target.value as any)}
                   className="w-full mt-1 px-3 py-2 bg-surface border border-surface-variant rounded-xl text-on-surface focus:outline-none"
                 >
-                  <option value="Central Government Portal">Central Government Portal</option>
-                  <option value="State Government Portal">State Government Portal</option>
-                  <option value="Government Agency">Government Agency</option>
-                  <option value="Corporate Foundation">Corporate Foundation</option>
-                  <option value="Verified Incubator / Accelerator">Verified Incubator / Accelerator</option>
-                  <option value="Financial Institution">Financial Institution</option>
+                  <option className="bg-zinc-900 text-white" value="Central Government Portal">Central Government Portal</option>
+                  <option className="bg-zinc-900 text-white" value="State Government Portal">State Government Portal</option>
+                  <option className="bg-zinc-900 text-white" value="Government Agency">Government Agency</option>
+                  <option className="bg-zinc-900 text-white" value="Corporate Foundation">Corporate Foundation</option>
+                  <option className="bg-zinc-900 text-white" value="Verified Incubator / Accelerator">Verified Incubator / Accelerator</option>
+                  <option className="bg-zinc-900 text-white" value="Financial Institution">Financial Institution</option>
                 </select>
               </div>
 
@@ -1212,7 +1212,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-primary text-on-primary font-semibold hover:bg-primary-hover"
+                  className="px-5 py-2 rounded-xl bg-white text-on-primary font-semibold hover:bg-white-hover"
                 >
                   Register Source
                 </button>
@@ -1225,7 +1225,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* Edit Scheme Details Modal */}
       {editingScheme && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-scrim/60 backdrop-blur-sm">
-          <div className="w-full max-w-2xl bg-surface-container-lowest border border-surface-variant rounded-2xl shadow-elevated p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-2xl bg-surface-container-lowest border border-surface-variant rounded-xl shadow-elevated p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-surface-variant">
               <h3 className="font-bold text-base text-on-surface">Edit Central Scheme Record</h3>
               <button
@@ -1267,8 +1267,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     onChange={(e) => setEditingScheme({ ...editingScheme, type: e.target.value as any })}
                     className="w-full mt-1 px-3 py-2 bg-surface border border-surface-variant rounded-xl text-on-surface"
                   >
-                    <option value="government">🏛️ Government Scheme</option>
-                    <option value="private">🏢 Private Scheme</option>
+                    <option className="bg-zinc-900 text-white" value="government">🏛️ Government Scheme</option>
+                    <option className="bg-zinc-900 text-white" value="private">🏢 Private Scheme</option>
                   </select>
                 </div>
               </div>
@@ -1291,12 +1291,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     onChange={(e) => setEditingScheme({ ...editingScheme, fundingNature: e.target.value as any })}
                     className="w-full mt-1 px-3 py-2 bg-surface border border-surface-variant rounded-xl text-on-surface"
                   >
-                    <option value="Grant / Subsidy">Grant / Subsidy</option>
-                    <option value="Soft Loan / Credit">Soft Loan / Credit</option>
-                    <option value="Non-Dilutive Seed">Non-Dilutive Seed</option>
-                    <option value="Corporate Support">Corporate Support</option>
-                    <option value="Innovation Prize">Innovation Prize</option>
-                    <option value="Tax Incentive / Exemption">Tax Incentive / Exemption</option>
+                    <option className="bg-zinc-900 text-white" value="Grant / Subsidy">Grant / Subsidy</option>
+                    <option className="bg-zinc-900 text-white" value="Soft Loan / Credit">Soft Loan / Credit</option>
+                    <option className="bg-zinc-900 text-white" value="Non-Dilutive Seed">Non-Dilutive Seed</option>
+                    <option className="bg-zinc-900 text-white" value="Corporate Support">Corporate Support</option>
+                    <option className="bg-zinc-900 text-white" value="Innovation Prize">Innovation Prize</option>
+                    <option className="bg-zinc-900 text-white" value="Tax Incentive / Exemption">Tax Incentive / Exemption</option>
                   </select>
                 </div>
               </div>
@@ -1330,9 +1330,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     onChange={(e) => setEditingScheme({ ...editingScheme, verificationStatus: e.target.value as any })}
                     className="w-full mt-1 px-3 py-2 bg-surface border border-surface-variant rounded-xl text-on-surface"
                   >
-                    <option value="verified">Verified</option>
-                    <option value="needs_verification">Needs Verification</option>
-                    <option value="expired">Expired</option>
+                    <option className="bg-zinc-900 text-white" value="verified">Verified</option>
+                    <option className="bg-zinc-900 text-white" value="needs_verification">Needs Verification</option>
+                    <option className="bg-zinc-900 text-white" value="expired">Expired</option>
                   </select>
                 </div>
 
@@ -1343,9 +1343,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     onChange={(e) => setEditingScheme({ ...editingScheme, status: e.target.value as any })}
                     className="w-full mt-1 px-3 py-2 bg-surface border border-surface-variant rounded-xl text-on-surface"
                   >
-                    <option value="active">Active</option>
-                    <option value="expired">Expired</option>
-                    <option value="temporarily_closed">Temporarily Closed</option>
+                    <option className="bg-zinc-900 text-white" value="active">Active</option>
+                    <option className="bg-zinc-900 text-white" value="expired">Expired</option>
+                    <option className="bg-zinc-900 text-white" value="temporarily_closed">Temporarily Closed</option>
                   </select>
                 </div>
               </div>
@@ -1360,7 +1360,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-primary text-on-primary font-semibold hover:bg-primary-hover"
+                  className="px-5 py-2 rounded-xl bg-white text-on-primary font-semibold hover:bg-white-hover"
                 >
                   Save Changes
                 </button>

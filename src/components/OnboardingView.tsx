@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { UserProfile, LanguageCode, EducationLevel, SectorType, OrgType, OnboardingProfile } from '../types';
 import { getTranslation } from '../i18n/translations';
 import { INDIAN_STATES, EDUCATION_LEVELS, SECTORS, ORG_TYPES } from '../data/mockData';
+import { 
+  ArrowLeft, ArrowRight, Save, Search, ChevronDown, Check,
+  GraduationCap, Briefcase, User, Building2, Landmark, Shield
+} from 'lucide-react';
 
 interface OnboardingViewProps {
   currentLanguage: LanguageCode;
@@ -11,6 +15,33 @@ interface OnboardingViewProps {
 }
 
 const TOTAL_STEPS = 5;
+
+// Helper to map mockData icons to Lucide icons
+const IconMap: Record<string, React.FC<any>> = {
+  'school': GraduationCap,
+  'menu_book': GraduationCap,
+  'auto_stories': GraduationCap,
+  'workspace_premium': Shield,
+  'psychology': GraduationCap,
+  'biotech': GraduationCap,
+  'more_horiz': Building2,
+  'agriculture': Landmark,
+  'engineering': Building2,
+  'precision_manufacturing': Building2,
+  'code': User,
+  'factory': Building2,
+  'health_and_safety': Shield,
+  'storefront': Building2,
+  'restaurant': Building2,
+  'brush': User,
+  'support_agent': User,
+  'person': User,
+  'lightbulb': Building2,
+  'rocket_launch': Building2,
+  'business': Building2,
+  'volunteer_activism': Shield,
+  'diversity_3': Shield,
+};
 
 export const OnboardingView: React.FC<OnboardingViewProps> = ({
   currentLanguage,
@@ -163,71 +194,75 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
   const stepLabels = [t('step1Title'), t('step2Title'), t('step3Title'), t('step4Title'), t('step5Title')];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+      {/* Background ambient glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+
       {/* Top bar */}
-      <header className="border-b border-outline-variant bg-surface-container-lowest sticky top-0 z-30">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <button onClick={handleBack} className="p-1 rounded-lg hover:bg-surface-variant transition-colors" aria-label="Back">
-              <span className="material-symbols-outlined text-on-surface-variant text-[20px]">arrow_back</span>
+      <header className="border-b border-white/10 glass-nav sticky top-0 z-30">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button onClick={handleBack} className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all" aria-label="Back">
+              <ArrowLeft size={18} className="text-on-surface-muted" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-primary text-on-primary flex items-center justify-center text-xs font-bold">M</div>
-              <span className="font-bold text-on-surface tracking-tight text-sm">MatchWise <span className="text-primary">AI</span></span>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center text-xs font-black shadow-sm">M</div>
+              <span className="font-extrabold text-white tracking-tight text-base hidden sm:inline">MatchWise <span className="text-white">AI</span></span>
             </div>
           </div>
           <button
             onClick={handleSaveLater}
-            className="text-xs font-medium text-primary hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-on-surface-muted hover:text-white px-3 py-1.5 rounded-lg border border-transparent hover:border-white/10 hover:bg-white/5 flex items-center gap-1.5 transition-all"
           >
-            <span className="material-symbols-outlined text-[14px]">save</span>
-            {t('saveContinueLater')}
+            <Save size={14} />
+            <span className="hidden sm:inline">{t('saveContinueLater')}</span>
           </button>
         </div>
       </header>
 
-      <main className="flex-1 flex items-start justify-center px-4 py-6 sm:py-10">
-        <div className="w-full max-w-xl">
+      <main className="flex-1 flex items-start justify-center px-4 py-8 sm:py-12 z-10">
+        <div className="w-full max-w-2xl">
           {/* Step indicator */}
-          <div className="mb-6">
-            <div className="flex items-center gap-1 mb-3">
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
               {Array.from({ length: TOTAL_STEPS }, (_, i) => (
-                <div key={i} className="flex-1 flex items-center gap-1">
-                  <div className={`h-1.5 flex-1 rounded-full transition-all ${
-                    i + 1 < step ? 'bg-primary' : i + 1 === step ? 'bg-primary' : 'bg-outline-variant'
+                <div key={i} className="flex-1">
+                  <div className={`h-1.5 w-full rounded-full transition-all duration-500 ${
+                    i + 1 < step ? 'bg-white' : i + 1 === step ? 'bg-white shadow-[0_0_10px_rgba(139,92,246,0.5)]' : 'bg-white/10'
                   }`} />
                 </div>
               ))}
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium text-on-surface-variant">
+              <p className="text-xs font-bold text-white uppercase tracking-widest">
                 Step {step} of {TOTAL_STEPS}
               </p>
-              <p className="text-xs text-on-surface-variant">{stepLabels[step - 1]}</p>
+              <p className="text-sm font-semibold text-white">{stepLabels[step - 1]}</p>
             </div>
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={`step-${step}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
-              className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 sm:p-7 shadow-ambient"
+              initial={{ opacity: 0, x: 20, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, x: -20, filter: 'blur(4px)' }}
+              transition={{ duration: 0.3, type: 'spring', damping: 25, stiffness: 300 }}
+              className="glass-panel border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden"
             >
               {/* Step 1: Personal Information */}
               {step === 1 && (
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-lg font-bold text-on-surface mb-1">{t('step1Title')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-2">{t('step1Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step1Subtitle')}</p>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     {/* Full Name */}
                     <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('fullNameLabel')} <span className="text-error">*</span>
                       </label>
                       <input
@@ -236,14 +271,14 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.fullName}
                         onChange={e => updateField('fullName', e.target.value)}
                         placeholder={t('fullNamePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all ${errors.fullName ? 'border-error' : 'border-outline-variant'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.fullName ? 'border-error ring-1 ring-error' : 'border-white/10 focus:border-white'}`}
                       />
-                      {errors.fullName && <p className="mt-1 text-xs text-error">{errors.fullName}</p>}
+                      {errors.fullName && <p className="mt-1.5 text-xs font-medium text-error">{errors.fullName}</p>}
                     </div>
 
                     {/* Age */}
                     <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('ageLabel')} <span className="text-error">*</span>
                       </label>
                       <input
@@ -254,17 +289,17 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.age}
                         onChange={e => updateField('age', e.target.value === '' ? '' : Number(e.target.value))}
                         placeholder={t('agePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all ${errors.age ? 'border-error' : 'border-outline-variant'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.age ? 'border-error ring-1 ring-error' : 'border-white/10 focus:border-white'}`}
                       />
-                      {errors.age && <p className="mt-1 text-xs text-error">{errors.age}</p>}
+                      {errors.age && <p className="mt-1.5 text-xs font-medium text-error">{errors.age}</p>}
                     </div>
 
                     {/* State - Searchable */}
                     <div className="relative">
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('stateLabel')} <span className="text-error">*</span>
                       </label>
-                      <div className="relative">
+                      <div className="relative group">
                         <input
                           id="input-state"
                           type="text"
@@ -272,15 +307,13 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onChange={e => { setStateSearch(e.target.value); setShowStateDropdown(true); }}
                           onFocus={() => { setShowStateDropdown(true); setStateSearch(''); }}
                           placeholder={t('statePlaceholder')}
-                          className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all ${errors.state ? 'border-error' : 'border-outline-variant'}`}
+                          className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.state ? 'border-error ring-1 ring-error' : 'border-white/10 focus:border-white'}`}
                           autoComplete="off"
                         />
-                        <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
-                          expand_more
-                        </span>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-muted pointer-events-none transition-transform group-focus-within:rotate-180" size={16} />
                       </div>
                       {showStateDropdown && (
-                        <div className="absolute z-20 w-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg max-h-48 overflow-y-auto">
+                        <div className="absolute z-20 w-full mt-2 glass-panel border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto py-1">
                           {filteredStates.map(s => (
                             <button
                               key={s}
@@ -291,26 +324,26 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                                 setShowStateDropdown(false);
                                 setStateSearch('');
                               }}
-                              className={`w-full text-left px-3.5 py-2.5 text-sm hover:bg-surface-variant transition-colors ${form.state === s ? 'bg-primary/5 text-primary font-medium' : 'text-on-surface'}`}
+                              className={`w-full text-left px-4 py-2.5 text-sm transition-colors font-medium ${form.state === s ? 'bg-white/10 text-white' : 'text-on-surface hover:bg-white/10 hover:text-white'}`}
                             >
                               {s}
                             </button>
                           ))}
                           {filteredStates.length === 0 && (
-                            <p className="px-3.5 py-2.5 text-xs text-on-surface-variant">No states found</p>
+                            <p className="px-4 py-3 text-xs text-on-surface-muted text-center">No states found</p>
                           )}
                         </div>
                       )}
-                      {errors.state && <p className="mt-1 text-xs text-error">{errors.state}</p>}
+                      {errors.state && <p className="mt-1.5 text-xs font-medium text-error">{errors.state}</p>}
                     </div>
 
-                    {/* District - Searchable (dependent on state) */}
+                    {/* District - Searchable */}
                     {form.state && (
                       <div className="relative">
-                        <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                        <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                           {t('districtLabel')}
                         </label>
-                        <div className="relative">
+                        <div className="relative group">
                           <input
                             id="input-district"
                             type="text"
@@ -318,15 +351,13 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                             onChange={e => { setDistrictSearch(e.target.value); setShowDistrictDropdown(true); }}
                             onFocus={() => { setShowDistrictDropdown(true); setDistrictSearch(''); }}
                             placeholder={t('districtPlaceholder')}
-                            className="w-full px-3.5 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                            className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white transition-all shadow-inner"
                             autoComplete="off"
                           />
-                          <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
-                            expand_more
-                          </span>
+                          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-muted pointer-events-none transition-transform group-focus-within:rotate-180" size={16} />
                         </div>
                         {showDistrictDropdown && (
-                          <div className="absolute z-20 w-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg max-h-48 overflow-y-auto">
+                          <div className="absolute z-20 w-full mt-2 glass-panel border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto py-1">
                             {filteredDistricts.map(d => (
                               <button
                                 key={d}
@@ -336,7 +367,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                                   setShowDistrictDropdown(false);
                                   setDistrictSearch('');
                                 }}
-                                className={`w-full text-left px-3.5 py-2.5 text-sm hover:bg-surface-variant transition-colors ${form.district === d ? 'bg-primary/5 text-primary font-medium' : 'text-on-surface'}`}
+                                className={`w-full text-left px-4 py-2.5 text-sm transition-colors font-medium ${form.district === d ? 'bg-white/10 text-white' : 'text-on-surface hover:bg-white/10 hover:text-white'}`}
                               >
                                 {d}
                               </button>
@@ -351,124 +382,127 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
 
               {/* Step 2: Education */}
               {step === 2 && (
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-lg font-bold text-on-surface mb-1">{t('step2Title')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-2">{t('step2Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step2Subtitle')}</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {EDUCATION_LEVELS.map(edu => {
                       const isSelected = form.education === edu.key;
+                      const IconObj = IconMap[edu.icon] || GraduationCap;
                       return (
                         <button
                           key={edu.key}
                           type="button"
                           onClick={() => updateField('education', edu.key as EducationLevel)}
-                          className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all ${
+                          className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-300 ${
                             isSelected
-                              ? 'border-primary bg-primary/5 ring-1 ring-primary/30'
-                              : 'border-outline-variant bg-surface hover:bg-surface-variant/50'
+                              ? 'border-white bg-white/5 ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                              : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
                           }`}
                         >
-                          <span className={`material-symbols-outlined text-[20px] ${isSelected ? 'text-primary' : 'text-on-surface-variant'}`}>
-                            {edu.icon}
-                          </span>
-                          <span className={`text-sm font-medium ${isSelected ? 'text-primary' : 'text-on-surface'}`}>
+                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-white/10 text-white' : 'bg-white/5 text-on-surface-muted'}`}>
+                            <IconObj size={20} />
+                          </div>
+                          <span className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-on-surface-variant'}`}>
                             {t(edu.labelKey)}
                           </span>
                           {isSelected && (
-                            <span className="ml-auto w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center">
-                              <span className="material-symbols-outlined text-[13px]">check</span>
+                            <span className="ml-auto w-5 h-5 rounded-full bg-white text-black flex items-center justify-center shadow-sm">
+                              <Check size={12} strokeWidth={3} />
                             </span>
                           )}
                         </button>
                       );
                     })}
                   </div>
-                  {errors.education && <p className="text-xs text-error">{errors.education}</p>}
+                  {errors.education && <p className="text-xs font-medium text-error">{errors.education}</p>}
                 </div>
               )}
 
               {/* Step 3: Sector */}
               {step === 3 && (
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-lg font-bold text-on-surface mb-1">{t('step3Title')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-2">{t('step3Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step3Subtitle')}</p>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {SECTORS.map(sec => {
                       const isSelected = form.sector === sec.key;
+                      const IconObj = IconMap[sec.icon] || Briefcase;
                       return (
                         <button
                           key={sec.key}
                           type="button"
                           onClick={() => updateField('sector', sec.key as SectorType)}
-                          className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border text-center transition-all ${
+                          className={`flex flex-col items-center gap-3 p-4 rounded-xl border text-center transition-all duration-300 ${
                             isSelected
-                              ? 'border-primary bg-primary/5 ring-1 ring-primary/30'
-                              : 'border-outline-variant bg-surface hover:bg-surface-variant/50'
+                              ? 'border-white bg-white/5 ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                              : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
                           }`}
                         >
-                          <span className={`material-symbols-outlined text-[22px] ${isSelected ? 'text-primary' : 'text-on-surface-variant'}`}>
-                            {sec.icon}
-                          </span>
-                          <span className={`text-xs font-medium ${isSelected ? 'text-primary' : 'text-on-surface'}`}>
+                          <div className={`p-3 rounded-xl ${isSelected ? 'bg-white/10 text-white' : 'bg-white/5 text-on-surface-muted'}`}>
+                            <IconObj size={24} />
+                          </div>
+                          <span className={`text-xs font-bold ${isSelected ? 'text-white' : 'text-on-surface-variant'}`}>
                             {t(sec.labelKey)}
                           </span>
                         </button>
                       );
                     })}
                   </div>
-                  {errors.sector && <p className="text-xs text-error">{errors.sector}</p>}
+                  {errors.sector && <p className="text-xs font-medium text-error">{errors.sector}</p>}
                 </div>
               )}
 
               {/* Step 4: Organization Type */}
               {step === 4 && (
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-lg font-bold text-on-surface mb-1">{t('step4Title')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-2">{t('step4Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step4Subtitle')}</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {ORG_TYPES.map(org => {
                       const isSelected = form.orgType === org.key;
+                      const IconObj = IconMap[org.icon] || Building2;
                       return (
                         <button
                           key={org.key}
                           type="button"
                           onClick={() => updateField('orgType', org.key as OrgType)}
-                          className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all ${
+                          className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-300 ${
                             isSelected
-                              ? 'border-primary bg-primary/5 ring-1 ring-primary/30'
-                              : 'border-outline-variant bg-surface hover:bg-surface-variant/50'
+                              ? 'border-white bg-white/5 ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                              : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
                           }`}
                         >
-                          <span className={`material-symbols-outlined text-[20px] ${isSelected ? 'text-primary' : 'text-on-surface-variant'}`}>
-                            {org.icon}
-                          </span>
-                          <span className={`text-sm font-medium ${isSelected ? 'text-primary' : 'text-on-surface'}`}>
+                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-white/10 text-white' : 'bg-white/5 text-on-surface-muted'}`}>
+                            <IconObj size={20} />
+                          </div>
+                          <span className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-on-surface-variant'}`}>
                             {t(org.labelKey)}
                           </span>
                           {isSelected && (
-                            <span className="ml-auto w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center">
-                              <span className="material-symbols-outlined text-[13px]">check</span>
+                            <span className="ml-auto w-5 h-5 rounded-full bg-white text-black flex items-center justify-center shadow-sm">
+                              <Check size={12} strokeWidth={3} />
                             </span>
                           )}
                         </button>
                       );
                     })}
                   </div>
-                  {errors.orgType && <p className="text-xs text-error">{errors.orgType}</p>}
+                  {errors.orgType && <p className="text-xs font-medium text-error">{errors.orgType}</p>}
 
                   {/* Conditional org name fields */}
                   {form.orgType === 'existing_startup' && (
-                    <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('companyNameLabel')} <span className="text-error">*</span>
                       </label>
                       <input
@@ -476,14 +510,14 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('orgNamePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary ${errors.orgName ? 'border-error' : 'border-outline-variant'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-white/10 focus:border-white'}`}
                       />
-                      {errors.orgName && <p className="mt-1 text-xs text-error">{errors.orgName}</p>}
-                    </div>
+                      {errors.orgName && <p className="mt-1.5 text-xs font-medium text-error">{errors.orgName}</p>}
+                    </motion.div>
                   )}
                   {form.orgType === 'existing_business' && (
-                    <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('businessNameLabel')} <span className="text-error">*</span>
                       </label>
                       <input
@@ -491,14 +525,14 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('orgNamePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary ${errors.orgName ? 'border-error' : 'border-outline-variant'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-white/10 focus:border-white'}`}
                       />
-                      {errors.orgName && <p className="mt-1 text-xs text-error">{errors.orgName}</p>}
-                    </div>
+                      {errors.orgName && <p className="mt-1.5 text-xs font-medium text-error">{errors.orgName}</p>}
+                    </motion.div>
                   )}
                   {form.orgType === 'existing_ngo' && (
-                    <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('ngoNameLabel')} <span className="text-error">*</span>
                       </label>
                       <input
@@ -506,14 +540,14 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('orgNamePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 bg-surface border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary ${errors.orgName ? 'border-error' : 'border-outline-variant'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-white/10 focus:border-white'}`}
                       />
-                      {errors.orgName && <p className="mt-1 text-xs text-error">{errors.orgName}</p>}
-                    </div>
+                      {errors.orgName && <p className="mt-1.5 text-xs font-medium text-error">{errors.orgName}</p>}
+                    </motion.div>
                   )}
                   {form.orgType === 'planning_startup' && (
-                    <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">
                         {t('startupPlanLabel')}
                       </label>
                       <input
@@ -521,55 +555,55 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('startupPlanPlaceholder')}
-                        className="w-full px-3.5 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner"
                       />
-                    </div>
+                    </motion.div>
                   )}
                 </div>
               )}
 
               {/* Step 5: Financial Information */}
               {step === 5 && (
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-lg font-bold text-on-surface mb-1">{t('step5Title')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-2">{t('step5Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step5Subtitle')}</p>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">{t('annualIncomeLabel')}</label>
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">{t('annualIncomeLabel')}</label>
                       <input
                         type="text"
                         value={form.annualIncome}
                         onChange={e => updateField('annualIncome', e.target.value)}
                         placeholder={t('annualIncomePlaceholder')}
-                        className="w-full px-3.5 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner transition-all"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-1.5">{t('annualTurnoverLabel')}</label>
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">{t('annualTurnoverLabel')}</label>
                       <input
                         type="text"
                         value={form.annualTurnover}
                         onChange={e => updateField('annualTurnover', e.target.value)}
                         placeholder={t('annualTurnoverPlaceholder')}
-                        className="w-full px-3.5 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner transition-all"
                       />
                     </div>
 
                     {/* Existing Loans */}
-                    <div>
-                      <label className="block text-xs font-semibold text-on-surface mb-2">{t('existingLoansLabel')}</label>
+                    <div className="pt-2 border-t border-white/5">
+                      <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-3">{t('existingLoansLabel')}</label>
                       <div className="flex gap-3">
                         <button
                           type="button"
                           onClick={() => updateField('existingLoans', true)}
-                          className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-all ${
+                          className={`flex-1 py-3 rounded-xl border text-sm font-bold transition-all ${
                             form.existingLoans
-                              ? 'border-primary bg-primary/5 text-primary ring-1 ring-primary/30'
-                              : 'border-outline-variant bg-surface text-on-surface hover:bg-surface-variant/50'
+                              ? 'border-white bg-white/5 text-white shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-primary/30'
+                              : 'border-white/10 bg-white/5 text-on-surface-muted hover:bg-white/10 hover:text-white'
                           }`}
                         >
                           {t('yesLabel')}
@@ -577,10 +611,10 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         <button
                           type="button"
                           onClick={() => { updateField('existingLoans', false); updateField('loanType', ''); updateField('loanAmount', ''); }}
-                          className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-all ${
+                          className={`flex-1 py-3 rounded-xl border text-sm font-bold transition-all ${
                             !form.existingLoans
-                              ? 'border-primary bg-primary/5 text-primary ring-1 ring-primary/30'
-                              : 'border-outline-variant bg-surface text-on-surface hover:bg-surface-variant/50'
+                              ? 'border-white bg-white/5 text-white shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-primary/30'
+                              : 'border-white/10 bg-white/5 text-on-surface-muted hover:bg-white/10 hover:text-white'
                           }`}
                         >
                           {t('noLabel')}
@@ -589,53 +623,51 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                     </div>
 
                     {form.existingLoans && (
-                      <>
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4 pt-4 border-t border-white/5">
                         <div>
-                          <label className="block text-xs font-semibold text-on-surface mb-1.5">{t('loanTypeLabel')}</label>
+                          <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">{t('loanTypeLabel')}</label>
                           <input
                             type="text"
                             value={form.loanType}
                             onChange={e => updateField('loanType', e.target.value)}
                             placeholder={t('loanTypePlaceholder')}
-                            className="w-full px-3.5 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-on-surface mb-1.5">{t('loanAmountLabel')}</label>
+                          <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">{t('loanAmountLabel')}</label>
                           <input
                             type="text"
                             value={form.loanAmount}
                             onChange={e => updateField('loanAmount', e.target.value)}
                             placeholder={t('loanAmountPlaceholder')}
-                            className="w-full px-3.5 py-2.5 bg-surface border border-outline-variant rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner"
                           />
                         </div>
-                      </>
+                      </motion.div>
                     )}
                   </div>
                 </div>
               )}
 
               {/* Navigation buttons */}
-              <div className="flex items-center justify-between gap-3 mt-6 pt-5 border-t border-outline-variant">
+              <div className="flex items-center justify-between gap-4 mt-8 pt-6 border-t border-white/10">
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="px-5 py-2.5 text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-variant rounded-xl transition-all flex items-center gap-1.5"
+                  className="px-5 py-3 text-sm font-bold text-on-surface-muted border border-white/10 hover:text-white hover:bg-white/10 rounded-xl transition-all flex items-center gap-2"
                 >
-                  <span className="material-symbols-outlined text-[16px]">arrow_back</span>
+                  <ArrowLeft size={16} />
                   {t('backButton')}
                 </button>
 
                 <button
                   type="button"
                   onClick={handleContinue}
-                  className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-on-primary text-sm font-semibold rounded-xl transition-all flex items-center gap-2"
+                  className="px-8 py-3 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-all flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95"
                 >
                   {step === TOTAL_STEPS ? t('completeProfile') : t('continueBtn')}
-                  <span className="material-symbols-outlined text-[16px]">
-                    {step === TOTAL_STEPS ? 'search' : 'arrow_forward'}
-                  </span>
+                  {step === TOTAL_STEPS ? <Search size={16} /> : <ArrowRight size={16} />}
                 </button>
               </div>
             </motion.div>
