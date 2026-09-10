@@ -277,9 +277,16 @@ If the API key is unavailable, the server has fallback behavior for AI-related f
 * React 19
 * TypeScript
 * Vite
-* Tailwind CSS
-* Motion
+* Tailwind CSS v4
+* Motion (Framer Motion)
 * Lucide React
+
+## Design System & UI/UX
+
+* **Aesthetic**: Premium Enterprise Dark Mode (Zinc 950 base)
+* **Design Inspiration**: Shadcn UI, Linear, Kokonut UI
+* **Components**: Glassmorphism panels, sophisticated glow effects, micro-interactions
+* **Typography**: Tightly kerned Inter/Geist fonts for a professional SaaS feel
 
 ## Backend
 
