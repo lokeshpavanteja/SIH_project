@@ -28,14 +28,14 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeTab, onTabChan
             onClick={() => onTabChange(t.tab)}
             className={`flex flex-col items-center justify-center rounded-xl w-16 h-12 transition-all duration-300 relative ${
               isActive
-                ? 'text-white'
-                : 'text-on-surface-muted hover:text-white'
+                ? 'text-on-surface'
+                : 'text-on-surface-muted hover:text-on-surface'
             }`}
           >
             {isActive && (
-              <div className="absolute inset-0 bg-white/5 rounded-xl blur-sm" />
+              <div className="absolute inset-0 bg-surface-container-highest rounded-xl blur-sm" />
             )}
-            <span className={`mb-1 transition-all duration-300 z-10 ${isActive ? 'text-white' : ''}`}>
+            <span className={`mb-1 transition-all duration-300 z-10 ${isActive ? 'text-on-surface' : ''}`}>
               {isActive ? t.activeIcon : t.icon}
             </span>
             <span className={`text-[10px] z-10 ${isActive ? 'font-bold' : 'font-medium'}`}>
