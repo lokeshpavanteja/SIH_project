@@ -26,8 +26,9 @@ import { DiscoveryView } from './components/DiscoveryView';
 import { MyStartedView } from './components/MyStartedView';
 import { ProfileView } from './components/ProfileView';
 import { GrantDetailModal } from './components/GrantDetailModal';
+import { DraftApplicationModal } from './components/DraftApplicationModal';
+import { SchemeCompareModal } from './components/SchemeCompareModal';
 import { StartApplicationModal } from './components/StartApplicationModal';
-import { SchemeComparisonModal } from './components/SchemeComparisonModal';
 import { Toast, ToastMessage } from './components/Toast';
 import { Layers } from 'lucide-react';
 
@@ -393,11 +394,14 @@ export default function App() {
       )}
 
       {/* Scheme Comparison Modal */}
-      <SchemeComparisonModal
+      <SchemeCompareModal
         isOpen={showComparisonModal}
         onClose={() => setShowComparisonModal(false)}
-        schemes={comparisonSchemes}
-        onRemoveScheme={handleToggleCompare}
+        initialSchemeA={comparisonSchemes[0] || null}
+        initialSchemeB={comparisonSchemes[1] || null}
+        allSchemes={schemes}
+        userProfile={userProfile}
+        currentLanguage={currentLanguage}
       />
 
       {/* Toasts */}
