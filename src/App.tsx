@@ -18,6 +18,7 @@ import {
 } from './data/mockData';
 import { LanguageSelection } from './components/LanguageSelection';
 import { OnboardingView } from './components/OnboardingView';
+import { AuthView } from './components/AuthView';
 import { TopAppBar } from './components/TopAppBar';
 import { BottomNavBar } from './components/BottomNavBar';
 import { RecommendedView } from './components/RecommendedView';
@@ -26,9 +27,11 @@ import { MyStartedView } from './components/MyStartedView';
 import { ProfileView } from './components/ProfileView';
 import { GrantDetailModal } from './components/GrantDetailModal';
 import { StartApplicationModal } from './components/StartApplicationModal';
+import { SchemeComparisonModal } from './components/SchemeComparisonModal';
 import { Toast, ToastMessage } from './components/Toast';
+import { Layers } from 'lucide-react';
 
-type AppScreen = 'language_select' | 'onboarding' | 'main_app';
+type AppScreen = 'auth' | 'language_select' | 'onboarding' | 'main_app';
 
 export default function App() {
   // Screen state
@@ -37,7 +40,7 @@ export default function App() {
       const savedProfile = localStorage.getItem('matchwise_user_profile');
       if (savedProfile) return 'main_app';
     } catch { /* ignore */ }
-    return 'language_select';
+    return 'auth';
   });
 
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>(() => {
@@ -57,10 +60,31 @@ export default function App() {
     return initialUserProfile;
   });
 
+  // Theme state
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('matchwise_theme');
+      if (saved) return saved === 'dark';
+    } catch { /* ignore */ }
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  // Sync theme with body
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    try { localStorage.setItem('matchwise_theme', isDarkMode ? 'dark' : 'light'); } catch { /* ignore */ }
+  }, [isDarkMode]);
+
   // App state
   const [activeTab, setActiveTab] = useState<NavigationTab>('recommended');
   const [schemes, setSchemes] = useState<Scheme[]>(initialSchemes);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [comparisonSchemes, setComparisonSchemes] = useState<Scheme[]>([]);
+  const [showComparisonModal, setShowComparisonModal] = useState(false);
 
   // Started schemes (localStorage)
   const [startedSchemes, setStartedSchemes] = useState<StartedScheme[]>(() => {
@@ -134,9 +158,17 @@ export default function App() {
       localStorage.removeItem('matchwise_started_schemes');
       localStorage.removeItem('matchwise_onboarding_draft');
     } catch { /* ignore */ }
-    setAppScreen('language_select');
+    setUserProfile(initialUserProfile);
+    setAppScreen('auth');
     setActiveTab('recommended');
+    setComparisonSchemes([]);
     addToast('info', 'Logged out', 'You have been logged out.');
+  };
+
+  // Auth Success
+  const handleAuthSuccess = (name: string, email: string) => {
+    setUserProfile(prev => ({ ...prev, name, email }));
+    setAppScreen('language_select');
   };
 
   // Profile update
@@ -155,6 +187,21 @@ export default function App() {
       }
       return s;
     }));
+  };
+
+  // Compare toggle
+  const handleToggleCompare = (scheme: Scheme) => {
+    setComparisonSchemes(prev => {
+      const isSelected = prev.some(s => s.id === scheme.id);
+      if (isSelected) {
+        return prev.filter(s => s.id !== scheme.id);
+      }
+      if (prev.length >= 3) {
+        addToast('warning', 'Comparison full', 'You can only compare up to 3 schemes at once.');
+        return prev;
+      }
+      return [...prev, scheme];
+    });
   };
 
   // Start application
@@ -198,6 +245,16 @@ export default function App() {
     }));
   };
 
+  // ─── Screen 0: Auth ─────────────────────────────────────────
+  if (appScreen === 'auth') {
+    return (
+      <div className="min-h-screen bg-background text-on-background">
+        <AuthView onSuccess={handleAuthSuccess} />
+        <Toast toasts={toasts} onDismiss={handleDismissToast} />
+      </div>
+    );
+  }
+
   // ─── Screen 1: Language Selection ───────────────────────────
   if (appScreen === 'language_select') {
     return (
@@ -237,6 +294,8 @@ export default function App() {
         currentLanguage={currentLanguage}
         onLanguageChange={setCurrentLanguage}
         onLogout={handleLogout}
+        isDarkMode={isDarkMode}
+        onToggleTheme={() => setIsDarkMode(!isDarkMode)}
       />
 
       <main className="flex-1 pb-24 md:pb-12 pt-6">
@@ -251,6 +310,8 @@ export default function App() {
               onToggleSave={handleToggleSave}
               onStartApplication={handleStartApplication}
               startedSchemes={startedSchemes}
+              comparisonSchemes={comparisonSchemes}
+              onToggleCompare={handleToggleCompare}
             />
           )}
 
@@ -264,6 +325,8 @@ export default function App() {
               onToggleSave={handleToggleSave}
               onStartApplication={handleStartApplication}
               startedSchemes={startedSchemes}
+              comparisonSchemes={comparisonSchemes}
+              onToggleCompare={handleToggleCompare}
             />
           )}
 
@@ -316,6 +379,25 @@ export default function App() {
         onClose={() => setStartModalScheme(null)}
         onConfirm={handleConfirmStart}
         currentLanguage={currentLanguage}
+      />
+
+      {/* Floating Compare Button */}
+      {comparisonSchemes.length > 0 && (
+        <button
+          onClick={() => setShowComparisonModal(true)}
+          className="fixed bottom-24 right-6 z-40 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary-hover hover:scale-105 transition-all flex items-center justify-center gap-2"
+        >
+          <Layers size={24} />
+          <span className="font-bold">Compare ({comparisonSchemes.length})</span>
+        </button>
+      )}
+
+      {/* Scheme Comparison Modal */}
+      <SchemeComparisonModal
+        isOpen={showComparisonModal}
+        onClose={() => setShowComparisonModal(false)}
+        schemes={comparisonSchemes}
+        onRemoveScheme={handleToggleCompare}
       />
 
       {/* Toasts */}

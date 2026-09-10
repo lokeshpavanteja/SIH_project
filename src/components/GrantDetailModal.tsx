@@ -46,10 +46,10 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-4xl bg-surface border border-white/10 rounded-2xl shadow-2xl z-10 overflow-hidden max-h-full flex flex-col"
+          className="relative w-full max-w-4xl bg-surface border border-outline rounded-2xl shadow-2xl z-10 overflow-hidden max-h-full flex flex-col"
         >
           {/* Header */}
-          <div className="p-6 sm:p-8 bg-surface-container/50 border-b border-white/5 relative overflow-hidden">
+          <div className="p-6 sm:p-8 bg-surface-container border-b border-outline relative overflow-hidden">
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
             
             <div className="flex items-start justify-between gap-4 mb-4 relative z-10">
@@ -60,13 +60,13 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
                   {isGov ? <Landmark size={14} /> : <Building2 size={14} />}
                   {isGov ? t('govBadge') : t('privateBadge')}
                 </span>
-                <span className="text-xs font-semibold text-on-surface-variant bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+                <span className="text-xs font-semibold text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-lg border border-outline">
                   {scheme.category}
                 </span>
                 <span className={`text-xs font-black px-3 py-1.5 rounded-lg border shadow-sm flex items-center gap-1.5 ${
-                  scheme.matchScore >= 80 ? 'bg-white/10 text-white border-white/20 shadow-[0_0_15px_rgba(139,92,246,0.2)]' :
+                  scheme.matchScore >= 80 ? 'bg-surface-container-highest text-on-surface border-outline-focus shadow-[0_0_15px_rgba(139,92,246,0.2)]' :
                   scheme.matchScore >= 60 ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                  'bg-surface-variant text-on-surface-variant border-white/10'
+                  'bg-surface-variant text-on-surface-variant border-outline'
                 }`}>
                   {scheme.matchScore}% {t('estimatedMatch')}
                 </span>
@@ -74,22 +74,22 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
 
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-white/10 transition-colors text-on-surface-muted hover:text-white bg-white/5 border border-white/5"
+                className="p-2 rounded-full hover:bg-surface-hover transition-colors text-on-surface-muted hover:text-on-surface bg-surface-container border border-outline"
               >
                 <X size={20} />
               </button>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 leading-tight relative z-10">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-background mb-3 leading-tight relative z-10">
               {scheme.title}
             </h2>
 
             <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-on-surface-variant mb-6 relative z-10">
-              <span className="flex items-center gap-1.5"><Shield size={16} className="text-white"/> {scheme.providerName}</span>
+              <span className="flex items-center gap-1.5"><Shield size={16} className="text-on-surface"/> {scheme.providerName}</span>
               {scheme.amountFormatted && (
                 <>
-                  <span className="text-white/20">•</span>
-                  <span className="text-white flex items-center gap-1"><IndianRupee size={16} className="text-secondary"/> {scheme.amountFormatted}</span>
+                  <span className="text-on-surface/20">•</span>
+                  <span className="text-on-surface flex items-center gap-1"><IndianRupee size={16} className="text-secondary"/> {scheme.amountFormatted}</span>
                 </>
               )}
             </div>
@@ -98,7 +98,7 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
             <div className="flex flex-wrap items-center gap-3 relative z-10">
               <button
                 onClick={() => onStartApplication(scheme)}
-                className="px-6 py-3 text-sm font-bold rounded-xl bg-white text-black hover:bg-white-hover transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:scale-105 active:scale-95"
+                className="px-6 py-3 text-sm font-bold rounded-xl bg-primary text-on-primary hover:bg-primary-hover transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:scale-105 active:scale-95"
               >
                 <Play size={18} className="fill-current" />
                 {t('startApplication')}
@@ -109,7 +109,7 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
                 className={`px-5 py-3 text-sm font-bold rounded-xl border transition-all flex items-center gap-2 ${
                   scheme.saved
                     ? 'border-secondary/30 bg-secondary/10 text-secondary'
-                    : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
+                    : 'border-outline bg-surface-container text-on-surface hover:bg-surface-hover'
                 }`}
               >
                 {scheme.saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
@@ -121,7 +121,7 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
                   href={scheme.officialWebsiteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3 text-sm font-bold rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-all flex items-center gap-2 ml-auto"
+                  className="px-5 py-3 text-sm font-bold rounded-xl border border-outline bg-surface-container text-on-surface hover:bg-surface-hover transition-all flex items-center gap-2 ml-auto"
                 >
                   <ExternalLink size={18} />
                   {t('applyOnOfficialWebsite')}
@@ -135,8 +135,8 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
             
             {/* Overview */}
             <section className="prose prose-invert max-w-none">
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                <Info className="text-white" size={20} />
+              <h3 className="text-lg font-bold text-on-surface mb-3 flex items-center gap-2">
+                <Info className="text-on-surface" size={20} />
                 {t('schemeOverview')}
               </h3>
               <p className="text-base text-on-surface-variant leading-relaxed">
@@ -146,15 +146,15 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
 
             {/* Why this matches */}
             {scheme.matchReasons && scheme.matchReasons.length > 0 && (
-              <section className="p-5 bg-gradient-to-r from-primary/10 to-transparent border border-white/10 rounded-xl">
-                <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                  <Star className="text-white" size={18} />
+              <section className="p-5 bg-gradient-to-r from-primary/10 to-transparent border border-outline rounded-xl">
+                <h3 className="text-base font-bold text-on-surface mb-4 flex items-center gap-2">
+                  <Star className="text-on-surface" size={18} />
                   {t('whyThisMatches')}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {scheme.matchReasons.map((reason, i) => (
                     <div key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="text-white shrink-0 mt-0.5" size={16} />
+                      <CheckCircle2 className="text-primary shrink-0 mt-0.5" size={16} />
                       <span className="text-sm text-on-surface-variant font-medium">{t(reason) || reason}</span>
                     </div>
                   ))}
@@ -166,13 +166,13 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
               {/* Benefits */}
               {scheme.benefits && scheme.benefits.length > 0 && (
                 <section>
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
                     <Star className="text-secondary" size={20} />
                     {t('schemeBenefits')}
                   </h3>
                   <ul className="space-y-3">
                     {scheme.benefits.map((b, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-on-surface-variant bg-white/5 p-3 rounded-xl border border-white/5">
+                      <li key={i} className="flex items-start gap-3 text-sm text-on-surface-variant bg-surface-container p-3 rounded-xl border border-outline">
                         <Check className="text-secondary shrink-0 mt-0.5" size={16} />
                         {b}
                       </li>
@@ -183,27 +183,27 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
 
               {/* Eligibility */}
               <section>
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
                   <UserCheck className="text-secondary" size={20} />
                   {t('schemeEligibility')}
                 </h3>
                 <div className="flex flex-col gap-3">
                   {scheme.ageRequirements && (
-                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                    <div className="p-3 bg-surface-container border border-outline rounded-xl flex items-center justify-between">
                       <span className="text-xs font-semibold text-on-surface-muted uppercase">{t('ageRequirement')}</span>
-                      <span className="text-sm font-bold text-white">{scheme.ageRequirements}</span>
+                      <span className="text-sm font-bold text-on-surface">{scheme.ageRequirements}</span>
                     </div>
                   )}
                   {scheme.locationRequirements && (
-                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                    <div className="p-3 bg-surface-container border border-outline rounded-xl flex items-center justify-between">
                       <span className="text-xs font-semibold text-on-surface-muted uppercase">{t('locationRequirement')}</span>
-                      <span className="text-sm font-bold text-white">{scheme.locationRequirements}</span>
+                      <span className="text-sm font-bold text-on-surface">{scheme.locationRequirements}</span>
                     </div>
                   )}
                   {scheme.incomeRequirements && (
-                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                    <div className="p-3 bg-surface-container border border-outline rounded-xl flex items-center justify-between">
                       <span className="text-xs font-semibold text-on-surface-muted uppercase">{t('incomeRequirement')}</span>
-                      <span className="text-sm font-bold text-white">{scheme.incomeRequirements}</span>
+                      <span className="text-sm font-bold text-on-surface">{scheme.incomeRequirements}</span>
                     </div>
                   )}
                 </div>
@@ -211,7 +211,7 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
                   <ul className="mt-4 space-y-2">
                     {scheme.eligibility.map((e, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
-                        <div className="w-1.5 h-1.5 rounded-full bg-white/30 mt-1.5 shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-on-surface/30 mt-1.5 shrink-0" />
                         {e}
                       </li>
                     ))}
@@ -224,13 +224,13 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
               {/* Required Documents */}
               {scheme.requiredDocs && scheme.requiredDocs.length > 0 && (
                 <section>
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                    <FileText className="text-white" size={20} />
+                  <h3 className="text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+                    <FileText className="text-on-surface" size={20} />
                     {t('schemeDocuments')}
                   </h3>
                   <div className="space-y-2">
                     {scheme.requiredDocs.map((doc, i) => (
-                      <div key={i} className="flex items-center gap-3 text-sm text-on-surface-variant bg-surface-container-low p-3 rounded-xl border border-white/5">
+                      <div key={i} className="flex items-center gap-3 text-sm text-on-surface-variant bg-surface-container-low p-3 rounded-xl border border-outline">
                         <FileText className="text-on-surface-muted" size={16} />
                         <span className="font-medium">{doc}</span>
                       </div>
@@ -242,15 +242,15 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
               {/* Application Process */}
               {(scheme.applicationSteps || scheme.applicationProcess) && (
                 <section>
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                    <Clock className="text-white" size={20} />
+                  <h3 className="text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+                    <Clock className="text-on-surface" size={20} />
                     {t('schemeProcess')}
                   </h3>
                   {scheme.applicationSteps ? (
-                    <ol className="relative border-l border-white/10 ml-3 space-y-6">
+                    <ol className="relative border-l border-outline ml-3 space-y-6">
                       {scheme.applicationSteps.map((step, i) => (
                         <li key={i} className="pl-6 relative">
-                          <span className="absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-white/10 border border-white/50 text-white text-xs font-black flex items-center justify-center">
+                          <span className="absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-surface-container-highest border border-outline text-on-surface text-xs font-black flex items-center justify-center">
                             {i + 1}
                           </span>
                           <p className="text-sm font-medium text-on-surface-variant pt-1">{step}</p>
@@ -258,37 +258,37 @@ export const GrantDetailModal: React.FC<GrantDetailModalProps> = ({
                       ))}
                     </ol>
                   ) : (
-                    <p className="text-sm text-on-surface-variant p-4 bg-white/5 rounded-xl border border-white/5">{scheme.applicationProcess}</p>
+                    <p className="text-sm text-on-surface-variant p-4 bg-surface-container rounded-xl border border-outline">{scheme.applicationProcess}</p>
                   )}
                 </section>
               )}
             </div>
 
             {/* Important Information Meta Grid */}
-            <section className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-surface-container-low border border-white/5 rounded-xl">
+            <section className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-surface-container-low border border-outline rounded-xl">
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
                   <Calendar size={12} /> {t('applicationDeadline')}
                 </div>
-                <div className="text-sm font-bold text-white">{scheme.deadline || 'Open'}</div>
+                <div className="text-sm font-bold text-on-surface">{scheme.deadline || 'Open'}</div>
               </div>
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
                   <Shield size={12} /> {t('responsibleAuthority')}
                 </div>
-                <div className="text-sm font-bold text-white truncate" title={scheme.providerName}>{scheme.providerName}</div>
+                <div className="text-sm font-bold text-on-surface truncate" title={scheme.providerName}>{scheme.providerName}</div>
               </div>
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
                   <CheckCircle2 size={12} /> {t('schemeStatus')}
                 </div>
-                <div className="text-sm font-bold text-green-400 capitalize">{scheme.status || 'Active'}</div>
+                <div className="text-sm font-bold text-green-500 capitalize">{scheme.status || 'Active'}</div>
               </div>
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-muted uppercase mb-1">
                   <Clock size={12} /> {t('lastUpdated')}
                 </div>
-                <div className="text-sm font-bold text-white">{scheme.lastUpdatedDate || '—'}</div>
+                <div className="text-sm font-bold text-on-surface">{scheme.lastUpdatedDate || '—'}</div>
               </div>
             </section>
 

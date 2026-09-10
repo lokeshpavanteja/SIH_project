@@ -51,9 +51,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   };
 
   const InfoRow: React.FC<{ label: string; value: string | undefined }> = ({ label, value }) => (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3 border-b border-white/5 last:border-0 group">
-      <span className="text-xs font-semibold text-on-surface-muted sm:w-40 shrink-0 group-hover:text-white transition-colors">{label}</span>
-      <span className="text-sm font-medium text-white sm:text-right">{value || '—'}</span>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3 border-b border-outline last:border-0 group">
+      <span className="text-xs font-semibold text-on-surface-muted sm:w-40 shrink-0 group-hover:text-on-surface transition-colors">{label}</span>
+      <span className="text-sm font-medium text-on-surface sm:text-right">{value || '—'}</span>
     </div>
   );
 
@@ -76,7 +76,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         {!isEditing ? (
           <button
             onClick={() => { setEditProfile(userProfile); setIsEditing(true); }}
-            className="px-4 py-2 text-xs font-bold text-white border border-white/20 bg-white/5 rounded-xl hover:bg-white/10 transition-all flex items-center gap-2 shadow-sm"
+            className="px-4 py-2 text-xs font-bold text-on-surface border border-outline bg-surface-container rounded-xl hover:bg-surface-hover transition-all flex items-center gap-2 shadow-sm"
           >
             <Edit3 size={14} />
             {t('editProfile')}
@@ -85,14 +85,14 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           <div className="flex gap-2">
             <button 
               onClick={handleCancel} 
-              className="p-2 sm:px-4 sm:py-2 text-xs font-bold text-on-surface-muted border border-white/10 rounded-xl hover:text-white hover:bg-white/5 transition-all flex items-center gap-2"
+              className="p-2 sm:px-4 sm:py-2 text-xs font-bold text-on-surface-muted border border-outline rounded-xl hover:text-on-surface hover:bg-surface-hover transition-all flex items-center gap-2"
             >
               <X size={14} />
               <span className="hidden sm:inline">{t('cancelEdit')}</span>
             </button>
             <button 
               onClick={handleSave} 
-              className="p-2 sm:px-4 sm:py-2 text-xs font-bold text-black bg-white border border-white/10-hover rounded-xl hover:bg-zinc-200 transition-all flex items-center gap-2 shadow-sm"
+              className="p-2 sm:px-4 sm:py-2 text-xs font-bold text-on-primary bg-primary border border-transparent rounded-xl hover:bg-primary-hover transition-all flex items-center gap-2 shadow-sm"
             >
               <Save size={14} />
               <span className="hidden sm:inline">{t('saveProfile')}</span>
@@ -102,17 +102,17 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       </div>
 
       {/* Profile Card */}
-      <div className="glass-panel border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
+      <div className="glass-panel border border-outline rounded-2xl overflow-hidden shadow-2xl relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
         {/* User avatar section */}
-        <div className="p-6 sm:p-8 border-b border-white/10 flex items-center gap-5 bg-surface-container/30 relative z-10">
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center text-2xl font-black shadow-[0_0_15px_rgba(139,92,246,0.4)] border border-white/20">
+        <div className="p-6 sm:p-8 border-b border-outline flex items-center gap-5 bg-surface-container relative z-10">
+          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary text-on-primary flex items-center justify-center text-2xl font-black shadow-sm border border-primary/20">
             {userProfile.name ? userProfile.name.charAt(0).toUpperCase() : 'U'}
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white mb-1 tracking-tight">{userProfile.name || 'User'}</h2>
-            <p className="text-xs font-medium text-on-surface-muted bg-white/5 px-3 py-1 rounded-full border border-white/10 inline-block">
+            <h2 className="text-xl font-bold text-on-background mb-1 tracking-tight">{userProfile.name || 'User'}</h2>
+            <p className="text-xs font-medium text-on-surface-muted bg-surface-container px-3 py-1 rounded-full border border-outline inline-block">
               {userProfile.stateRegion}{userProfile.district ? `, ${userProfile.district}` : ''}, India
             </p>
           </div>
@@ -122,32 +122,37 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         <div className="p-6 sm:p-8 space-y-8 relative z-10">
           {/* Personal */}
           <section>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+            <h3 className="text-xs font-bold text-on-surface uppercase tracking-widest mb-4 flex items-center gap-2">
               <User size={16} />
               {t('personalInfo')}
             </h3>
             {isEditing ? (
-              <div className="space-y-4 bg-surface-container-low/50 p-4 rounded-xl border border-white/5">
+              <div className="space-y-4 bg-surface-container p-4 rounded-xl border border-outline">
                 <div>
                   <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">{t('fullNameLabel')}</label>
-                  <input type="text" value={editProfile.name} onChange={e => setEditProfile({...editProfile, name: e.target.value})} className="w-full px-4 py-2.5 bg-surface border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all" />
+                  <input type="text" value={editProfile.name} onChange={e => setEditProfile({...editProfile, name: e.target.value})} className="w-full px-4 py-2.5 bg-surface border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-outline-focus transition-all" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">Email</label>
+                  <input type="email" value={editProfile.email || ''} onChange={e => setEditProfile({...editProfile, email: e.target.value})} className="w-full px-4 py-2.5 bg-surface border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-outline-focus transition-all" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">{t('ageLabel')}</label>
-                    <input type="number" value={editProfile.age || ''} onChange={e => setEditProfile({...editProfile, age: Number(e.target.value) || undefined})} className="w-full px-4 py-2.5 bg-surface border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all" />
+                    <input type="number" value={editProfile.age || ''} onChange={e => setEditProfile({...editProfile, age: Number(e.target.value) || undefined})} className="w-full px-4 py-2.5 bg-surface border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-outline-focus transition-all" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">{t('stateLabel')}</label>
-                    <select value={editProfile.stateRegion} onChange={e => setEditProfile({...editProfile, stateRegion: e.target.value})} className="w-full px-4 py-2.5 bg-surface border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all">
-                      {Object.keys(INDIAN_STATES).map(s => <option className="bg-zinc-900 text-white" key={s} value={s}>{s}</option>)}
+                    <select value={editProfile.stateRegion} onChange={e => setEditProfile({...editProfile, stateRegion: e.target.value})} className="w-full px-4 py-2.5 bg-surface border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-outline-focus transition-all">
+                      {Object.keys(INDIAN_STATES).map(s => <option className="bg-surface text-on-surface" key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="bg-surface-container-low/30 px-5 py-2 rounded-xl border border-white/5">
+              <div className="bg-surface-container-low px-5 py-2 rounded-xl border border-outline">
                 <InfoRow label={t('fullNameLabel')} value={userProfile.name} />
+                <InfoRow label="Email" value={userProfile.email} />
                 <InfoRow label={t('ageLabel')} value={userProfile.age ? String(userProfile.age) : undefined} />
                 <InfoRow label={t('stateLabel')} value={userProfile.stateRegion} />
                 <InfoRow label={t('districtLabel')} value={userProfile.district} />
@@ -162,7 +167,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 <GraduationCap size={16} />
                 {t('educationInfo')}
               </h3>
-              <div className="bg-surface-container-low/30 px-5 py-2 rounded-xl border border-white/5 h-full">
+              <div className="bg-surface-container-low px-5 py-2 rounded-xl border border-outline h-full">
                 <InfoRow label={t('educationLabel')} value={getEduLabel(userProfile.education)} />
               </div>
             </section>
@@ -173,7 +178,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 <Briefcase size={16} />
                 {t('sectorInfo')} & {t('orgInfo')}
               </h3>
-              <div className="bg-surface-container-low/30 px-5 py-2 rounded-xl border border-white/5 h-full">
+              <div className="bg-surface-container-low px-5 py-2 rounded-xl border border-outline h-full">
                 <InfoRow label={t('sectorLabel')} value={getSectorLabel(userProfile.sector)} />
                 <InfoRow label={t('orgTypeLabel')} value={getOrgLabel(userProfile.orgType)} />
                 {userProfile.companyName && <InfoRow label={t('orgNameLabel')} value={userProfile.companyName} />}
@@ -187,7 +192,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               <CreditCard size={16} />
               {t('financialInfo')}
             </h3>
-            <div className="bg-surface-container-low/30 px-5 py-2 rounded-xl border border-white/5">
+            <div className="bg-surface-container-low px-5 py-2 rounded-xl border border-outline">
               <InfoRow label={t('annualIncomeLabel')} value={userProfile.annualIncome} />
               <InfoRow label={t('annualTurnoverLabel')} value={userProfile.annualTurnover} />
               <InfoRow label={t('existingLoansLabel')} value={userProfile.existingLoans ? t('yesLabel') : t('noLabel')} />
@@ -213,8 +218,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                   onClick={() => onLanguageChange(lang.code)}
                   className={`px-5 py-2.5 text-xs font-bold rounded-xl transition-all duration-300 border ${
                     currentLanguage === lang.code
-                      ? 'bg-white/10 text-white border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.05)]'
-                      : 'bg-transparent border-white/5 text-on-surface-muted hover:text-white hover:bg-white/5'
+                      ? 'bg-surface-container-highest text-on-surface border-outline-focus shadow-sm'
+                      : 'bg-transparent border-outline text-on-surface-muted hover:text-on-surface hover:bg-surface-hover'
                   }`}
                 >
                   {lang.nativeName}

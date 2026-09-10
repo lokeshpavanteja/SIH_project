@@ -1,46 +1,101 @@
 @import "tailwindcss";
 
 @theme {
-  /* Ultra-Premium Dark Color Theme (Shadcn/Linear Inspired) */
-  --color-primary: #8b5cf6; /* Violet 500 */
-  --color-on-primary: #ffffff;
-  --color-primary-hover: #7c3aed; /* Violet 600 */
-  
-  --color-secondary: #0ea5e9; /* Sky 500 */
-  --color-on-secondary: #ffffff;
-
-  --color-accent: #3f3f46; /* zinc-700 */
-  --color-on-accent: #ffffff;
-
-  /* Background & Surfaces */
-  --color-background: #09090b; /* zinc-950 */
-  --color-on-background: #fafafa;
-  
-  --color-surface: #18181b; /* zinc-900 */
-  --color-surface-hover: #27272a; /* zinc-800 */
-  --color-surface-container: #27272a;
-  --color-surface-container-low: #18181b;
-  --color-surface-container-highest: #3f3f46;
-  
-  --color-on-surface: #fafafa; /* zinc-50 */
-  --color-on-surface-variant: #a1a1aa; /* zinc-400 - Muted text */
-  --color-on-surface-muted: #71717a; /* zinc-500 */
-
-  /* Borders & Outlines */
-  --color-outline: #27272a; /* zinc-800 */
-  --color-outline-variant: #18181b; /* zinc-900 */
-  --color-outline-focus: #3f3f46; /* zinc-700 */
-
-  /* Semantic */
-  --color-error: #ef4444;
-  --color-error-container: #450a0a;
-  --color-on-error: #ffffff;
-  
-  --color-success: #10b981;
-  --color-success-container: #064e3b;
-  --color-on-success: #ffffff;
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-on-surface-muted: var(--on-surface-muted);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-outline-focus: var(--outline-focus);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-on-error: var(--on-error);
+  --color-success: var(--success);
+  --color-success-container: var(--success-container);
+  --color-on-success: var(--on-success);
 
   --font-inter: 'Inter', 'Geist', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  :root {
+    --primary: #8b5cf6;
+    --on-primary: #ffffff;
+    --primary-hover: #7c3aed;
+    --secondary: #0ea5e9;
+    --on-secondary: #ffffff;
+    --accent: #e4e4e7;
+    --on-accent: #18181b;
+    --background: #fafafa;
+    --on-background: #09090b;
+    --surface: #ffffff;
+    --surface-hover: #f4f4f5;
+    --surface-container: #f4f4f5;
+    --surface-container-low: #ffffff;
+    --surface-container-highest: #e4e4e7;
+    --on-surface: #09090b;
+    --on-surface-variant: #52525b;
+    --on-surface-muted: #71717a;
+    --outline: #e4e4e7;
+    --outline-variant: #ffffff;
+    --outline-focus: #d4d4d8;
+    --error: #ef4444;
+    --error-container: #fecaca;
+    --on-error: #ffffff;
+    --success: #10b981;
+    --success-container: #a7f3d0;
+    --on-success: #ffffff;
+  }
+
+  .dark {
+    --primary: #8b5cf6;
+    --on-primary: #ffffff;
+    --primary-hover: #7c3aed;
+    --secondary: #0ea5e9;
+    --on-secondary: #ffffff;
+    --accent: #3f3f46;
+    --on-accent: #ffffff;
+    --background: #09090b;
+    --on-background: #fafafa;
+    --surface: #18181b;
+    --surface-hover: #27272a;
+    --surface-container: #27272a;
+    --surface-container-low: #18181b;
+    --surface-container-highest: #3f3f46;
+    --on-surface: #fafafa;
+    --on-surface-variant: #a1a1aa;
+    --on-surface-muted: #71717a;
+    --outline: #27272a;
+    --outline-variant: #18181b;
+    --outline-focus: #3f3f46;
+    --error: #ef4444;
+    --error-container: #450a0a;
+    --on-error: #ffffff;
+    --success: #10b981;
+    --success-container: #064e3b;
+    --on-success: #ffffff;
+  }
+
+  /* Smooth Theme Transitions */
+  *, ::before, ::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
 }
 
 @layer utilities {
@@ -97,20 +152,20 @@
 
   /* Premium Box Grids & Glassmorphism */
   .glass-panel {
-    @apply bg-surface/50 backdrop-blur-2xl border border-white/5 shadow-2xl ring-1 ring-white/5;
+    @apply bg-surface/50 backdrop-blur-2xl border border-outline shadow-2xl ring-1 ring-outline-variant;
   }
   
   .glass-card {
-    @apply bg-surface-container-low backdrop-blur-xl border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.02] transition-all duration-300;
+    @apply bg-surface-container-low backdrop-blur-xl border border-outline hover:border-outline-focus hover:bg-surface-hover transition-all duration-300;
   }
   
   .glass-nav {
-    @apply bg-background/80 backdrop-blur-3xl border-b border-white/[0.08] transition-colors;
+    @apply bg-background/80 backdrop-blur-3xl border-b border-outline transition-colors;
   }
 
-  /* Sleek Glows (Subtle, strictly monochromatic or faint blue) */
+  /* Sleek Glows */
   .glow-effect {
-    box-shadow: 0 0 40px -10px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.15); /* More visible, using primary color faintly */
   }
   
   /* Noise overlay class */
@@ -136,7 +191,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-on-background);
   /* A very sophisticated, barely visible spotlight at the top center */
-  background-image: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.06), transparent 50%);
+  background-image: radial-gradient(circle at 50% -20%, var(--color-surface-container-highest), transparent 50%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

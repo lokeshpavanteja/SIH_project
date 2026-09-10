@@ -200,20 +200,20 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Top bar */}
-      <header className="border-b border-white/10 glass-nav sticky top-0 z-30">
+      <header className="border-b border-outline glass-nav sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={handleBack} className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all" aria-label="Back">
+            <button onClick={handleBack} className="p-2 rounded-xl bg-surface-container border border-outline hover:bg-surface-hover hover:border-outline-focus transition-all" aria-label="Back">
               <ArrowLeft size={18} className="text-on-surface-muted" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center text-xs font-black shadow-sm">M</div>
-              <span className="font-extrabold text-white tracking-tight text-base hidden sm:inline">MatchWise <span className="text-white">AI</span></span>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary text-on-primary flex items-center justify-center text-xs font-black shadow-sm">M</div>
+              <span className="font-extrabold text-on-background tracking-tight text-base hidden sm:inline">MatchWise <span className="text-on-background">AI</span></span>
             </div>
           </div>
           <button
             onClick={handleSaveLater}
-            className="text-xs font-bold text-on-surface-muted hover:text-white px-3 py-1.5 rounded-lg border border-transparent hover:border-white/10 hover:bg-white/5 flex items-center gap-1.5 transition-all"
+            className="text-xs font-bold text-on-surface-muted hover:text-on-surface px-3 py-1.5 rounded-lg border border-transparent hover:border-outline hover:bg-surface-hover flex items-center gap-1.5 transition-all"
           >
             <Save size={14} />
             <span className="hidden sm:inline">{t('saveContinueLater')}</span>
@@ -229,33 +229,33 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
               {Array.from({ length: TOTAL_STEPS }, (_, i) => (
                 <div key={i} className="flex-1">
                   <div className={`h-1.5 w-full rounded-full transition-all duration-500 ${
-                    i + 1 < step ? 'bg-white' : i + 1 === step ? 'bg-white shadow-[0_0_10px_rgba(139,92,246,0.5)]' : 'bg-white/10'
+                    i + 1 < step ? 'bg-primary' : i + 1 === step ? 'bg-primary shadow-sm' : 'bg-surface-container-highest'
                   }`} />
                 </div>
               ))}
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold text-white uppercase tracking-widest">
+              <p className="text-xs font-bold text-on-surface uppercase tracking-widest">
                 Step {step} of {TOTAL_STEPS}
               </p>
-              <p className="text-sm font-semibold text-white">{stepLabels[step - 1]}</p>
+              <p className="text-sm font-semibold text-on-background">{stepLabels[step - 1]}</p>
             </div>
           </div>
 
           <AnimatePresence mode="wait">
-            <motion.div
+              <motion.div
               key={`step-${step}`}
               initial={{ opacity: 0, x: 20, filter: 'blur(4px)' }}
               animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, x: -20, filter: 'blur(4px)' }}
               transition={{ duration: 0.3, type: 'spring', damping: 25, stiffness: 300 }}
-              className="glass-panel border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden"
+              className="glass-panel border border-outline rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden"
             >
               {/* Step 1: Personal Information */}
               {step === 1 && (
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-white mb-2">{t('step1Title')}</h2>
+                    <h2 className="text-2xl font-bold text-on-background mb-2">{t('step1Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step1Subtitle')}</p>
                   </div>
 
@@ -271,7 +271,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.fullName}
                         onChange={e => updateField('fullName', e.target.value)}
                         placeholder={t('fullNamePlaceholder')}
-                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.fullName ? 'border-error ring-1 ring-error' : 'border-white/10 focus:border-white'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.fullName ? 'border-error ring-1 ring-error' : 'border-outline focus:border-outline-focus'}`}
                       />
                       {errors.fullName && <p className="mt-1.5 text-xs font-medium text-error">{errors.fullName}</p>}
                     </div>
@@ -289,7 +289,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.age}
                         onChange={e => updateField('age', e.target.value === '' ? '' : Number(e.target.value))}
                         placeholder={t('agePlaceholder')}
-                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.age ? 'border-error ring-1 ring-error' : 'border-white/10 focus:border-white'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.age ? 'border-error ring-1 ring-error' : 'border-outline focus:border-outline-focus'}`}
                       />
                       {errors.age && <p className="mt-1.5 text-xs font-medium text-error">{errors.age}</p>}
                     </div>
@@ -307,13 +307,13 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onChange={e => { setStateSearch(e.target.value); setShowStateDropdown(true); }}
                           onFocus={() => { setShowStateDropdown(true); setStateSearch(''); }}
                           placeholder={t('statePlaceholder')}
-                          className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.state ? 'border-error ring-1 ring-error' : 'border-white/10 focus:border-white'}`}
+                          className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all shadow-inner ${errors.state ? 'border-error ring-1 ring-error' : 'border-outline focus:border-outline-focus'}`}
                           autoComplete="off"
                         />
                         <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-muted pointer-events-none transition-transform group-focus-within:rotate-180" size={16} />
                       </div>
                       {showStateDropdown && (
-                        <div className="absolute z-20 w-full mt-2 glass-panel border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto py-1">
+                        <div className="absolute z-20 w-full mt-2 glass-panel border border-outline rounded-xl shadow-2xl max-h-56 overflow-y-auto py-1">
                           {filteredStates.map(s => (
                             <button
                               key={s}
@@ -324,7 +324,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                                 setShowStateDropdown(false);
                                 setStateSearch('');
                               }}
-                              className={`w-full text-left px-4 py-2.5 text-sm transition-colors font-medium ${form.state === s ? 'bg-white/10 text-white' : 'text-on-surface hover:bg-white/10 hover:text-white'}`}
+                              className={`w-full text-left px-4 py-2.5 text-sm transition-colors font-medium ${form.state === s ? 'bg-surface-container-highest text-on-surface' : 'text-on-surface hover:bg-surface-hover hover:text-on-surface'}`}
                             >
                               {s}
                             </button>
@@ -351,13 +351,13 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                             onChange={e => { setDistrictSearch(e.target.value); setShowDistrictDropdown(true); }}
                             onFocus={() => { setShowDistrictDropdown(true); setDistrictSearch(''); }}
                             placeholder={t('districtPlaceholder')}
-                            className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white transition-all shadow-inner"
+                            className="w-full px-4 py-3 bg-surface-container-low border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-outline-focus transition-all shadow-inner"
                             autoComplete="off"
                           />
                           <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-muted pointer-events-none transition-transform group-focus-within:rotate-180" size={16} />
                         </div>
                         {showDistrictDropdown && (
-                          <div className="absolute z-20 w-full mt-2 glass-panel border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto py-1">
+                          <div className="absolute z-20 w-full mt-2 glass-panel border border-outline rounded-xl shadow-2xl max-h-56 overflow-y-auto py-1">
                             {filteredDistricts.map(d => (
                               <button
                                 key={d}
@@ -367,7 +367,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                                   setShowDistrictDropdown(false);
                                   setDistrictSearch('');
                                 }}
-                                className={`w-full text-left px-4 py-2.5 text-sm transition-colors font-medium ${form.district === d ? 'bg-white/10 text-white' : 'text-on-surface hover:bg-white/10 hover:text-white'}`}
+                                className={`w-full text-left px-4 py-2.5 text-sm transition-colors font-medium ${form.district === d ? 'bg-surface-container-highest text-on-surface' : 'text-on-surface hover:bg-surface-hover hover:text-on-surface'}`}
                               >
                                 {d}
                               </button>
@@ -384,7 +384,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
               {step === 2 && (
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-white mb-2">{t('step2Title')}</h2>
+                    <h2 className="text-2xl font-bold text-on-background mb-2">{t('step2Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step2Subtitle')}</p>
                   </div>
 
@@ -399,18 +399,18 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onClick={() => updateField('education', edu.key as EducationLevel)}
                           className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-300 ${
                             isSelected
-                              ? 'border-white bg-white/5 ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
-                              : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
+                              ? 'border-outline-focus bg-surface-container-highest ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                              : 'border-outline bg-surface-container hover:bg-surface-hover hover:border-outline-focus'
                           }`}
                         >
-                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-white/10 text-white' : 'bg-white/5 text-on-surface-muted'}`}>
+                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-primary/20 text-primary' : 'bg-surface-container text-on-surface-muted'}`}>
                             <IconObj size={20} />
                           </div>
-                          <span className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-on-surface-variant'}`}>
+                          <span className={`text-sm font-bold ${isSelected ? 'text-on-surface' : 'text-on-surface-variant'}`}>
                             {t(edu.labelKey)}
                           </span>
                           {isSelected && (
-                            <span className="ml-auto w-5 h-5 rounded-full bg-white text-black flex items-center justify-center shadow-sm">
+                            <span className="ml-auto w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm">
                               <Check size={12} strokeWidth={3} />
                             </span>
                           )}
@@ -426,7 +426,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
               {step === 3 && (
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-white mb-2">{t('step3Title')}</h2>
+                    <h2 className="text-2xl font-bold text-on-background mb-2">{t('step3Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step3Subtitle')}</p>
                   </div>
 
@@ -441,14 +441,14 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onClick={() => updateField('sector', sec.key as SectorType)}
                           className={`flex flex-col items-center gap-3 p-4 rounded-xl border text-center transition-all duration-300 ${
                             isSelected
-                              ? 'border-white bg-white/5 ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
-                              : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
+                              ? 'border-outline-focus bg-surface-container-highest ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                              : 'border-outline bg-surface-container hover:bg-surface-hover hover:border-outline-focus'
                           }`}
                         >
-                          <div className={`p-3 rounded-xl ${isSelected ? 'bg-white/10 text-white' : 'bg-white/5 text-on-surface-muted'}`}>
+                          <div className={`p-3 rounded-xl ${isSelected ? 'bg-primary/20 text-primary' : 'bg-surface-container text-on-surface-muted'}`}>
                             <IconObj size={24} />
                           </div>
-                          <span className={`text-xs font-bold ${isSelected ? 'text-white' : 'text-on-surface-variant'}`}>
+                          <span className={`text-xs font-bold ${isSelected ? 'text-on-surface' : 'text-on-surface-variant'}`}>
                             {t(sec.labelKey)}
                           </span>
                         </button>
@@ -463,7 +463,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
               {step === 4 && (
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-white mb-2">{t('step4Title')}</h2>
+                    <h2 className="text-2xl font-bold text-on-background mb-2">{t('step4Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step4Subtitle')}</p>
                   </div>
 
@@ -478,18 +478,18 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onClick={() => updateField('orgType', org.key as OrgType)}
                           className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-300 ${
                             isSelected
-                              ? 'border-white bg-white/5 ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
-                              : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
+                              ? 'border-outline-focus bg-surface-container-highest ring-1 ring-primary/30 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]'
+                              : 'border-outline bg-surface-container hover:bg-surface-hover hover:border-outline-focus'
                           }`}
                         >
-                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-white/10 text-white' : 'bg-white/5 text-on-surface-muted'}`}>
+                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-primary/20 text-primary' : 'bg-surface-container text-on-surface-muted'}`}>
                             <IconObj size={20} />
                           </div>
-                          <span className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-on-surface-variant'}`}>
+                          <span className={`text-sm font-bold ${isSelected ? 'text-on-surface' : 'text-on-surface-variant'}`}>
                             {t(org.labelKey)}
                           </span>
                           {isSelected && (
-                            <span className="ml-auto w-5 h-5 rounded-full bg-white text-black flex items-center justify-center shadow-sm">
+                            <span className="ml-auto w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm">
                               <Check size={12} strokeWidth={3} />
                             </span>
                           )}
@@ -510,7 +510,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('orgNamePlaceholder')}
-                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-white/10 focus:border-white'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-outline focus:border-outline-focus'}`}
                       />
                       {errors.orgName && <p className="mt-1.5 text-xs font-medium text-error">{errors.orgName}</p>}
                     </motion.div>
@@ -525,7 +525,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('orgNamePlaceholder')}
-                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-white/10 focus:border-white'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-outline focus:border-outline-focus'}`}
                       />
                       {errors.orgName && <p className="mt-1.5 text-xs font-medium text-error">{errors.orgName}</p>}
                     </motion.div>
@@ -540,7 +540,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('orgNamePlaceholder')}
-                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-white/10 focus:border-white'}`}
+                        className={`w-full px-4 py-3 bg-surface-container-low border rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-all ${errors.orgName ? 'border-error' : 'border-outline focus:border-outline-focus'}`}
                       />
                       {errors.orgName && <p className="mt-1.5 text-xs font-medium text-error">{errors.orgName}</p>}
                     </motion.div>
@@ -555,7 +555,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.orgName}
                         onChange={e => updateField('orgName', e.target.value)}
                         placeholder={t('startupPlanPlaceholder')}
-                        className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner"
+                        className="w-full px-4 py-3 bg-surface-container-low border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-outline-focus shadow-inner"
                       />
                     </motion.div>
                   )}
@@ -566,7 +566,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
               {step === 5 && (
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-white mb-2">{t('step5Title')}</h2>
+                    <h2 className="text-2xl font-bold text-on-background mb-2">{t('step5Title')}</h2>
                     <p className="text-sm text-on-surface-variant">{t('step5Subtitle')}</p>
                   </div>
 
@@ -578,7 +578,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.annualIncome}
                         onChange={e => updateField('annualIncome', e.target.value)}
                         placeholder={t('annualIncomePlaceholder')}
-                        className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner transition-all"
+                        className="w-full px-4 py-3 bg-surface-container-low border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-outline-focus shadow-inner transition-all"
                       />
                     </div>
 
@@ -589,12 +589,12 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                         value={form.annualTurnover}
                         onChange={e => updateField('annualTurnover', e.target.value)}
                         placeholder={t('annualTurnoverPlaceholder')}
-                        className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner transition-all"
+                        className="w-full px-4 py-3 bg-surface-container-low border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-outline-focus shadow-inner transition-all"
                       />
                     </div>
 
                     {/* Existing Loans */}
-                    <div className="pt-2 border-t border-white/5">
+                    <div className="pt-2 border-t border-outline">
                       <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-3">{t('existingLoansLabel')}</label>
                       <div className="flex gap-3">
                         <button
@@ -602,8 +602,8 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onClick={() => updateField('existingLoans', true)}
                           className={`flex-1 py-3 rounded-xl border text-sm font-bold transition-all ${
                             form.existingLoans
-                              ? 'border-white bg-white/5 text-white shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-primary/30'
-                              : 'border-white/10 bg-white/5 text-on-surface-muted hover:bg-white/10 hover:text-white'
+                              ? 'border-outline-focus bg-surface-container-highest text-on-surface shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-primary/30'
+                              : 'border-outline bg-surface-container text-on-surface-muted hover:bg-surface-hover hover:text-on-surface'
                           }`}
                         >
                           {t('yesLabel')}
@@ -613,8 +613,8 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                           onClick={() => { updateField('existingLoans', false); updateField('loanType', ''); updateField('loanAmount', ''); }}
                           className={`flex-1 py-3 rounded-xl border text-sm font-bold transition-all ${
                             !form.existingLoans
-                              ? 'border-white bg-white/5 text-white shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-primary/30'
-                              : 'border-white/10 bg-white/5 text-on-surface-muted hover:bg-white/10 hover:text-white'
+                              ? 'border-outline-focus bg-surface-container-highest text-on-surface shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-primary/30'
+                              : 'border-outline bg-surface-container text-on-surface-muted hover:bg-surface-hover hover:text-on-surface'
                           }`}
                         >
                           {t('noLabel')}
@@ -623,7 +623,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                     </div>
 
                     {form.existingLoans && (
-                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4 pt-4 border-t border-white/5">
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4 pt-4 border-t border-outline">
                         <div>
                           <label className="block text-xs font-bold text-on-surface-muted uppercase tracking-wider mb-2">{t('loanTypeLabel')}</label>
                           <input
@@ -631,7 +631,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                             value={form.loanType}
                             onChange={e => updateField('loanType', e.target.value)}
                             placeholder={t('loanTypePlaceholder')}
-                            className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner"
+                            className="w-full px-4 py-3 bg-surface-container-low border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-outline-focus shadow-inner"
                           />
                         </div>
                         <div>
@@ -641,7 +641,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                             value={form.loanAmount}
                             onChange={e => updateField('loanAmount', e.target.value)}
                             placeholder={t('loanAmountPlaceholder')}
-                            className="w-full px-4 py-3 bg-surface-container-low border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-white shadow-inner"
+                            className="w-full px-4 py-3 bg-surface-container-low border border-outline rounded-xl text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-outline-focus shadow-inner"
                           />
                         </div>
                       </motion.div>
@@ -651,11 +651,11 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
               )}
 
               {/* Navigation buttons */}
-              <div className="flex items-center justify-between gap-4 mt-8 pt-6 border-t border-white/10">
+              <div className="flex items-center justify-between gap-4 mt-8 pt-6 border-t border-outline">
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="px-5 py-3 text-sm font-bold text-on-surface-muted border border-white/10 hover:text-white hover:bg-white/10 rounded-xl transition-all flex items-center gap-2"
+                  className="px-5 py-3 text-sm font-bold text-on-surface-muted border border-outline hover:text-on-surface hover:bg-surface-hover rounded-xl transition-all flex items-center gap-2"
                 >
                   <ArrowLeft size={16} />
                   {t('backButton')}
@@ -664,7 +664,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({
                 <button
                   type="button"
                   onClick={handleContinue}
-                  className="px-8 py-3 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-all flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95"
+                  className="px-8 py-3 bg-primary hover:bg-primary-hover text-on-primary text-sm font-bold rounded-xl transition-all flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95"
                 >
                   {step === TOTAL_STEPS ? t('completeProfile') : t('continueBtn')}
                   {step === TOTAL_STEPS ? <Search size={16} /> : <ArrowRight size={16} />}

@@ -57,24 +57,24 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
     >
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">{t('myStartedTitle')}</h1>
+        <h1 className="text-3xl font-extrabold text-on-background mb-2 tracking-tight">{t('myStartedTitle')}</h1>
         <p className="text-sm text-on-surface-variant max-w-2xl">{t('myStartedSubtitle')}</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex bg-surface-container-low/50 p-1.5 rounded-xl border border-white/5 mb-8 w-fit shadow-inner">
+      <div className="flex bg-surface-container-low p-1.5 rounded-xl border border-outline mb-8 w-fit shadow-inner">
         <button
           onClick={() => setActiveTab('started')}
           className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all flex items-center gap-2 ${
             activeTab === 'started'
-              ? 'bg-surface text-white shadow-md border border-white/10'
-              : 'text-on-surface-muted hover:text-white hover:bg-white/5 border border-transparent'
+              ? 'bg-surface-container-highest text-on-surface shadow-md border border-outline'
+              : 'text-on-surface-muted hover:text-on-surface hover:bg-surface-hover border border-transparent'
           }`}
         >
-          <PlayCircle size={16} className={activeTab === 'started' ? 'text-white' : ''} />
+          <PlayCircle size={16} className={activeTab === 'started' ? 'text-on-surface' : ''} />
           {t('startedTab')}
           {startedSchemes.length > 0 && (
-            <span className="ml-1 px-2 py-0.5 text-[10px] font-black rounded-full bg-white/10 text-white border border-white/20">
+            <span className="ml-1 px-2 py-0.5 text-[10px] font-black rounded-full bg-surface-container-highest text-on-surface border border-outline-focus">
               {startedSchemes.length}
             </span>
           )}
@@ -83,8 +83,8 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
           onClick={() => setActiveTab('saved')}
           className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all flex items-center gap-2 ${
             activeTab === 'saved'
-              ? 'bg-surface text-white shadow-md border border-white/10'
-              : 'text-on-surface-muted hover:text-white hover:bg-white/5 border border-transparent'
+              ? 'bg-surface-container-highest text-on-surface shadow-md border border-outline'
+              : 'text-on-surface-muted hover:text-on-surface hover:bg-surface-hover border border-transparent'
           }`}
         >
           <Bookmark size={16} className={activeTab === 'saved' ? 'text-secondary' : ''} />
@@ -108,11 +108,11 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
             transition={{ duration: 0.2 }}
           >
             {startedSchemes.length === 0 ? (
-              <div className="text-center py-24 glass-panel border border-white/5 border-dashed rounded-2xl">
-                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="text-center py-24 glass-panel border border-outline border-dashed rounded-2xl">
+                <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-6">
                   <Inbox size={40} className="text-on-surface-muted/50" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{t('emptyStarted')}</h3>
+                <h3 className="text-xl font-bold text-on-background mb-2">{t('emptyStarted')}</h3>
                 <p className="text-sm text-on-surface-muted max-w-sm mx-auto">{t('emptyStartedSubtitle')}</p>
               </div>
             ) : (
@@ -123,7 +123,7 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                   return (
                     <div
                       key={started.id}
-                      className="glass-card rounded-xl p-5 hover:border-white/20 transition-all flex flex-col group relative overflow-hidden"
+                      className="glass-card rounded-xl p-5 hover:border-outline-focus transition-all flex flex-col group relative overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       
@@ -140,7 +140,7 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                           </span>
                         </div>
                         <h3
-                          className="text-base font-bold text-white mb-3 cursor-pointer hover:text-white transition-colors line-clamp-2 leading-tight"
+                          className="text-base font-bold text-on-background mb-3 cursor-pointer hover:text-primary transition-colors line-clamp-2 leading-tight"
                           onClick={() => onOpenSchemeDetail(scheme)}
                         >
                           {scheme.title}
@@ -150,7 +150,7 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                             <Calendar size={14} className="text-on-surface-variant" />
                             {t('startedOn')} {started.startedDate}
                           </span>
-                          <span className="flex items-center gap-1.5 text-white">
+                          <span className="flex items-center gap-1.5 text-on-surface">
                             <TrendingUp size={14} />
                             {started.progress}% Progress
                           </span>
@@ -158,29 +158,29 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                       </div>
 
                       {/* Progress bar */}
-                      <div className="h-2 bg-surface-container-low rounded-full overflow-hidden mb-5 border border-white/5 relative z-10">
+                      <div className="h-2 bg-surface-container-low rounded-full overflow-hidden mb-5 border border-outline relative z-10">
                         <div
-                          className="h-full bg-white rounded-full transition-all duration-1000"
+                          className="h-full bg-primary rounded-full transition-all duration-1000"
                           style={{ width: `${started.progress}%` }}
                         />
                       </div>
 
                       {/* Actions */}
-                      <div className="flex items-center justify-between gap-3 pt-4 border-t border-white/10 relative z-10">
+                      <div className="flex items-center justify-between gap-3 pt-4 border-t border-outline relative z-10">
                         <select
                           value={started.status}
                           onChange={e => onUpdateStatus(started.id, e.target.value as any)}
-                          className="px-3 py-2 text-xs font-bold bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/20 cursor-pointer appearance-none flex-1 max-w-[160px]"
+                          className="px-3 py-2 text-xs font-bold bg-surface-container border border-outline rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-outline-focus cursor-pointer appearance-none flex-1 max-w-[160px]"
                         >
-                          <option className="bg-zinc-900 text-white" value="started">{t('statusStarted')}</option>
-                          <option className="bg-zinc-900 text-white" value="in_progress">{t('statusInProgress')}</option>
-                          <option className="bg-zinc-900 text-white" value="ready_to_apply">{t('statusReadyToApply')}</option>
+                          <option className="bg-surface text-on-surface" value="started">{t('statusStarted')}</option>
+                          <option className="bg-surface text-on-surface" value="in_progress">{t('statusInProgress')}</option>
+                          <option className="bg-surface text-on-surface" value="ready_to_apply">{t('statusReadyToApply')}</option>
                         </select>
 
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => onOpenSchemeDetail(scheme)}
-                            className="p-2.5 text-on-surface-muted hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-transparent hover:border-white/10 transition-all"
+                            className="p-2.5 text-on-surface-muted hover:text-on-surface bg-surface-container hover:bg-surface-hover rounded-xl border border-transparent hover:border-outline transition-all"
                             title={t('viewScheme')}
                           >
                             <Eye size={16} />
@@ -188,7 +188,7 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
 
                           <button
                             onClick={() => onRemoveStarted(started.id)}
-                            className="p-2.5 text-on-surface-muted hover:text-error bg-white/5 hover:bg-error/10 rounded-xl border border-transparent hover:border-error/20 transition-all"
+                            className="p-2.5 text-on-surface-muted hover:text-error bg-surface-container hover:bg-error/10 rounded-xl border border-transparent hover:border-error transition-all"
                             title={t('removeStarted')}
                           >
                             <Trash2 size={16} />
@@ -213,11 +213,11 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
             transition={{ duration: 0.2 }}
           >
             {savedSchemes.length === 0 ? (
-              <div className="text-center py-24 glass-panel border border-white/5 border-dashed rounded-2xl">
-                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="text-center py-24 glass-panel border border-outline border-dashed rounded-2xl">
+                <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-6">
                   <Bookmark size={40} className="text-on-surface-muted/50" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{t('emptySaved')}</h3>
+                <h3 className="text-xl font-bold text-on-background mb-2">{t('emptySaved')}</h3>
                 <p className="text-sm text-on-surface-muted max-w-sm mx-auto">{t('emptySavedSubtitle')}</p>
               </div>
             ) : (
@@ -225,7 +225,7 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                 {savedSchemes.map(scheme => (
                   <div
                     key={scheme.id}
-                    className="glass-card rounded-xl p-5 hover:border-white/20 transition-all flex flex-col group relative overflow-hidden"
+                    className="glass-card rounded-xl p-5 hover:border-outline-focus transition-all flex flex-col group relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     
@@ -237,12 +237,12 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                           {scheme.type === 'government' ? <Landmark size={12} /> : <Building2 size={12} />}
                           {scheme.type === 'government' ? t('govBadge') : t('privateBadge')}
                         </span>
-                        <span className="text-[10px] font-semibold text-on-surface-variant bg-white/5 px-2 py-1 rounded border border-white/10">
+                        <span className="text-[10px] font-semibold text-on-surface-variant bg-surface-container px-2 py-1 rounded border border-outline">
                           {scheme.category}
                         </span>
                       </div>
                       <h3
-                        className="text-base font-bold text-white cursor-pointer hover:text-secondary transition-colors line-clamp-2"
+                        className="text-base font-bold text-on-background cursor-pointer hover:text-secondary transition-colors line-clamp-2"
                         onClick={() => onOpenSchemeDetail(scheme)}
                       >
                         {scheme.title}
@@ -250,10 +250,10 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                       <p className="text-sm text-on-surface-variant mt-2 line-clamp-2">{scheme.description}</p>
                     </div>
 
-                    <div className="flex items-center gap-3 pt-4 border-t border-white/10 mt-auto relative z-10">
+                    <div className="flex items-center gap-3 pt-4 border-t border-outline mt-auto relative z-10">
                       <button
                         onClick={() => onOpenSchemeDetail(scheme)}
-                        className="flex-1 py-2 text-xs font-bold text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-transparent hover:border-white/20"
+                        className="flex-1 py-2 text-xs font-bold text-on-surface bg-surface-container hover:bg-surface-hover rounded-xl transition-all border border-transparent hover:border-outline-focus"
                       >
                         {t('viewDetails')}
                       </button>
