@@ -6,7 +6,7 @@ import { computeAllMatches } from '../utils/matchingEngine';
 import { 
   Search, Info, Landmark, Building2, CheckCircle2, 
   Eye, Bookmark, BookmarkCheck, Play, Check, 
-  ChevronDown, ChevronUp, ShieldCheck, Sparkles, AlertCircle, Layers
+  ChevronDown, ChevronUp, ShieldCheck, Sparkles, AlertCircle, Layers, ExternalLink
 } from 'lucide-react';
 
 interface RecommendedViewProps {
@@ -365,6 +365,19 @@ const SchemeCard: React.FC<SchemeCardProps> = ({
           <Eye size={16} />
           {t('viewDetails')}
         </button>
+
+        {scheme.officialWebsiteUrl && (
+          <a
+            href={scheme.officialWebsiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl transition-all border text-on-surface-muted hover:text-primary bg-surface-container hover:bg-surface-hover border-outline"
+            title="Visit Official Website"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ExternalLink size={18} />
+          </a>
+        )}
 
         <button
           onClick={onSave}

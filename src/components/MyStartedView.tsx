@@ -4,7 +4,7 @@ import { Scheme, StartedScheme, LanguageCode } from '../types';
 import { getTranslation } from '../i18n/translations';
 import { 
   PlayCircle, Bookmark, Inbox, Landmark, Building2, 
-  Calendar, TrendingUp, Eye, Trash2, BookmarkCheck
+  Calendar, TrendingUp, Eye, Trash2, BookmarkCheck, ExternalLink
 } from 'lucide-react';
 
 interface MyStartedViewProps {
@@ -257,6 +257,18 @@ export const MyStartedView: React.FC<MyStartedViewProps> = ({
                       >
                         {t('viewDetails')}
                       </button>
+                      {scheme.officialWebsiteUrl && (
+                        <a
+                          href={scheme.officialWebsiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 text-on-surface-muted hover:text-primary bg-surface-container hover:bg-surface-hover rounded-xl border border-transparent hover:border-outline-focus transition-all"
+                          title="Visit Official Website"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink size={18} />
+                        </a>
+                      )}
                       <button
                         onClick={() => onToggleSave(scheme.id)}
                         className="p-2 text-secondary bg-secondary/10 border border-secondary/30 shadow-[0_0_10px_rgba(14,165,233,0.2)] rounded-xl transition-all hover:bg-secondary/20"
