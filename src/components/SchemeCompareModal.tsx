@@ -83,280 +83,276 @@ export const SchemeCompareModal: React.FC<SchemeCompareModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-scrim/60 backdrop-blur-sm"
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="fixed inset-0 bg-black/40 dark:bg-black/60"
         />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 16 }}
+          initial={{ opacity: 0, scale: 0.98, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 16 }}
-          transition={{ duration: 0.2 }}
-          className="relative w-full max-w-5xl bg-surface-container-lowest border border-surface-variant rounded-xl shadow-elevated z-10 overflow-hidden max-h-[90vh] flex flex-col"
+          exit={{ opacity: 0, scale: 0.98, y: 8 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="relative w-full max-w-5xl bg-white dark:bg-[#111111] border border-[#E5E5E5] dark:border-[#2A2A2A] rounded-[12px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] z-10 overflow-hidden flex flex-col max-h-[90vh]"
         >
           {/* Header */}
-          <div className="p-6 border-b border-surface-variant flex items-center justify-between bg-surface/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
-                <span className="material-symbols-outlined text-[22px]">compare_arrows</span>
-              </div>
-              <div>
-                <h2 className="font-headline-md text-lg sm:text-xl font-bold text-on-surface">
-                  {t('compareSchemesTitle')}
-                </h2>
-                <p className="text-xs text-on-surface-variant">
-                  Side-by-side evaluation of Government and Private funding options for {userProfile.companyName}
-                </p>
-              </div>
+          <div className="px-6 py-6 border-b border-[#E5E5E5] dark:border-[#2A2A2A] flex items-start justify-between bg-white dark:bg-[#111111] shrink-0">
+            <div>
+              <h2 className="text-[24px] leading-[1.15] tracking-tight font-bold text-[#111111] dark:text-[#F5F5F5]">
+                {t('compareSchemesTitle') || 'Compare Schemes'}
+              </h2>
+              <p className="text-[15px] leading-[1.6] text-[#6B6B6B] dark:text-[#888888] mt-2 max-w-[560px]">
+                Evaluate funding options for {userProfile.companyName}
+              </p>
             </div>
-
             <button
               id="btn-close-compare"
               onClick={onClose}
-              className="p-2 rounded-xl border border-surface-variant text-on-surface-variant hover:bg-surface-variant"
+              className="p-2 -mr-2 -mt-2 text-[#6B6B6B] hover:text-[#111111] dark:text-[#888888] dark:hover:text-[#F5F5F5] transition-colors rounded-md focus:outline-none focus:ring-2 focus:ring-[#111111] dark:focus:ring-[#F5F5F5]"
+              aria-label="Close modal"
             >
-              <span className="material-symbols-outlined text-[20px]">close</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
           </div>
 
-          {/* Scheme Selectors */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 sm:p-6 bg-surface border-b border-surface-variant">
-            {/* Selector A */}
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1.5">
-                Scheme 1 (Select to compare)
-              </label>
-              <select
-                id="select-scheme-a"
-                value={selectedSchemeAId}
-                onChange={(e) => setSelectedSchemeAId(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl text-xs font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
-              >
-                {allSchemes.map((s) => (
-                  <option className="bg-surface text-on-surface" key={s.id} value={s.id}>
-                    {s.type === 'government' ? '🏛️ [Gov]' : '🏢 [Private]'} {s.title} ({s.matchScore}% Match)
-                  </option>
-                ))}
-              </select>
+          <div className="overflow-y-auto flex-1">
+            {/* Scheme Selectors */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-[#FAFAFA] dark:bg-[#1A1A1A] border-b border-[#E5E5E5] dark:border-[#2A2A2A]">
+              {/* Selector A */}
+              <div className="flex flex-col gap-2">
+                <label htmlFor="select-scheme-a" className="text-[13px] font-semibold text-[#111111] dark:text-[#F5F5F5]">
+                  Scheme 1
+                </label>
+                <select
+                  id="select-scheme-a"
+                  value={selectedSchemeAId}
+                  onChange={(e) => setSelectedSchemeAId(e.target.value)}
+                  className="w-full px-[14px] py-[10px] bg-white dark:bg-[#111111] border border-[#E5E5E5] dark:border-[#2A2A2A] rounded-[8px] text-[15px] text-[#111111] dark:text-[#F5F5F5] focus:outline-none focus:border-[#111111] dark:focus:border-[#F5F5F5] transition-colors"
+                >
+                  {allSchemes.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.type === 'government' ? 'Government: ' : 'Private: '} {s.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Selector B */}
+              <div className="flex flex-col gap-2">
+                <label htmlFor="select-scheme-b" className="text-[13px] font-semibold text-[#111111] dark:text-[#F5F5F5]">
+                  Scheme 2
+                </label>
+                <select
+                  id="select-scheme-b"
+                  value={selectedSchemeBId}
+                  onChange={(e) => setSelectedSchemeBId(e.target.value)}
+                  className="w-full px-[14px] py-[10px] bg-white dark:bg-[#111111] border border-[#E5E5E5] dark:border-[#2A2A2A] rounded-[8px] text-[15px] text-[#111111] dark:text-[#F5F5F5] focus:outline-none focus:border-[#111111] dark:focus:border-[#F5F5F5] transition-colors"
+                >
+                  {allSchemes.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.type === 'government' ? 'Government: ' : 'Private: '} {s.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            {/* Selector B */}
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1.5">
-                Scheme 2 (Select to compare)
-              </label>
-              <select
-                id="select-scheme-b"
-                value={selectedSchemeBId}
-                onChange={(e) => setSelectedSchemeBId(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl text-xs font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
-              >
-                {allSchemes.map((s) => (
-                  <option className="bg-surface text-on-surface" key={s.id} value={s.id}>
-                    {s.type === 'government' ? '🏛️ [Gov]' : '🏢 [Private]'} {s.title} ({s.matchScore}% Match)
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Compare Action Button */}
-          {!hasCompared && (
-            <div className="p-4 sm:p-6 bg-surface-container-lowest flex justify-center border-b border-surface-variant">
-              <button
-                onClick={handleCompare}
-                disabled={!selectedSchemeAId || !selectedSchemeBId || selectedSchemeAId === selectedSchemeBId}
-                className="px-6 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-sm hover:bg-primary-hover hover:scale-105 transition-all flex items-center gap-2 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
-              >
-                <span className="material-symbols-outlined text-[20px]">play_arrow</span>
-                Compare Now
-              </button>
-            </div>
-          )}
-
-          {/* Body Comparison Matrix */}
-          {hasCompared && (
-          <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 text-on-surface">
-            {schemeA && schemeB && (
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-surface-variant">
-                      <th className="py-3 px-4 font-bold text-on-surface-variant uppercase w-1/4">Criteria</th>
-                      <th className="py-3 px-4 font-bold text-on-surface w-3/8 text-sm">
-                        <div className="flex items-center gap-1.5">
-                          <span>{schemeA.type === 'government' ? '🏛️' : '🏢'}</span>
-                          <span>{schemeA.title}</span>
-                        </div>
-                      </th>
-                      <th className="py-3 px-4 font-bold text-indigo-600 dark:text-indigo-400 w-3/8 text-sm">
-                        <div className="flex items-center gap-1.5">
-                          <span>{schemeB.type === 'government' ? '🏛️' : '🏢'}</span>
-                          <span>{schemeB.title}</span>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-surface-variant/60">
-                    {/* Category Type */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Scheme Type</td>
-                      <td className="py-3 px-4">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-md font-bold uppercase text-[10px] ${
-                          schemeA.type === 'government' ? 'bg-amber-500/10 text-amber-600' : 'bg-indigo-500/10 text-indigo-600'
-                        }`}>
-                          {schemeA.type === 'government' ? 'Government Scheme' : 'Private Scheme'}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-md font-bold uppercase text-[10px] ${
-                          schemeB.type === 'government' ? 'bg-amber-500/10 text-amber-600' : 'bg-indigo-500/10 text-indigo-600'
-                        }`}>
-                          {schemeB.type === 'government' ? 'Government Scheme' : 'Private Scheme'}
-                        </span>
-                      </td>
-                    </tr>
-
-                    {/* Match Score */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Match Score</td>
-                      <td className="py-3 px-4">
-                        <span className="font-bold text-sm text-on-surface">{schemeA.matchScore}% Match</span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="font-bold text-sm text-indigo-600 dark:text-indigo-400">{schemeB.matchScore}% Match</span>
-                      </td>
-                    </tr>
-
-                    {/* Provider */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Provider / Body</td>
-                      <td className="py-3 px-4 text-on-surface font-medium">{schemeA.providerName}</td>
-                      <td className="py-3 px-4 text-on-surface font-medium">{schemeB.providerName}</td>
-                    </tr>
-
-                    {/* Funding & Nature */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Funding / Benefit</td>
-                      <td className="py-3 px-4">
-                        <div className="font-bold text-on-surface text-sm">{schemeA.amountFormatted}</div>
-                        <div className="text-[11px] text-on-surface-variant">{schemeA.fundingNature}</div>
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="font-bold text-on-surface text-sm">{schemeB.amountFormatted}</div>
-                        <div className="text-[11px] text-on-surface-variant">{schemeB.fundingNature}</div>
-                      </td>
-                    </tr>
-
-                    {/* Document Readiness */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Document Readiness</td>
-                      <td className="py-3 px-4">
-                        <div className="font-semibold text-success flex items-center gap-1">
-                          <span className="material-symbols-outlined text-[16px]">task_alt</span>
-                          {schemeA.documentReadiness.score}% Ready
-                        </div>
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="font-semibold text-success flex items-center gap-1">
-                          <span className="material-symbols-outlined text-[16px]">task_alt</span>
-                          {schemeB.documentReadiness.score}% Ready
-                        </div>
-                      </td>
-                    </tr>
-
-                    {/* Eligibility Highlights */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Key Eligibility</td>
-                      <td className="py-3 px-4 space-y-1">
-                        {schemeA.eligibility.slice(0, 3).map((e, idx) => (
-                          <div key={idx} className="flex items-start gap-1 text-[11px] text-on-surface-variant">
-                            <span className="text-on-surface">•</span>
-                            <span>{e}</span>
-                          </div>
-                        ))}
-                      </td>
-                      <td className="py-3 px-4 space-y-1">
-                        {schemeB.eligibility.slice(0, 3).map((e, idx) => (
-                          <div key={idx} className="flex items-start gap-1 text-[11px] text-on-surface-variant">
-                            <span className="text-indigo-500">•</span>
-                            <span>{e}</span>
-                          </div>
-                        ))}
-                      </td>
-                    </tr>
-
-                    {/* Official Portal Link */}
-                    <tr>
-                      <td className="py-3 px-4 font-semibold text-on-surface-variant">Official Website</td>
-                      <td className="py-3 px-4">
-                        <a
-                          href={schemeA.officialWebsiteUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary font-semibold text-[11px] hover:bg-primary-hover transition-colors"
-                        >
-                          <span>{schemeA.providerType}</span>
-                          <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-                        </a>
-                      </td>
-                      <td className="py-3 px-4">
-                        <a
-                          href={schemeB.officialWebsiteUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-secondary text-on-secondary font-semibold text-[11px] hover:bg-secondary-hover transition-colors"
-                        >
-                          <span>{schemeB.providerType}</span>
-                          <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            {/* Compare Action Button */}
+            {!hasCompared && (
+              <div className="p-6 bg-white dark:bg-[#111111] flex justify-start">
+                <button
+                  onClick={handleCompare}
+                  disabled={!selectedSchemeAId || !selectedSchemeBId || selectedSchemeAId === selectedSchemeBId}
+                  className="px-[24px] py-[12px] bg-[#111111] dark:bg-[#F5F5F5] text-[#FFFFFF] dark:text-[#111111] text-[15px] font-semibold rounded-[8px] hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#111111] dark:focus:ring-offset-[#111111]"
+                >
+                  Compare Schemes
+                </button>
               </div>
             )}
 
-            {/* AI Comparison Analysis Box */}
-            <div className="p-5 rounded-xl bg-surface border border-surface-variant shadow-xs">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="material-symbols-outlined text-primary text-[20px]">auto_awesome</span>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-on-surface">
-                  MatchWise AI Comparative Analysis
-                </h3>
-              </div>
+            {/* Body Comparison Matrix */}
+            {hasCompared && (
+              <div className="p-6 space-y-8 bg-white dark:bg-[#111111]">
+                {schemeA && schemeB && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-[15px] leading-[1.6] text-left border-collapse">
+                      <thead>
+                        <tr className="border-b border-[#E5E5E5] dark:border-[#2A2A2A]">
+                          <th className="py-4 px-4 font-semibold text-[#6B6B6B] dark:text-[#888888] w-1/4">Criteria</th>
+                          <th className="py-4 px-4 font-bold text-[#111111] dark:text-[#F5F5F5] w-3/8 text-[16px]">
+                            {schemeA.title}
+                          </th>
+                          <th className="py-4 px-4 font-bold text-[#111111] dark:text-[#F5F5F5] w-3/8 text-[16px]">
+                            {schemeB.title}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#E5E5E5] dark:divide-[#2A2A2A]">
+                        {/* Category Type */}
+                        <tr>
+                          <td className="py-4 px-4 text-[#6B6B6B] dark:text-[#888888]">Type</td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">
+                            <span className="border border-[#E0E0E0] dark:border-[#2A2A2A] rounded-[4px] px-[8px] py-[2px] text-[12px] text-[#6B6B6B] dark:text-[#888888]">
+                              {schemeA.type === 'government' ? 'Government' : 'Private'}
+                            </span>
+                          </td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">
+                            <span className="border border-[#E0E0E0] dark:border-[#2A2A2A] rounded-[4px] px-[8px] py-[2px] text-[12px] text-[#6B6B6B] dark:text-[#888888]">
+                              {schemeB.type === 'government' ? 'Government' : 'Private'}
+                            </span>
+                          </td>
+                        </tr>
 
-              {isLoadingAnalysis ? (
-                <div className="flex items-center gap-2 text-xs text-on-surface-variant py-4">
-                  <span className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                  <span>Evaluating compatibility for {userProfile.companyName}...</span>
+                        {/* Match Score */}
+                        <tr>
+                          <td className="py-4 px-4 text-[#6B6B6B] dark:text-[#888888]">Match Score</td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">
+                            <span className="text-[13px] font-semibold">{schemeA.matchScore}% match</span>
+                          </td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">
+                            <span className="text-[13px] font-semibold">{schemeB.matchScore}% match</span>
+                          </td>
+                        </tr>
+
+                        {/* Provider */}
+                        <tr>
+                          <td className="py-4 px-4 text-[#6B6B6B] dark:text-[#888888]">Provider</td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">{schemeA.providerName}</td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">{schemeB.providerName}</td>
+                        </tr>
+
+                        {/* Funding & Nature */}
+                        <tr>
+                          <td className="py-4 px-4 text-[#6B6B6B] dark:text-[#888888] align-top">Funding</td>
+                          <td className="py-4 px-4 align-top">
+                            <div className="text-[#111111] dark:text-[#F5F5F5] font-semibold">{schemeA.amountFormatted}</div>
+                            <div className="text-[14px] text-[#6B6B6B] dark:text-[#888888] mt-1">{schemeA.fundingNature}</div>
+                          </td>
+                          <td className="py-4 px-4 align-top">
+                            <div className="text-[#111111] dark:text-[#F5F5F5] font-semibold">{schemeB.amountFormatted}</div>
+                            <div className="text-[14px] text-[#6B6B6B] dark:text-[#888888] mt-1">{schemeB.fundingNature}</div>
+                          </td>
+                        </tr>
+
+                        {/* Document Readiness */}
+                        <tr>
+                          <td className="py-4 px-4 text-[#6B6B6B] dark:text-[#888888]">Document Readiness</td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">
+                            {schemeA.documentReadiness.score}% Ready
+                          </td>
+                          <td className="py-4 px-4 text-[#111111] dark:text-[#F5F5F5]">
+                            {schemeB.documentReadiness.score}% Ready
+                          </td>
+                        </tr>
+
+                        {/* Eligibility Highlights */}
+                        <tr>
+                          <td className="py-4 px-4 align-top text-[#6B6B6B] dark:text-[#888888]">Key Eligibility</td>
+                          <td className="py-4 px-4">
+                            <ul className="space-y-2 m-0 p-0 list-none">
+                              {schemeA.eligibility.slice(0, 3).map((e, idx) => (
+                                <li key={idx} className="flex items-start gap-3 text-[#111111] dark:text-[#F5F5F5]">
+                                  <span className="text-[#6B6B6B] dark:text-[#888888] mt-[8px] w-[4px] h-[4px] rounded-full bg-[#6B6B6B] dark:bg-[#888888] shrink-0" />
+                                  <span>{e}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </td>
+                          <td className="py-4 px-4">
+                            <ul className="space-y-2 m-0 p-0 list-none">
+                              {schemeB.eligibility.slice(0, 3).map((e, idx) => (
+                                <li key={idx} className="flex items-start gap-3 text-[#111111] dark:text-[#F5F5F5]">
+                                  <span className="text-[#6B6B6B] dark:text-[#888888] mt-[8px] w-[4px] h-[4px] rounded-full bg-[#6B6B6B] dark:bg-[#888888] shrink-0" />
+                                  <span>{e}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </td>
+                        </tr>
+
+                        {/* Official Portal Link */}
+                        <tr>
+                          <td className="py-4 px-4 text-[#6B6B6B] dark:text-[#888888]">Website</td>
+                          <td className="py-4 px-4">
+                            <a
+                              href={schemeA.officialWebsiteUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[15px] font-semibold text-[#111111] dark:text-[#F5F5F5] hover:opacity-80 transition-opacity inline-flex items-center gap-1 focus:outline-none focus:underline"
+                            >
+                              Visit portal
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#6B6B6B] dark:text-[#888888]">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                              </svg>
+                            </a>
+                          </td>
+                          <td className="py-4 px-4">
+                            <a
+                              href={schemeB.officialWebsiteUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[15px] font-semibold text-[#111111] dark:text-[#F5F5F5] hover:opacity-80 transition-opacity inline-flex items-center gap-1 focus:outline-none focus:underline"
+                            >
+                              Visit portal
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#6B6B6B] dark:text-[#888888]">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                              </svg>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* AI Comparison Analysis Box */}
+                <div className="p-6 rounded-[10px] border border-[#E5E5E5] dark:border-[#2A2A2A] bg-[#FAFAFA] dark:bg-[#1A1A1A] shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-[1px] transition-all duration-200">
+                  <h3 className="text-[16px] font-bold text-[#111111] dark:text-[#F5F5F5] mb-4">
+                    Comparative Analysis
+                  </h3>
+
+                  {isLoadingAnalysis ? (
+                    <div className="text-[15px] text-[#6B6B6B] dark:text-[#888888] flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4 text-[#6B6B6B] dark:text-[#888888]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Evaluating compatibility for {userProfile.companyName}...
+                    </div>
+                  ) : aiAnalysis ? (
+                    <div className="text-[15px] leading-[1.6] text-[#111111] dark:text-[#F5F5F5] space-y-2 whitespace-pre-line">
+                      {aiAnalysis}
+                    </div>
+                  ) : (
+                    <p className="text-[15px] leading-[1.6] text-[#6B6B6B] dark:text-[#888888]">
+                      Both schemes offer distinct advantages. Review their criteria to choose the most suitable pathway.
+                    </p>
+                  )}
                 </div>
-              ) : aiAnalysis ? (
-                <div className="text-xs text-on-surface space-y-2 whitespace-pre-line leading-relaxed">
-                  {aiAnalysis}
-                </div>
-              ) : (
-                <p className="text-xs text-on-surface-variant">
-                  Both schemes offer strong advantages. Compare your compliance readiness in the vault to choose the fastest pathway.
-                </p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-          )}
 
           {/* Footer */}
-          <div className="p-4 border-t border-surface-variant bg-surface-container-lowest flex items-center justify-between text-xs text-on-surface-variant">
-            <span>MatchWise provides objective scheme comparison. Applications must be completed on official portals.</span>
+          <div className="px-6 py-4 border-t border-[#E5E5E5] dark:border-[#2A2A2A] bg-[#FAFAFA] dark:bg-[#1A1A1A] flex items-center justify-between shrink-0">
+            <span className="text-[14px] text-[#6B6B6B] dark:text-[#888888]">
+              Applications must be completed on official portals.
+            </span>
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-surface hover:bg-surface-variant border border-surface-variant rounded-xl font-semibold text-on-surface"
+              className="px-[20px] py-[10px] bg-transparent border border-[#E5E5E5] dark:border-[#2A2A2A] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] rounded-[8px] text-[14px] font-semibold text-[#111111] dark:text-[#F5F5F5] transition-colors focus:outline-none focus:ring-2 focus:ring-[#111111] dark:focus:ring-[#F5F5F5]"
             >
-              Close Comparison
+              Close
             </button>
           </div>
         </motion.div>

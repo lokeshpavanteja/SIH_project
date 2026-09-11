@@ -19,6 +19,7 @@ import {
 import { LanguageSelection } from './components/LanguageSelection';
 import { OnboardingView } from './components/OnboardingView';
 import { AuthView } from './components/AuthView';
+import { LandingView } from './components/LandingView';
 import { TopAppBar } from './components/TopAppBar';
 import { BottomNavBar } from './components/BottomNavBar';
 import { RecommendedView } from './components/RecommendedView';
@@ -32,7 +33,7 @@ import { StartApplicationModal } from './components/StartApplicationModal';
 import { Toast, ToastMessage } from './components/Toast';
 import { Layers } from 'lucide-react';
 
-type AppScreen = 'auth' | 'language_select' | 'onboarding' | 'main_app';
+type AppScreen = 'landing' | 'auth' | 'language_select' | 'onboarding' | 'main_app';
 
 export default function App() {
   // Screen state
@@ -41,7 +42,7 @@ export default function App() {
       const savedProfile = localStorage.getItem('matchwise_user_profile');
       if (savedProfile) return 'main_app';
     } catch { /* ignore */ }
-    return 'auth';
+    return 'landing';
   });
 
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>(() => {
@@ -246,11 +247,22 @@ export default function App() {
     }));
   };
 
+  // ─── Screen 0.5: Landing ────────────────────────────────────
+  if (appScreen === 'landing') {
+    return (
+      <LandingView
+        onNavigateAuth={() => setAppScreen('auth')}
+        isDarkMode={isDarkMode}
+        onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+      />
+    );
+  }
+
   // ─── Screen 0: Auth ─────────────────────────────────────────
   if (appScreen === 'auth') {
     return (
-      <div className="min-h-screen bg-background text-on-background">
-        <AuthView onSuccess={handleAuthSuccess} />
+      <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-[#111111] dark:text-[#F5F5F5]">
+        <AuthView onSuccess={handleAuthSuccess} isDarkMode={isDarkMode} onToggleTheme={() => setIsDarkMode(!isDarkMode)} />
         <Toast toasts={toasts} onDismiss={handleDismissToast} />
       </div>
     );

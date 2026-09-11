@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
   --color-primary: var(--primary);
   --color-on-primary: var(--on-primary);
@@ -168,14 +169,14 @@
     box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.15); /* More visible, using primary color faintly */
   }
   
-  /* Noise overlay class */
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.015;
-    pointer-events: none;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+  /* Premium Dot Grid Pattern */
+  .bg-dot-pattern {
+    background-image: radial-gradient(var(--color-outline) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  
+  .dark .bg-dot-pattern {
+    background-image: radial-gradient(#333333 1px, transparent 1px);
   }
 
   /* Structural */
@@ -190,9 +191,6 @@ body {
   min-height: max(884px, 100dvh);
   background-color: var(--color-background);
   color: var(--color-on-background);
-  /* A very sophisticated, barely visible spotlight at the top center */
-  background-image: radial-gradient(circle at 50% -20%, var(--color-surface-container-highest), transparent 50%);
-  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
